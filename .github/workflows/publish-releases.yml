@@ -59,5 +59,37 @@ jobs:
             echo "Publishing the existing 2.0.1 draft after the interrupted asset upload"
             gh release edit v2.0.1 --draft=false --notes-file docs/releases/v2.0.1.md
           fi
+          # Publish the actual installable files; GitHub's automatic source archives
+          # are not the installer and must not be mistaken for it.
+          for version in v2.0.0 v2.0.1; do
+            workdir="$(mktemp -d)"
+            mkdir -p "$workdir/kalenderprofile-$version"
+            git archive "$version" | tar -xf - -C "$workdir/kalenderprofile-$version"
+            (
+              cd "$workdir/kalenderprofile-$version"
+              python scripts/build.py
+              python tests/check_release.py
+            )
+            cp "$workdir/kalenderprofile-$version/install/installation.html" \
+              "$workdir/kalenderprofile-$version-installation.html"
+            (
+              cd "$workdir"
+              zip -qr "kalenderprofile-$version.zip" "kalenderprofile-$version"
+            )
+            gh release upload "$version" \
+              "$workdir/kalenderprofile-$version-installation.html" \
+              "$workdir/kalenderprofile-$version.zip" --clobber
+            gh release view "$version" --json assets --jq '.assets[].name' | \
+              grep -Fx "kalenderprofile-$version-installation.html"
+            gh release view "$version" --json assets --jq '.assets[].name' | \
+              grep -Fx "kalenderprofile-$version.zip"
+            notesfile="$workdir/notes.md"
+            gh release view "$version" --json body --jq '.body' > "$notesfile"
+            if ! grep -q 'Installationsdatei unter Assets' "$notesfile"; then
+              printf '\n## Installation\n\nDie **Installationsdatei unter Assets** herunterladen: \`kalenderprofile-%s-installation.html\`. Lokal in Chrome oder Edge öffnen, den Link **Kalenderprofile** in die Lesezeichenleiste ziehen und das Lesezeichen in der Nextcloud-Kalender-App verwenden. Die GitHub-Quellcode-Vorschau ist keine ausführbare Installationsseite.\n' "$version" >> "$notesfile"
+              gh release edit "$version" --notes-file "$notesfile"
+            fi
+            rm -rf "$workdir"
+          done
           gh release view v2.0.1 --json isDraft,tagName,url
           test "$(gh release view v2.0.1 --json isDraft --jq '.isDraft')" = "false"
