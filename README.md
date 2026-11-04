@@ -36,6 +36,4 @@ Die Software wurde in einer produktiven Nextcloud-Instanz mit der Beta-15-Basis 
 
 Die CalDAV-Sortierung schreibt nach ausdrücklicher Benutzerfreigabe in die Nextcloud. Änderungen über mehrere Kalender sind nicht atomar; im Fehlerfall erfolgt ein Wiederherstellungsversuch. JSON-Exporte können Kalendernamen und weitere benutzerspezifische Angaben im Klartext enthalten.
 
-**Hinweis:** Dieses Repository enthält bewusst keine persönliche Gemeinde-Konfiguration und keine produktiven Benutzerdaten.
-
 **Lizenz:** Noch keine Lizenz festgelegt. Die öffentliche Sichtbarkeit des Repositories bedeutet nicht automatisch, dass eine Open-Source-Lizenz erteilt wurde.
