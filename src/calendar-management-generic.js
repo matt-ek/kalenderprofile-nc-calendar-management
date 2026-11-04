@@ -616,12 +616,12 @@
   // Nextcloud-Handler auf dem übergeordneten document/window (auch Capture-Handler).
   const host = document.createElement('iframe');
   host.id = HOST_ID;
-  host.title = 'Nextcloud Kalender Management';
+  host.title = 'Kalenderprofile';
   host.setAttribute('aria-label',host.title);
   host.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:0;background:transparent;z-index:2147483645;';
   document.body.appendChild(host);
   const appDoc = host.contentDocument;
-  if (!appDoc || !appDoc.body) { host.remove(); alert('Kalender Management: Isoliertes Fenster konnte nicht gestartet werden.'); return; }
+  if (!appDoc || !appDoc.body) { host.remove(); alert('Kalenderprofile: Isoliertes Fenster konnte nicht gestartet werden.'); return; }
   // Nextcloud-Farbvariablen sind im iframe nicht automatisch vererbbar.
   const upstream = getComputedStyle(document.documentElement);
   for (const name of ['--color-main-background','--color-main-text','--color-border','--color-border-dark','--color-primary-element','--color-primary-element-text','--color-text-maxcontrast','--color-background-hover','--color-background-dark','--border-radius-element','--border-radius-large']) {
@@ -750,7 +750,7 @@
   panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'true');
   panel.setAttribute('aria-label', 'Kalenderprofile'); shadow.appendChild(panel);
   panel.innerHTML = `
-    <div class="head"><div><h2>Kalenderprofile</h2><div class="subtitle">Nextcloud Calendar Management · V${VERSION}</div></div><button class="close" id="close" title="Schließen" aria-label="Schließen">×</button></div>
+    <div class="head"><div><h2>Kalenderprofile</h2><div class="subtitle">Kalenderverwaltung für Nextcloud · V${VERSION}</div></div><button class="close" id="close" title="Schließen" aria-label="Schließen">×</button></div>
     <div class="tabs" role="tablist" aria-label="Arbeitsbereich"><button data-tab="profiles" role="tab" aria-selected="true">Profile & Filter</button><button data-tab="individual" role="tab" aria-selected="false">Einzelauswahl</button><button data-tab="sorting" role="tab" aria-selected="false">Sortierung</button><button data-tab="setup" class="setup-nav" role="tab" aria-selected="false">Setup</button></div>
     <div class="scroll">
       <div class="tab-panel" data-panel="profiles">
@@ -2278,7 +2278,7 @@ const summary=document.createElement('summary');summary.textContent=issues.lengt
       if(item.source!==section){section=item.source;lines.push('',{personal:'Eigene Kalender',shared:'Geteilte Kalender',deck:'Deck',tasks:'Aufgaben',unknown:'Sonstige'}[section]||section);}
       lines.push('  '+item.name);
     }
-    const copy='Calendar Management – individuelle Sortierliste\n'+lines.join('\n');
+    const copy='Kalenderprofile – individuelle Sortierliste\n'+lines.join('\n');
     try{await navigator.clipboard.writeText(copy);status('Sortierliste kopiert. Du kannst sie als Anleitung für Drag-and-drop verwenden.');}
     catch(error){prompt('Sortierliste zum Kopieren:',copy);status('Sortierliste zur manuellen Übernahme angezeigt.');}
   });
