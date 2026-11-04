@@ -304,7 +304,7 @@
       if(item.source!==section){section=item.source;lines.push('',{personal:'Eigene Kalender',shared:'Geteilte Kalender',deck:'Deck',tasks:'Aufgaben',unknown:'Sonstige'}[section]||section);}
       lines.push('  '+item.name);
     }
-    const copy='Calendar Management – individuelle Sortierliste\n'+lines.join('\n');
+    const copy='Kalenderprofile – individuelle Sortierliste\n'+lines.join('\n');
     try{await navigator.clipboard.writeText(copy);status('Sortierliste kopiert. Du kannst sie als Anleitung für Drag-and-drop verwenden.');}
     catch(error){prompt('Sortierliste zum Kopieren:',copy);status('Sortierliste zur manuellen Übernahme angezeigt.');}
   });

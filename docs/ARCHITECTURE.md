@@ -1,6 +1,6 @@
-# Architektur – Nextcloud Calendar Management (Generic)
+# Architektur – Kalenderprofile
 
-Stand: V2.0.0-beta.15. Dies ist die Entwicklungsstruktur des lokalen Bookmarklets, keine serverseitige Nextcloud-App.
+Stand: V2.0.0. Dies ist die Entwicklungsstruktur des lokalen Bookmarklets, keine serverseitige Nextcloud-App.
 
 ## Prinzipien
 

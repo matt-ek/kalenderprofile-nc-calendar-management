@@ -3,12 +3,12 @@
   // Nextcloud-Handler auf dem übergeordneten document/window (auch Capture-Handler).
   const host = document.createElement('iframe');
   host.id = HOST_ID;
-  host.title = 'Nextcloud Kalender Management';
+  host.title = 'Kalenderprofile';
   host.setAttribute('aria-label',host.title);
   host.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:0;background:transparent;z-index:2147483645;';
   document.body.appendChild(host);
   const appDoc = host.contentDocument;
-  if (!appDoc || !appDoc.body) { host.remove(); alert('Kalender Management: Isoliertes Fenster konnte nicht gestartet werden.'); return; }
+  if (!appDoc || !appDoc.body) { host.remove(); alert('Kalenderprofile: Isoliertes Fenster konnte nicht gestartet werden.'); return; }
   // Nextcloud-Farbvariablen sind im iframe nicht automatisch vererbbar.
   const upstream = getComputedStyle(document.documentElement);
   for (const name of ['--color-main-background','--color-main-text','--color-border','--color-border-dark','--color-primary-element','--color-primary-element-text','--color-text-maxcontrast','--color-background-hover','--color-background-dark','--border-radius-element','--border-radius-large']) {

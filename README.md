@@ -1,6 +1,7 @@
-# Nextcloud Calendar Management
+# Kalenderprofile
 
-**Version 2.0.0 (04.11.2026)**
+**Version:** 2.0.0 (04.11.2026)  
+**Untertitel:** Kalenderverwaltung für Nextcloud · V2.0.0
 
 Browser-Bookmarklet zur Verwaltung von Kalenderprofilen, Schnellansichten, Kategorien, Bereichs- und Kalenderartfiltern sowie Kalenderreihenfolgen in der Nextcloud-Kalender-App.
 

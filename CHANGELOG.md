@@ -4,7 +4,7 @@
 
 Stabile Veröffentlichung auf Basis der produktiv geprüften Beta 15.
 
-- Sichtbarer Produkttitel ohne „(Generic)“.
+- Einheitlicher Produktname **Kalenderprofile**; „Nextcloud“ wird im Untertitel als Plattform genannt.
 - Persistenzkorrektur für den bevorzugten Bereich nach JSON-Import oder Kennungsänderung.
 - Abwärtskompatibilität mit den bisherigen lokalen Einstellungen und JSON-Exporten.
 - Release-QA: 17 von 17 Prüfungen erfolgreich (siehe `docs/RELEASE_QA.md`).

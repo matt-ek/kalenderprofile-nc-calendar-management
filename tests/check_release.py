@@ -19,6 +19,9 @@ for marker, file in [("@STYLE_INLINE@", "calendar-management.css"), ("@HTML_INLI
 bundle = (ROOT / "src/calendar-management-generic.js").read_text(encoding="utf-8")
 assert source == bundle, "Built JS differs from modular sources"
 assert "const VERSION = '2.0.0'" in source
+assert "<h2>Kalenderprofile</h2>" in source
+assert "Kalenderverwaltung für Nextcloud · V${VERSION}" in source
+assert "Nextcloud Calendar Management · V${VERSION}" not in source
 assert "(Generic) ·" not in source
 subprocess.run(["node", "--check", str(ROOT / "src/calendar-management-generic.js")], check=True)
 
@@ -29,6 +32,8 @@ assert unquote(url[len("javascript:"):]) == source, "Bookmarklet URL differs fro
 html = (ROOT / "install/installation.html").read_text(encoding="utf-8")
 m = re.search(r'<a class="bookmark" href="([^"]+)"', html)
 assert m, "Bookmarklet drag link missing"
+assert "<title>Kalenderprofile – Installation</title>" in html
+assert ">Kalenderprofile</a>" in html
 assert unescape(m.group(1)) == url, "Installer link differs from bookmarklet URL"
 
 print("PASS: source modules, CSS/HTML assets, JS syntax, bookmarklet and installer")

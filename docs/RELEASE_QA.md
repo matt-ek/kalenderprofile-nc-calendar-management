@@ -1,4 +1,4 @@
-# Qualitäts- und Release-Prüfung – Nextcloud Calendar Management 2.0.0
+# Qualitäts- und Release-Prüfung – Kalenderprofile 2.0.0
 
 **Release-Datum:** 04.11.2026  
 **Basis:** V2.0.0-beta.15, vom Anwender in der produktiven Nextcloud getestet und freigegeben.  
@@ -23,7 +23,7 @@
 
 ## Änderungen gegenüber Beta 15
 
-1. **Produktbezeichnung:** In der Oberfläche wird `Nextcloud Calendar Management · V2.0.0` angezeigt. Auch die Installationsseite verwendet den neutralen Produktnamen.
+1. **Produktbezeichnung:** In der Oberfläche und auf der Installationsseite lautet der Produktname **Kalenderprofile**. Der Untertitel lautet `Kalenderverwaltung für Nextcloud · V2.0.0`.
 2. **Persistenzkorrektur:** Der bevorzugte Bereich wird bei mehrteiligen Speicheroperationen als Rohtext abgelegt, genau wie bei einer manuellen Änderung. Ältere, versehentlich JSON-kodierte Werte (z. B. `"bue"`) werden weiterhin gelesen. Die Änderung benötigt keine Migration und verändert keine anderen Einstellungen.
 3. **Qualitätssicherung:** Ein neuer Regressionstest für ältere bevorzugte Bereiche; bestehende Tests warten bei JSON-Importen auf den tatsächlichen Abschluss, statt auf ein zufällig frühes UI-Ereignis.
 4. **Releasepflege:** Versionskennung 2.0.0, konsolidiertes Änderungsprotokoll, aktualisierte Installation und Dokumentation.
@@ -36,4 +36,4 @@
 - CalDAV-Sortierung über mehrere Kalender ist serverseitig keine atomare Transaktion. Bei Teilfehlern wird eine Rücknahme versucht; ein unklarer Serverzustand kann nicht vollständig ausgeschlossen werden.
 - Das Bookmarklet wird in der geöffneten Nextcloud-Sitzung ausgeführt. Es darf nur aus vertrauenswürdigen Quellen installiert werden. Konfigurationen und Kalenderbezeichnungen werden lokal bzw. im JSON-Export im Klartext gespeichert.
 
-**Freigabestatus:** Die Software ist als lokales 2.0.0-Release paketiert. Keine Veröffentlichung auf GitHub, kein Hochladen in eine Nextcloud-Instanz und keine produktiven Serveränderungen durch diese Release-Prüfung.
+**Freigabestatus:** Die Software ist als 2.0.0-Release paketiert und im GitHub-Repository bereitgestellt. Durch die Release-Prüfung wurden keine produktiven Nextcloud-Serveränderungen vorgenommen.
