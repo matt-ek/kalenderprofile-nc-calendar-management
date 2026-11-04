@@ -11,7 +11,7 @@ Browser-Bookmarklet zur Verwaltung von Kalenderprofilen, Schnellansichten, Kateg
 
 ## Installation
 
-Die Datei `install/installation.html` in **Chrome oder Edge** öffnen, den Bookmarklet-Link in die Lesezeichenleiste ziehen und die Nextcloud-Kalenderseite öffnen. Anschließend das Lesezeichen ausführen.
+**Empfohlen:** Unter [Releases](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases) die passende Datei `kalenderprofile-vX.Y.Z-installation.html` im Bereich **Assets** herunterladen. Diese HTML-Datei **lokal in Chrome oder Edge öffnen**, den Link **Kalenderprofile** in die Lesezeichenleiste ziehen, die Nextcloud-Kalender-App aufrufen und das Lesezeichen anklicken. Die GitHub-Dateivorschau und die automatisch generierten Quellcode-Archive sind keine unmittelbar ausführbare Installationsseite.\n\nAlternativ lässt sich die Datei `install/installation.html` aus dem vollständig heruntergeladenen Repository lokal öffnen.
 
 Der Installer und das Bookmarklet enthalten den vollständigen JavaScript-Code. Es sind weder ein externer Loader noch zusätzliche Nextcloud-Apps erforderlich.
 
