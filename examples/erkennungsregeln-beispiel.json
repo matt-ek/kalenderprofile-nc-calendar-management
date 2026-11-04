@@ -1,0 +1,78 @@
+{
+  "areas": [
+    {
+      "id": "sales",
+      "label": "Vertrieb",
+      "keywords": [
+        "sales",
+        "vertrieb"
+      ]
+    },
+    {
+      "id": "development",
+      "label": "Entwicklung",
+      "keywords": [
+        "development",
+        "entwicklung"
+      ]
+    }
+  ],
+  "types": [
+    {
+      "id": "resources",
+      "label": "Räume und Ressourcen",
+      "keywords": [
+        "raum",
+        "room",
+        "resource"
+      ]
+    },
+    {
+      "id": "absence",
+      "label": "Abwesenheiten",
+      "keywords": [
+        "urlaub",
+        "ferien",
+        "absence",
+        "vacation"
+      ]
+    },
+    {
+      "id": "project",
+      "label": "Projekte",
+      "keywords": [
+        "projekt",
+        "project"
+      ]
+    },
+    {
+      "id": "team",
+      "label": "Teamkalender",
+      "keywords": [
+        "team",
+        "gruppe"
+      ]
+    },
+    {
+      "id": "private",
+      "label": "Privat",
+      "keywords": [
+        "privat",
+        "private",
+        "familie",
+        "family"
+      ]
+    },
+    {
+      "id": "other",
+      "label": "Sonstige",
+      "keywords": []
+    }
+  ],
+  "commonKeywords": [
+    "feiertage",
+    "ferien",
+    "holidays",
+    "geburtstage"
+  ]
+}
