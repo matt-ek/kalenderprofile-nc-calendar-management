@@ -1,0 +1,26 @@
+name: Build and quality checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Rebuild standalone bookmarklet
+        run: python scripts/build.py
+      - name: Verify sources, bookmarklet and installer
+        run: python tests/check_release.py
+      - name: Verify generated files are committed
+        run: git diff --exit-code -- src/calendar-management-generic.js install/bookmarklet-url.txt install/installation.html
