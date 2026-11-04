@@ -77,6 +77,8 @@ jobs:
           for version in v2.0.2; do
             workdir="$(mktemp -d)"
             mkdir -p "$workdir/kalenderprofile-$version"
+            # A tag created by gh release is remote-only until explicitly fetched.
+            git fetch --no-tags origin "refs/tags/$version:refs/tags/$version"
             git archive "$version" | tar -xf - -C "$workdir/kalenderprofile-$version"
             (
               cd "$workdir/kalenderprofile-$version"
