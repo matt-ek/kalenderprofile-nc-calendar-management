@@ -106,3 +106,29 @@
 .setup-tab .setup-intro{min-height:34px;margin:6px 0 10px}
 @media(max-width:730px){.setup-tab .setup-subtabs{grid-template-columns:repeat(3,minmax(0,1fr));min-height:100px}.setup-tab .classification-grid,.setup-tab .quick-editor-grid,.setup-tab .category-management .quick-category-editor{grid-template-columns:1fr}.setup-tab .setup-subpanel{min-height:480px}.setup-tab select[size]{height:145px;min-height:145px}}
 
+
+/* 2.0.1: shared saved-record editor with isolated draft state. */
+.saved-manager-calendar-editor{margin-top:12px;min-width:0}
+.saved-manager-criteria{padding:9px;margin:8px 0;border:1px solid var(--color-border,#d3dce4);border-radius:8px}
+.saved-manager-criteria .checks{margin:5px 0 10px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.saved-manager-criteria .check{min-width:0;font-size:12px}
+.saved-manager-quick-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:6px;margin:8px 0 9px;align-items:start}
+.saved-manager-quick-controls .individual-filter-popover{z-index:18}
+.saved-manager-quick-controls button{padding:7px 9px;min-width:0;font-size:11px}
+.saved-manager-calendar-list{min-height:178px;max-height:290px;overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--color-border,#d3dce4);border-radius:7px;padding:7px;background:var(--color-main-background,#fff)}
+.saved-manager-calendar-list .item{margin:0 0 2px;min-height:31px}
+.saved-manager-calendar-list .sort-row{min-height:35px;padding:3px 4px}
+.saved-manager-calendar-list .sort-group{font-size:11px}
+.saved-manager-calendar-list .sort-label{font-size:12px}
+.saved-manager-list-footer{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.saved-manager-list-footer button{font-size:11px;min-height:32px}
+.saved-manager-list-footer .setup-note{margin:0}
+#saved-manager-missing{margin:7px 0 0}
+.setup-tab #saved-manager-new,.setup-tab #saved-manager-duplicate{padding:5px 7px;min-width:0}
+.setup-tab .classification-actions:has(#saved-manager-new){flex-wrap:wrap}
+@media(max-width:730px){.saved-manager-quick-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.saved-manager-criteria .checks{grid-template-columns:1fr}}
+/* Classification form inputs are full-width by default; exclude calendar checkboxes. */
+.setup-tab .saved-manager-calendar-editor input[type="checkbox"],.setup-tab .saved-manager-criteria input[type="checkbox"]{width:17px;min-width:17px;height:17px;min-height:17px;padding:0;flex:0 0 17px}
+.setup-tab .saved-manager-calendar-list .item{display:flex;align-items:center;gap:9px;min-height:34px;height:auto}
+.setup-tab .saved-manager-calendar-list .item-name{flex:1;min-width:0;font-size:12px;overflow-wrap:anywhere}
+

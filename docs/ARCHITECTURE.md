@@ -1,6 +1,6 @@
 # Architektur – Kalenderprofile
 
-Stand: V2.0.0. Dies ist die Entwicklungsstruktur des lokalen Bookmarklets, keine serverseitige Nextcloud-App.
+Stand: V2.0.1. Dies ist die Entwicklungsstruktur des lokalen Bookmarklets, keine serverseitige Nextcloud-App.
 
 ## Prinzipien
 
@@ -57,3 +57,6 @@ Die vorhandenen Browser-Tests verwenden simulierte Nextcloud-Kalender. Ein Versi
 - Platzhalter `*` sind flexible Teilstringmuster, nicht ausdrücklich am Namensanfang/-ende verankert. Vor einer Änderung ist die bestehende Konfiguration zu migrieren.
 - Optionales portables JSON-Vorlagenformat ohne personenbezogene Kalender-IDs; die vorhandene persönliche Sicherung bleibt in Beta 15 bewusst unverändert.
 - Vollständig isolierte Zustandsmodule erst nach zusätzlichen CalDAV-Kompatibilitätstests erwägen.
+## 2.0.1: Gespeicherte Listen bearbeiten
+
+Der Setup-Editor verwendet einen eigenen, nicht persistierten Bearbeitungsentwurf für feste und dynamische Profile sowie Sortier-Sets. Er teilt sich Kalenderidentitäten, Klassifikation und die lokale Speicherlogik mit den Hauptreitern. Änderungen werden erst bei „Änderungen speichern“ geschrieben; Serveroperationen werden nicht angestoßen.

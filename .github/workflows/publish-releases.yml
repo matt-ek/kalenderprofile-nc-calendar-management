@@ -1,0 +1,43 @@
+name: Publish Kalenderprofile 2.0.0 and 2.0.1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/publish-releases.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  publish-releases:
+    if: github.repository == 'matt-ek/kalenderprofile-nc-calendar-management'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Rebuild and validate the bookmarklet
+        run: |
+          python scripts/build.py
+          python tests/check_release.py
+          git diff --exit-code -- src/calendar-management-generic.js install/bookmarklet-url.txt install/installation.html
+      - name: Prepare version 2.0.1 archive
+        run: |
+          zip -qr kalenderprofile-v2.0.1.zip README.md CHANGELOG.md CONTRIBUTING.md LICENSE .github scripts src install tests docs examples
+      - name: Publish both releases in chronological order
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view v2.0.0 >/dev/null 2>&1; then
+            gh release create v2.0.0 --target 7a45c48adffc09766a3a3dfcc3d5577e406712c2 --title "Kalenderprofile 2.0.0" --notes-file docs/releases/v2.0.0.md
+          fi
+          if ! gh release view v2.0.1 >/dev/null 2>&1; then
+            gh release create v2.0.1 kalenderprofile-v2.0.1.zip --target "$GITHUB_SHA" --title "Kalenderprofile 2.0.1" --notes-file docs/releases/v2.0.1.md
+          fi

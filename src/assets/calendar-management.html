@@ -234,7 +234,7 @@
         <div class="setup-subpanel" data-setup-panel="saved" hidden>
           <p class="setup-intro">Gespeicherte Kalenderprofile und Sortier-Sets zentral verwalten. Reihenfolgen bestimmen die Anzeige in den jeweiligen Auswahlmenüs.</p>
           <section class="dimension" aria-label="Gespeicherte Profile und Sortier-Sets verwalten">
-            <div class="dimension-title"><strong>Eigene Profile &amp; Sortier-Sets</strong><span class="setup-note">Umbenennen, sortieren und löschen</span></div>
+            <div class="dimension-title"><strong>Eigene Profile &amp; Sortier-Sets</strong><span class="setup-note">Erstellen, duplizieren und bearbeiten</span></div>
             <div class="classification-grid">
               <div class="classification-sidebar">
                 <label class="section-title" for="saved-manager-kind">Eintragstyp</label>
@@ -242,6 +242,8 @@
                 <label class="section-title" for="saved-manager-list">Gespeicherte Einträge</label>
                 <select id="saved-manager-list" size="10" aria-label="Gespeicherten Eintrag auswählen"></select>
                 <div class="setup-actions classification-actions">
+                  <button id="saved-manager-new" type="button">+ Neu</button>
+                  <button id="saved-manager-duplicate" type="button">Duplizieren</button>
                   <button id="saved-manager-up" type="button" title="Nach oben" aria-label="Eintrag nach oben">↑</button>
                   <button id="saved-manager-down" type="button" title="Nach unten" aria-label="Eintrag nach unten">↓</button>
                   <button id="saved-manager-delete" type="button">Löschen</button>
@@ -251,11 +253,34 @@
                 <label class="section-title" for="saved-manager-name">Name des Eintrags</label>
                 <input id="saved-manager-name" type="text" maxlength="60" placeholder="Eintrag auswählen">
                 <p class="setup-note" id="saved-manager-detail" aria-live="polite"></p>
-                <p class="setup-note">Neue Profile werden unter „Profile &amp; Filter“ oder „Einzelauswahl“ gespeichert. Neue Sortier-Sets werden unter „Sortierung“ gespeichert. Hier erfolgt ausschließlich ihre Organisation.</p>
+                <div id="saved-manager-profile-settings">
+                  <label class="section-title" for="saved-manager-mode">Profiltyp</label>
+                  <select id="saved-manager-mode"><option value="fixed">Feste Kalenderauswahl</option><option value="criteria">Dynamische Filterauswahl</option></select>
+                  <div id="saved-manager-criteria" class="saved-manager-criteria" hidden>
+                    <strong class="section-title">Bereiche</strong><div id="saved-manager-criteria-areas" class="checks"></div>
+                    <strong class="section-title">Kalenderarten</strong><div id="saved-manager-criteria-types" class="checks"></div>
+                    <strong class="section-title">Weitere Kalender</strong><div id="saved-manager-criteria-extras" class="checks"></div>
+                  </div>
+                </div>
+                <div id="saved-manager-calendar-editor" class="saved-manager-calendar-editor">
+                  <label class="section-title" for="saved-manager-search">Zugeordnete Kalender / Sortierreihenfolge</label>
+                  <input id="saved-manager-search" type="search" placeholder="Kalender suchen …">
+                  <div class="saved-manager-quick-controls">
+                    <details class="individual-filter" data-saved-filter="areas"><summary id="saved-manager-areas-title">Bereiche</summary><div class="individual-filter-popover"><div id="saved-manager-filter-areas" class="individual-filter-options"></div></div></details>
+                    <details class="individual-filter" data-saved-filter="types"><summary id="saved-manager-types-title">Kalenderarten</summary><div class="individual-filter-popover"><div id="saved-manager-filter-types" class="individual-filter-options"></div></div></details>
+                    <details class="individual-filter" data-saved-filter="extras"><summary id="saved-manager-extras-title">Weitere Kalender</summary><div class="individual-filter-popover"><div id="saved-manager-filter-extras" class="individual-filter-options"></div></div></details>
+                    <button id="saved-manager-filters-reset" type="button" title="Suche und Filter zurücksetzen">Zurücksetzen</button>
+                  </div>
+                  <div id="saved-manager-calendar-list" class="saved-manager-calendar-list" aria-label="Kalenderzuordnungen bearbeiten"></div>
+                  <div class="saved-manager-list-footer"><span id="saved-manager-coverage" class="setup-note"></span><button id="saved-manager-toggle-visible" type="button">Alle angezeigten auswählen</button></div>
+                  <p id="saved-manager-missing" class="setup-note" aria-live="polite"></p>
+                </div>
+                <p class="setup-note">Änderungen wirken erst nach „Speichern“. Aktive Kalender und die CalDAV-Sortierung bleiben unverändert.</p>
               </div>
             </div>
           </section>
         </div>
+
         <div class="setup-subpanel" data-setup-panel="backup" hidden>
           <p class="setup-intro">Komplette Konfiguration für einen späteren Import sichern. Einzelne Kalenderprofile und Sortier-Sets werden in ihren Arbeitsreitern gespeichert und im Unterreiter „Profile &amp; Sortier-Sets“ verwaltet.</p>
           <section class="profile-section setup-backup">

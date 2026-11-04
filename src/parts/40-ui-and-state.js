@@ -453,60 +453,296 @@
     for(const entry of sortSets){const option=document.createElement('option');option.value=entry.id;option.textContent=entry.label;select.appendChild(option);}
     select.value=currentSortSet;
   }
-  // A single editor handles both saved record kinds; IDs never change on rename.
+  // The 2.0.1 setup editor never modifies the active selection or server order.
+  // Both stored record types share one isolated editing draft and persistence path.
   const savedRecords=kind=>kind==='sorting'?sortSets:profiles;
   const saveRecords=kind=>kind==='sorting'?persistSortSets():persist();
+  const managerExtraFields=[['includeCommon','Allgemeine Kalender','common'],['includePersonal','Eigene Kalender','personal'],['includeShared','Geteilte Kalender','shared'],['includeDeck','Deck','deck'],['includeTasks','Aufgaben','tasks']];
+  const managerQuick={areas:new Set(),types:new Set(),extras:new Set()};
+  let managerDraft=null,managerDragKey=null;
+  function managerDefaultFilters(){
+    return {areas:[],types:[],includeCommon:false,includePersonal:false,includeShared:false,includeDeck:false,includeTasks:false};
+  }
+  function managerCloneEntry(entry,kind){
+    const result={kind,id:entry.id||null,label:entry.label||'',keys:[...entry.keys],pinned:[...(entry.pinned||[])],filters:entry.filters?structuredClone(entry.filters):null};
+    return result;
+  }
+  function managerCompareValue(draft){return JSON.stringify({label:draft.label,keys:draft.keys,pinned:draft.pinned,filters:draft.filters});}
+  function managerDirty(){return !!managerDraft&&(managerDraft.isNew||managerCompareValue(managerDraft)!==managerDraft.original);}
+  function managerMayDiscard(){return !managerDirty()||confirm('Ungespeicherte Änderungen im Editor verwerfen?');}
+  function managerClearQuick(){
+    for(const s of Object.values(managerQuick))s.clear();
+    el('saved-manager-search').value='';
+  }
+  function managerLoad(kind,id){
+    const entry=savedRecords(kind).find(e=>e.id===id);
+    managerDraft=entry?{...managerCloneEntry(entry,kind),isNew:false,original:managerCompareValue(managerCloneEntry(entry,kind))}:null;
+    managerClearQuick();
+  }
+  function managerCalendarRows(){
+    const draft=managerDraft;
+    if(!draft)return [];
+    const position=new Map(draft.keys.map((key,index)=>[key,index]));
+    if(draft.kind!=='sorting')return [...items];
+    return [...items].sort((a,b)=>sourcePriority.indexOf(a.source)-sourcePriority.indexOf(b.source)||
+      (position.has(a.key)?position.get(a.key):items.length+items.indexOf(a))-
+      (position.has(b.key)?position.get(b.key):items.length+items.indexOf(b)));
+  }
+  function managerVisibleRows(){
+    const query=norm(cleanName(el('saved-manager-search').value));
+    return managerCalendarRows().filter(item=>(!query||norm(item.name).includes(query))&&
+      (!managerQuick.areas.size||(item.source!=='deck'&&item.source!=='tasks'&&managerQuick.areas.has(areaOf(item.name))))&&
+      (!managerQuick.types.size||(item.source!=='deck'&&item.source!=='tasks'&&managerQuick.types.has(typeOf(item.name))))&&
+      (!managerQuick.extras.size||[...managerQuick.extras].some(id=>matchesIndividualExtra(item,id))));
+  }
+  function managerRenderQuick(){
+    const options={areas,types,extras:individualExtraOptions};
+    for(const [kind,title] of [['areas','Bereiche'],['types','Kalenderarten'],['extras','Weitere Kalender']]){
+      const target=el('saved-manager-filter-'+kind),selectedFilter=managerQuick[kind];
+      target.replaceChildren();
+      for(const [id,label] of options[kind]){
+        const wrapper=document.createElement('label');wrapper.className='individual-filter-option';
+        const cb=document.createElement('input');cb.type='checkbox';cb.checked=selectedFilter.has(id);cb.disabled=busy;
+        const name=document.createElement('span');name.textContent=label;
+        wrapper.append(cb,name);target.appendChild(wrapper);
+        cb.addEventListener('change',()=>{
+          if(cb.checked)selectedFilter.add(id);else selectedFilter.delete(id);
+          el('saved-manager-'+kind+'-title').textContent=title+(selectedFilter.size?' ('+selectedFilter.size+')':'');
+          managerRenderCalendarList();
+        });
+      }
+      el('saved-manager-'+kind+'-title').textContent=title+(selectedFilter.size?' ('+selectedFilter.size+')':'');
+    }
+    el('saved-manager-filters-reset').disabled=busy||(!el('saved-manager-search').value&&!Object.values(managerQuick).some(s=>s.size));
+  }
+  function managerRecomputeProfileKeys(){
+    const d=managerDraft;
+    if(!d||d.kind!=='profiles'||!d.filters)return;
+    const f=d.filters;
+    const cfg={areas:f.areas,types:f.types,common:f.includeCommon,personal:f.includePersonal,shared:f.includeShared,deck:f.includeDeck,tasks:f.includeTasks};
+    d.keys=items.filter(x=>matchesConfig(x,cfg)).map(x=>x.key);
+  }
+  function managerRenderCriteria(){
+    const d=managerDraft;
+    const isProfile=!!d&&d.kind==='profiles';
+    el('saved-manager-profile-settings').hidden=!isProfile;
+    el('saved-manager-mode').value=d?.filters?'criteria':'fixed';
+    el('saved-manager-criteria').hidden=!isProfile||!d.filters;
+    if(!isProfile||!d.filters)return;
+    for(const [field,options] of [['areas',areas],['types',types]]){
+      const target=el('saved-manager-criteria-'+field);target.replaceChildren();
+      for(const [id,label] of options){
+        const wrapper=document.createElement('label');wrapper.className='check';
+        const cb=document.createElement('input');cb.type='checkbox';cb.checked=d.filters[field].includes(id);cb.disabled=busy;
+        const txt=document.createElement('span');txt.textContent=label;wrapper.append(cb,txt);target.appendChild(wrapper);
+        cb.addEventListener('change',()=>{
+          const values=new Set(d.filters[field]);if(cb.checked)values.add(id);else values.delete(id);
+          d.filters[field]=[...values];managerRecomputeProfileKeys();managerRenderCalendarList();
+        });
+      }
+    }
+    const extras=el('saved-manager-criteria-extras');extras.replaceChildren();
+    for(const [field,label] of managerExtraFields){
+      const wrapper=document.createElement('label');wrapper.className='check';
+      const cb=document.createElement('input');cb.type='checkbox';cb.checked=!!d.filters[field];cb.disabled=busy;
+      const txt=document.createElement('span');txt.textContent=label;wrapper.append(cb,txt);extras.appendChild(wrapper);
+      cb.addEventListener('change',()=>{d.filters[field]=cb.checked;managerRecomputeProfileKeys();managerRenderCalendarList();});
+    }
+  }
+  function managerMoveSort(sourceKey,targetKey){
+    const d=managerDraft;if(!d||d.kind!=='sorting')return;
+    const rows=managerCalendarRows().filter(x=>x.key&&!x.ambiguous);
+    const from=rows.find(x=>x.key===sourceKey),to=rows.find(x=>x.key===targetKey);
+    if(!from||!to||from.source!==to.source||d.pinned.includes(sourceKey)||d.pinned.includes(targetKey))return;
+    const slots=rows.map((item,index)=>!d.pinned.includes(item.key)?index:-1).filter(i=>i>=0);
+    const mobile=slots.map(i=>rows[i]);
+    const i=mobile.findIndex(x=>x.key===sourceKey),j=mobile.findIndex(x=>x.key===targetKey);
+    if(i===-1||j===-1||i===j)return;
+    const [moved]=mobile.splice(i,1);mobile.splice(j,0,moved);
+    slots.forEach((position,index)=>{rows[position]=mobile[index];});
+    // Keep obsolete calendar keys in the saved record; do not silently discard them.
+    const live=new Set(rows.map(x=>x.key));
+    d.keys=[...rows.map(x=>x.key),...d.keys.filter(k=>!live.has(k))];
+    managerRenderCalendarList();
+  }
+  function managerRenderCalendarList(){
+    const d=managerDraft,list=el('saved-manager-calendar-list');list.replaceChildren();
+    const toggle=el('saved-manager-toggle-visible');
+    if(!d){
+      list.textContent='Bitte einen Eintrag auswählen oder über „+ Neu“ anlegen.';
+      el('saved-manager-coverage').textContent='';el('saved-manager-missing').textContent='';toggle.hidden=true;
+      managerRenderQuick();return;
+    }
+    const rows=managerVisibleRows(),known=new Set(items.map(x=>x.key));
+    let currentSource='';
+    for(const item of rows){
+      if(d.kind==='sorting'){
+        if(item.source!==currentSource){currentSource=item.source;const section=document.createElement('div');section.className='sort-group';section.textContent=sourceLabel[currentSource]||currentSource;list.appendChild(section);}
+        const row=document.createElement('div');row.className='sort-row';
+        const pin=document.createElement('button');pin.className='sort-btn';pin.type='button';pin.textContent=d.pinned.includes(item.key)?'🔒':'🔓';pin.disabled=busy||item.ambiguous;pin.title='Positionsfixierung umschalten';
+        pin.addEventListener('click',()=>{
+          const p=new Set(d.pinned);if(p.has(item.key))p.delete(item.key);else p.add(item.key);
+          d.pinned=[...p];managerRenderCalendarList();
+        });
+        const label=document.createElement('span');label.className='sort-label';label.textContent=item.name;
+        const up=document.createElement('button');up.className='sort-btn';up.textContent='↑';up.title='Innerhalb der Kalendergruppe nach oben';
+        const down=document.createElement('button');down.className='sort-btn';down.textContent='↓';down.title='Innerhalb der Kalendergruppe nach unten';
+        const movable=managerCalendarRows().filter(x=>x.source===item.source&&!d.pinned.includes(x.key)&&!x.ambiguous);
+        const i=movable.findIndex(x=>x.key===item.key),locked=d.pinned.includes(item.key)||item.ambiguous;
+        up.disabled=busy||locked||i<=0;down.disabled=busy||locked||i===-1||i===movable.length-1;
+        up.addEventListener('click',()=>managerMoveSort(item.key,movable[i-1]?.key));
+        down.addEventListener('click',()=>managerMoveSort(item.key,movable[i+1]?.key));
+        row.draggable=!locked&&!busy;
+        row.addEventListener('dragstart',event=>{if(locked)return event.preventDefault();managerDragKey=item.key;event.dataTransfer.effectAllowed='move';event.dataTransfer.setData('text/plain',item.key);});
+        row.addEventListener('dragover',event=>{if(managerDragKey&&managerDragKey!==item.key&&!locked){event.preventDefault();}});
+        row.addEventListener('drop',event=>{event.preventDefault();managerMoveSort(managerDragKey,item.key);managerDragKey=null;});
+        row.addEventListener('dragend',()=>{managerDragKey=null;});
+        row.append(pin,label,up,down);list.appendChild(row);
+      }else{
+        const wrapper=document.createElement('label');wrapper.className='item';
+        const cb=document.createElement('input');cb.type='checkbox';cb.checked=d.keys.includes(item.key);cb.disabled=busy||item.ambiguous||!!d.filters;
+        const label=document.createElement('span');label.className='item-name';label.textContent=item.name;
+        wrapper.append(cb,label);list.appendChild(wrapper);
+        cb.addEventListener('change',()=>{
+          const keys=new Set(d.keys);if(cb.checked)keys.add(item.key);else keys.delete(item.key);
+          d.keys=[...keys];managerRenderCalendarList();
+        });
+      }
+    }
+    if(!rows.length){const hint=document.createElement('p');hint.className='hint';hint.textContent='Keine Kalender für diese Suche und Filter.';list.appendChild(hint);}
+    const missing=d.keys.filter(key=>!known.has(key));
+    el('saved-manager-missing').textContent=missing.length?missing.length+' gespeicherte Kalender zurzeit nicht gefunden; ihre Zuordnung bleibt erhalten.':'';
+    const selectedCount=d.keys.filter(key=>known.has(key)).length;
+    el('saved-manager-coverage').textContent=d.kind==='sorting'
+      ?d.keys.length+' Kalender in der Sortierung · '+d.pinned.length+' fixiert · '+rows.length+' Treffer'
+      :selectedCount+' von '+items.filter(x=>!x.ambiguous).length+' zugeordnet · '+rows.length+' Treffer';
+    const available=rows.filter(x=>x.key&&!x.ambiguous);
+    const allChecked=available.length>0&&available.every(x=>d.keys.includes(x.key));
+    toggle.hidden=d.kind==='sorting'||!!d.filters;
+    toggle.disabled=busy||!available.length;
+    toggle.textContent=allChecked?'Alle angezeigten abwählen':'Alle angezeigten auswählen';
+    managerRenderQuick();
+  }
   function renderSavedManager(selectId){
     const kind=el('saved-manager-kind').value,entries=savedRecords(kind),list=el('saved-manager-list');
-    const wanted=selectId===undefined?list.value:selectId;
+    if(managerDraft?.kind!==kind)managerDraft=null;
+    if(selectId!==undefined){
+      if(!managerDraft||managerDraft.id!==selectId)managerLoad(kind,selectId||entries[0]?.id||'');
+    }else if(!managerDraft){
+      managerLoad(kind,entries[0]?.id||'');
+    }
     list.replaceChildren();
-    for(const item of entries){const option=document.createElement('option');option.value=item.id;option.textContent=item.label;list.appendChild(option);}
-    list.value=entries.some(x=>x.id===wanted)?wanted:(entries[0]?.id||'');
-    const index=entries.findIndex(x=>x.id===list.value),entry=entries[index];
-    el('saved-manager-name').value=entry?.label||'';
-    el('saved-manager-name').disabled=!entry||busy;
-    el('saved-manager-up').disabled=busy||index<=0;
-    el('saved-manager-down').disabled=busy||index<0||index===entries.length-1;
+    for(const entry of entries){const opt=document.createElement('option');opt.value=entry.id;opt.textContent=entry.label;list.appendChild(opt);}
+    list.value=managerDraft?.id||'';
+    const entry=entries.find(x=>x.id===managerDraft?.id);
+    el('saved-manager-name').value=managerDraft?.label||'';
+    el('saved-manager-name').disabled=!managerDraft||busy;
+    el('saved-manager-up').disabled=busy||!entry||entries.indexOf(entry)===0;
+    el('saved-manager-down').disabled=busy||!entry||entries.indexOf(entry)===entries.length-1;
     el('saved-manager-delete').disabled=busy||!entry;
-    el('saved-manager-rename').disabled=busy||!entry;
-    el('saved-manager-detail').textContent=entry?(kind==='sorting'
-      ?entry.keys.length+' Kalender in diesem Sortier-Set · '+entry.pinned.length+' fixiert.'
-      :entry.keys.length+' Kalender · '+(entry.filters?'Filterprofil':'Feste Auswahl'))
-      :'Noch keine '+(kind==='sorting'?'Sortier-Sets':'Kalenderprofile')+' gespeichert.';
+    el('saved-manager-duplicate').disabled=busy||!entry;
+    el('saved-manager-new').disabled=busy;
+    el('saved-manager-rename').disabled=busy||!managerDraft;
+    el('saved-manager-discard').disabled=busy||!managerDraft;
+    el('saved-manager-detail').textContent=managerDraft?
+      (managerDraft.isNew?'Neuer Eintrag – noch nicht gespeichert. ':'')+(kind==='sorting'?'Sortierreihenfolge und Fixierungen bearbeiten.':'Kalenderzuordnungen oder Filter bearbeiten.'):
+      'Noch keine '+(kind==='sorting'?'Sortier-Sets':'Kalenderprofile')+' gespeichert.';
+    managerRenderCriteria();managerRenderCalendarList();
+  }
+  function managerUniqueLabel(kind,name){
+    const labels=new Set(savedRecords(kind).map(x=>norm(x.label)));
+    if(!labels.has(norm(name)))return name;
+    for(let i=2;i<1000;i++)if(!labels.has(norm(name+' '+i)))return name+' '+i;
+    return name+' '+Date.now();
+  }
+  function managerStartNew(duplicate=false){
+    if(busy||!managerMayDiscard())return;
+    const kind=el('saved-manager-kind').value,old=duplicate?managerDraft:null;
+    if(duplicate&&!old?.id)return;
+    managerDraft=old?managerCloneEntry(old,kind):{
+      kind,id:null,label:'',keys:kind==='sorting'?sortPlanItems().map(x=>x.key):[],pinned:kind==='sorting'?[...sortPinned]:[],filters:null
+    };
+    managerDraft.id=null;managerDraft.isNew=true;
+    managerDraft.label=old?managerUniqueLabel(kind,old.label+' (Kopie)'):'';
+    managerDraft.original='';managerClearQuick();renderSavedManager();
+    el('saved-manager-name').focus();
+  }
+  function managerSave(){
+    if(busy||!managerDraft)return;
+    const d=managerDraft,kind=d.kind,existing=savedRecords(kind),name=cleanName(el('saved-manager-name').value);
+    if(!name||name.length>60)return status('Name muss 1 bis 60 Zeichen enthalten.');
+    if(existing.some(x=>x.id!==d.id&&norm(x.label)===norm(name)))return status('Name ist bereits vergeben.');
+    if(d.isNew&&existing.length>=(kind==='sorting'?50:80))return status('Maximalzahl gespeicherter Einträge erreicht.');
+    if(kind==='profiles'&&d.filters)managerRecomputeProfileKeys();
+    const id=d.id||Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
+    const value=kind==='sorting'?{id,label:name,keys:[...d.keys],pinned:[...d.pinned]}:
+      {id,label:name,keys:[...d.keys],...(d.filters?{filters:structuredClone(d.filters)}:{})};
+    const updated=d.isNew?[...existing,value]:existing.map(x=>x.id===id?value:x);
+    if(kind==='sorting')sortSets=updated;else profiles=updated;
+    if(!saveRecords(kind)){
+      if(kind==='sorting')sortSets=existing;else profiles=existing;
+      return status('Eintrag konnte nicht gespeichert werden.');
+    }
+    managerLoad(kind,id);renderAll();renderSavedManager(id);
+    status((kind==='sorting'?'Sortier-Set':'Kalenderprofil')+' „'+name+'“ gespeichert. Die aktive Kalenderansicht wurde nicht verändert.');
   }
   function changeSavedManager(action){
     if(busy)return;
-    const kind=el('saved-manager-kind').value,old=savedRecords(kind),id=el('saved-manager-list').value;
-    const index=old.findIndex(x=>x.id===id);if(index<0)return;
-    let next=old.map(x=>({...x})),focus=id;
-    if(action==='rename'){
-      const name=cleanName(el('saved-manager-name').value);
-      if(!name||name.length>60)return status('Name muss 1 bis 60 Zeichen enthalten.');
-      if(next.some(x=>x.id!==id&&norm(x.label)===norm(name)))return status('Name ist bereits vergeben.');
-      next[index].label=name;
-    }else if(action==='delete'){
+    if(action==='rename'){managerSave();return;}
+    const kind=el('saved-manager-kind').value,old=savedRecords(kind),id=managerDraft?.id;
+    const index=old.findIndex(x=>x.id===id);if(index<0||!managerMayDiscard())return;
+    const next=old.map(x=>structuredClone(x));let focus=id;
+    if(action==='delete'){
       if(!confirm((kind==='sorting'?'Sortier-Set':'Kalenderprofil')+' „'+next[index].label+'“ endgültig löschen?'))return;
       next.splice(index,1);focus=next[Math.min(index,next.length-1)]?.id||'';
     }else{
-      const target=index+(action==='up'?-1:1);
-      if(target<0||target>=next.length)return;
+      const target=index+(action==='up'?-1:1);if(target<0||target>=next.length)return;
       [next[index],next[target]]=[next[target],next[index]];
     }
     if(kind==='sorting')sortSets=next;else profiles=next;
     if(!saveRecords(kind)){
       if(kind==='sorting')sortSets=old;else profiles=old;
-      renderSavedManager(id);return status('Änderung konnte nicht gespeichert werden.');
+      return status('Änderung konnte nicht gespeichert werden.');
     }
     if(action==='delete'){
       if(kind==='sorting'&&currentSortSet===id)currentSortSet='';
       if(kind==='profiles'&&choice==='saved:'+id){choice='manual';selectionKind='manual';syncSummaryFromManual();persistDraft();}
     }
-    renderAll();renderSavedManager(focus);
-    status((kind==='sorting'?'Sortier-Set':'Kalenderprofil')+' '+({rename:'umbenannt',delete:'gelöscht',up:'nach oben verschoben',down:'nach unten verschoben'}[action])+'.');
+    managerDraft=null;renderSavedManager(focus);renderAll();
+    status((kind==='sorting'?'Sortier-Set':'Kalenderprofil')+(action==='delete'?' gelöscht.':' in der Liste verschoben.'));
   }
-  el('saved-manager-kind').addEventListener('change',()=>renderSavedManager(''));
-  el('saved-manager-list').addEventListener('change',()=>renderSavedManager());
+  el('saved-manager-kind').addEventListener('change',event=>{
+    if(!managerMayDiscard()){el('saved-manager-kind').value=managerDraft?.kind||'profiles';return;}
+    managerDraft=null;managerClearQuick();renderSavedManager('');
+  });
+  el('saved-manager-list').addEventListener('change',event=>{
+    if(!managerMayDiscard()){el('saved-manager-list').value=managerDraft?.id||'';return;}
+    managerLoad(el('saved-manager-kind').value,event.target.value);renderSavedManager();
+  });
+  el('saved-manager-name').addEventListener('input',event=>{if(managerDraft)managerDraft.label=event.target.value;});
+  el('saved-manager-mode').addEventListener('change',event=>{
+    if(!managerDraft||managerDraft.kind!=='profiles')return;
+    managerDraft.filters=event.target.value==='criteria'?managerDefaultFilters():null;
+    if(managerDraft.filters)managerRecomputeProfileKeys();
+    managerRenderCriteria();managerRenderCalendarList();
+  });
+  el('saved-manager-search').addEventListener('input',managerRenderCalendarList);
+  el('saved-manager-filters-reset').addEventListener('click',()=>{managerClearQuick();managerRenderCalendarList();});
+  el('saved-manager-toggle-visible').addEventListener('click',()=>{
+    const d=managerDraft;if(!d||d.kind!=='profiles'||d.filters)return;
+    const shown=managerVisibleRows().filter(x=>x.key&&!x.ambiguous),keys=new Set(d.keys);
+    if(shown.every(x=>keys.has(x.key)))shown.forEach(x=>keys.delete(x.key));
+    else shown.forEach(x=>keys.add(x.key));
+    d.keys=[...keys];managerRenderCalendarList();
+  });
+  el('saved-manager-new').addEventListener('click',()=>managerStartNew(false));
+  el('saved-manager-duplicate').addEventListener('click',()=>managerStartNew(true));
+  el('saved-manager-discard').addEventListener('click',()=>{
+    if(!managerMayDiscard())return;
+    const id=managerDraft?.id||'';managerDraft=null;managerClearQuick();renderSavedManager(id);
+  });
   for(const action of ['rename','delete','up','down'])el('saved-manager-'+action).addEventListener('click',()=>changeSavedManager(action));
+
   function renderSort() {
     const list=el('sort-preview'),oldScroll=list.scrollTop;list.replaceChildren();
     let section='',index=0;
@@ -893,7 +1129,7 @@ const summary=document.createElement('summary');summary.textContent=issues.lengt
   }
   function setBusy(value) {
     busy=value;
-    for (const id of ['apply','save','all','none','all-individual','none-individual','individual-release-fixed','individual-toggle-visible','reload','reload-individual','presets','presets-individual','areas-all','areas-none','types-all','types-none','sort-mode','sort-copy','sort-pin-always','save-individual','reload-individual','saved-profiles','saved-profiles-individual','sort-reset','sort-save-set','sort-sets','preferred-area','settings-export','settings-import','always-visible-search','saved-manager-kind','saved-manager-list']) el(id).disabled=value;
+    for (const id of ['apply','save','all','none','all-individual','none-individual','individual-release-fixed','individual-toggle-visible','reload','reload-individual','presets','presets-individual','areas-all','areas-none','types-all','types-none','sort-mode','sort-copy','sort-pin-always','save-individual','reload-individual','saved-profiles','saved-profiles-individual','sort-reset','sort-save-set','sort-sets','preferred-area','settings-export','settings-import','always-visible-search','saved-manager-kind','saved-manager-list','saved-manager-new','saved-manager-duplicate','saved-manager-discard','saved-manager-search','saved-manager-mode']) el(id).disabled=value;
     renderCriteria();renderExtras();renderList();renderSort();renderAlwaysVisible();
     if(currentSetupTab==='saved')renderSavedManager();
   }

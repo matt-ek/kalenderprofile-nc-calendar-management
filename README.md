@@ -4,7 +4,7 @@
 
 **Free & Open Source · Contributions welcome!**
 
-**Version:** 2.0.0 (04.11.2026)  
+**Version:** 2.0.1 (04.11.2026)  
 **Untertitel:** Kalenderverwaltung für Nextcloud · V2.0.0
 
 Browser-Bookmarklet zur Verwaltung von Kalenderprofilen, Schnellansichten, Kategorien, Bereichs- und Kalenderartfiltern sowie Kalenderreihenfolgen in der Nextcloud-Kalender-App.
@@ -47,3 +47,8 @@ Kalenderprofile ist **kostenlos und Open Source** unter der [MIT-Lizenz](LICENSE
 **Beiträge sind willkommen:** Fehlerberichte, Vorschläge, Übersetzungen und Pull Requests. Hinweise findest du in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Copyright © 2026 Matthias Ebermann-Kestel.
+
+## Releases
+
+- [2.0.1 – Erweiterter Profil- und Sortier-Set-Editor](docs/releases/v2.0.1.md)
+- [2.0.0 – Stabile Erstveröffentlichung](docs/releases/v2.0.0.md)

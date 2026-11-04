@@ -1,5 +1,16 @@
 # Änderungsprotokoll
 
+## 2.0.1 – 04.11.2026
+
+- **Setup → Profile & Sortier-Sets**: neue Profile und Sortier-Sets direkt erstellen, vorhandene Einträge duplizieren.
+- Zuordnung einzelner Kalender über Checkboxen, Suche und Mehrfachfilter.
+- Dynamische Profile mit Bereichen, Kalenderarten und zusätzlichen Kalenderquellen bearbeiten.
+- Sortier-Sets mit Pfeiltasten, Drag-and-drop und Positionsfixierungen bearbeiten.
+- Entwurfsmodus mit Speichern/Verwerfen; keine Veränderung aktiver Kalender oder serverseitiger Sortierung.
+- JSON-Schema 1 und bisherige Speicherkennungen bleiben unverändert; 18 von 18 lokalen Qualitätstests bestanden.
+
+Weitere Informationen: [Release Notes 2.0.1](docs/releases/v2.0.1.md).
+
 ## 2.0.0 – 04.11.2026
 
 - Veröffentlichung des Projekts unter der MIT-Lizenz; Beitragsrichtlinien für Forks und Pull Requests ergänzt.
