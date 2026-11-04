@@ -1,0 +1,277 @@
+
+    <div class="head"><div><h2>Kalenderprofile</h2><div class="subtitle">Nextcloud Calendar Management · V${VERSION}</div></div><button class="close" id="close" title="Schließen" aria-label="Schließen">×</button></div>
+    <div class="tabs" role="tablist" aria-label="Arbeitsbereich"><button data-tab="profiles" role="tab" aria-selected="true">Profile & Filter</button><button data-tab="individual" role="tab" aria-selected="false">Einzelauswahl</button><button data-tab="sorting" role="tab" aria-selected="false">Sortierung</button><button data-tab="setup" class="setup-nav" role="tab" aria-selected="false">Setup</button></div>
+    <div class="scroll">
+      <div class="tab-panel" data-panel="profiles">
+      <div class="profile-top">
+        <div class="profile-section">
+          <div class="toolbar"><label class="section-title" for="presets">Schnellansichten</label><div class="profile-tools"><button id="all" title="Alle Kalender anzeigen">Alle</button><button id="none" title="Alle Kalender ausblenden">Keine</button></div></div>
+          <select id="presets" aria-label="Vordefinierte Schnellansicht"></select>
+        </div>
+        <div class="profile-section">
+          <div class="toolbar"><label class="section-title" for="saved-profiles">Meine Profile</label><div class="profile-tools"><button id="save">Speichern</button></div></div>
+          <select id="saved-profiles" aria-label="Gespeichertes Kalenderprofil"></select>
+        </div>
+        <div class="summary-line"><div class="summary" id="summary"></div><button id="reload" title="Häkchen aus der aktuellen Kalenderansicht übernehmen">Ansicht einlesen</button></div>
+      </div>
+        <div class="dimension"><div class="dimension-title"><strong>1. Bereiche</strong><div class="dimension-actions"><button type="button" id="areas-all">Alle</button><button type="button" id="areas-none">Keine</button></div></div><div id="areas" class="checks"></div></div>
+        <div class="dimension"><div class="dimension-title"><strong>2. Kalenderarten</strong><div class="dimension-actions"><button type="button" id="types-all">Alle</button><button type="button" id="types-none">Keine</button></div></div><div id="types" class="checks"></div></div>
+        <div class="dimension"><div class="dimension-title"><strong>3. Weitere Kalender</strong></div><div class="extra">
+          <label class="check"><input id="include-common" type="checkbox">Allgemeine Kalender <small id="common-count"></small></label>
+          <label class="check"><input id="include-personal" type="checkbox">Eigene Kalender <small id="personal-count"></small></label>
+          <label class="check"><input id="include-shared" type="checkbox">Geteilte Kalender <small id="shared-count"></small></label>
+          <label class="check"><input id="include-deck" type="checkbox">Deck <small id="deck-count"></small></label>
+          <label class="check"><input id="include-tasks" type="checkbox">Aufgaben <small id="tasks-count"></small></label>
+        </div></div>
+        <details class="info help"><summary>Hinweise zur Filterlogik</summary><div id="note"></div></details><div id="warning"></div>
+        <section class="visibility-preview" id="visibility-preview" aria-label="Vorschau der Kalenderanzeige" hidden>
+          <div class="preview-heading"><strong>Vorschau der Kalenderauswahl</strong><span>Nach „Auswahl anwenden“</span></div>
+          <div class="preview-columns">
+            <div class="preview-column"><div class="preview-label"><strong>Angezeigt</strong><span id="preview-on-count"></span></div><div id="preview-on" class="preview-entries"></div></div>
+            <div class="preview-column"><div class="preview-label"><strong>Ausgeblendet</strong><span id="preview-off-count"></span></div><div id="preview-off" class="preview-entries"></div></div>
+          </div>
+        </section>
+      </div>
+      <div class="tab-panel" data-panel="individual" hidden>
+        <div class="profile-top">
+          <div class="profile-section">
+            <div class="toolbar"><label class="section-title" for="presets-individual">Schnellansichten</label><div class="profile-tools"><button id="all-individual" title="Alle Kalender anzeigen">Alle</button><button id="none-individual" title="Alle Kalender ausblenden">Keine</button></div></div>
+            <select id="presets-individual" aria-label="Schnellansicht für Einzelauswahl"></select>
+          </div>
+          <div class="profile-section">
+            <div class="toolbar"><label class="section-title" for="saved-profiles-individual">Meine Profile</label><div class="profile-tools"><button id="save-individual">Speichern</button></div></div>
+            <select id="saved-profiles-individual" aria-label="Gespeichertes Profil für Einzelauswahl"></select>
+          </div>
+          <div class="summary-line"><div class="summary" id="individual-summary"></div><button id="reload-individual" title="Aktuelle Kalender aus der Nextcloud-Ansicht übernehmen">Ansicht einlesen</button></div>
+        </div>
+        <div class="selection-title"><strong>Einzelne Kalender auswählen</strong><span class="count" id="count"></span></div>
+        <input id="search" type="search" placeholder="Kalender suchen …" aria-label="Kalender filtern" />
+        <div class="individual-quick" aria-label="Schnellfilter für die Kalenderliste">
+          <div class="individual-quick-controls">
+            <details class="individual-filter" data-quick-filter="areas"><summary id="individual-areas-title">Bereiche</summary><div class="individual-filter-popover"><div id="individual-areas-options" class="individual-filter-options"></div><button type="button" id="individual-areas-reset" class="individual-filter-clear">Bereichsfilter aufheben</button></div></details>
+            <details class="individual-filter" data-quick-filter="types"><summary id="individual-types-title">Kalenderarten</summary><div class="individual-filter-popover"><div id="individual-types-options" class="individual-filter-options"></div><button type="button" id="individual-types-reset" class="individual-filter-clear">Artfilter aufheben</button></div></details>
+            <details class="individual-filter" data-quick-filter="extras"><summary id="individual-extras-title">Weitere Kalender</summary><div class="individual-filter-popover"><div id="individual-extras-options" class="individual-filter-options"></div><button type="button" id="individual-extras-reset" class="individual-filter-clear">Herkunftsfilter aufheben</button></div></details>
+            <button type="button" id="individual-filters-reset" title="Suche und alle Schnellfilter zurücksetzen" disabled>Zurücksetzen</button>
+          </div>
+          <div class="individual-filter-hint">Mehrfachauswahl möglich · innerhalb eines Filters ODER, zwischen Filtern UND · nur Listenanzeige</div>
+        </div>
+        <div class="list" id="list"></div>
+        <div class="individual-list-actions" aria-label="Aktionen für angezeigte Kalender">
+          <button type="button" id="individual-release-fixed" title="Fixierung sichtbarer Kalender nur für diese Sitzung aussetzen (Setup bleibt unverändert)">Fixierung lösen</button>
+          <button type="button" id="individual-toggle-visible" title="Nur angezeigte Kalender auswählen oder abwählen; fixierte Kalender bleiben aktiv">Alle angezeigten abwählen</button>
+        </div>
+        <div class="individual-list-note" id="individual-list-note">Die Schnellfilter ändern nur die Darstellung. Setup-Fixierungen bleiben aktiv.</div>
+      </div>
+      <div class="tab-panel" data-panel="sorting" hidden>
+        <div class="profile-top sort-top">
+          <div class="profile-section">
+            <div class="toolbar"><label class="section-title" for="sort-mode">Sortiervorschläge</label><div class="profile-tools"><button id="sort-reset" type="button">Zurücksetzen</button></div></div>
+            <select id="sort-mode" aria-label="Sortiervorschlag">
+              <option value="original">Aktuelle Nextcloud-Reihenfolge</option>
+              <option value="manual" disabled>Manuell angepasst</option>
+              <option value="community">Vorschlag: Bereich → Art → Name</option>
+              <option value="category">Vorschlag: Art → Bereich → Name</option>
+              <option value="active">Aktive Kalender zuerst · Reihenfolge erhalten</option>
+              <option value="selected">Ausgewählte Kalender zuerst · Reihenfolge erhalten</option>
+              <option value="home">Mein bevorzugter Bereich zuerst</option>
+              <option value="alphabet">Vorschlag: Alphabetisch</option>
+            </select>
+          </div>
+          <div class="profile-section">
+            <div class="toolbar"><label class="section-title" for="sort-sets">Meine Sortier-Sets</label><div class="profile-tools"><button id="sort-save-set">Speichern</button></div></div>
+            <select id="sort-sets" aria-label="Sortier-Set"><option value="">— Sortier-Set auswählen —</option></select>
+          </div>
+        </div>
+        <p class="mini sort-explanation">Kalender durch Ziehen oder ↑↓ innerhalb ihrer Nextcloud-Gruppe verschieben. Mit dem Schloss Positionen fixieren. Sortier-Sets bleiben lokal, bis du die neue Reihenfolge übernimmst.</p>
+        <div class="sort-preview" id="sort-preview" aria-label="Manuelle Reihenfolge"></div>
+        <div class="hint" id="sort-hint"></div>
+        <div class="actions"><button id="sort-pin-always" type="button" title="Alle immer angezeigten Kalender fixieren oder ihre Positionen wieder freigeben">Immer angezeigte fixieren</button><button id="sort-copy" type="button">Reihenfolge kopieren</button><button id="sort-check" type="button">Kalenderzuordnung prüfen</button><button id="sort-restore" type="button">Letzte Sortierung rückgängig</button></div>
+        <p class="compact-info">Fixierte Zeilen behalten ihre Position innerhalb des Bereichs bei automatischen Vorschlägen und beim Verschieben anderer Zeilen. Die CalDAV-Übernahme benötigt eine einmalige Prüfung und eine Bestätigung.</p>
+      </div>
+      <div class="tab-panel setup-tab" data-panel="setup" hidden>
+        <nav class="setup-subtabs" role="tablist" aria-label="Setup-Bereiche">
+          <button type="button" data-setup-tab="general" role="tab" aria-selected="true">Allgemein</button>
+          <button type="button" data-setup-tab="classification" role="tab" aria-selected="false">Bereiche &amp; Arten</button>
+          <button type="button" data-setup-tab="quick" role="tab" aria-selected="false">Schnellansichten</button>
+          <button type="button" data-setup-tab="categories" role="tab" aria-selected="false">Kategorien</button>
+          <button type="button" data-setup-tab="saved" role="tab" aria-selected="false">Profile &amp; Sortier-Sets</button>
+          <button type="button" data-setup-tab="backup" role="tab" aria-selected="false">Sicherung</button>
+        </nav>
+        <div class="setup-subpanel" data-setup-panel="general">
+          <p class="setup-intro">Persönliche Vorgaben für die Kalenderauswahl und Sortierung.</p>
+        <div class="setup-columns">
+          <div class="setup-left"><section class="profile-section">
+            <div class="toolbar"><label class="section-title" for="preferred-area">Mein bevorzugter Bereich</label></div>
+            <select id="preferred-area" aria-label="Bevorzugter Bereich für Sortierungen"><option value="">— Keinen bevorzugten Bereich festlegen —</option></select>
+            <p class="setup-note">Wird bei „Mein bevorzugter Bereich zuerst“ und bei bereichsbezogenen Sortiervorschlägen berücksichtigt.</p>
+          </section>
+</div>
+          <section class="profile-section setup-always">
+            <div class="toolbar"><label class="section-title" for="always-visible-search">Immer angezeigte Kalender</label></div>
+            <input id="always-visible-search" type="search" placeholder="Kalender suchen …" aria-label="Immer angezeigte Kalender suchen">
+            <div id="always-visible-list" class="always-list" aria-label="Verfügbare Kalender für Immer-Anzeige"></div>
+            <p class="setup-note" id="always-visible-note">Der eigene Standardkalender ist vorausgewählt. Weitere Kalender bleiben in jeder Ansicht eingeschaltet.</p>
+          </section>
+        </div>
+        </div>
+        <div class="setup-subpanel" data-setup-panel="classification" hidden>
+          <p class="setup-intro">Bereiche und Kalenderarten verwalten, Erkennungsregeln pflegen und neue Bereiche vorschlagen lassen.</p>
+        <section class="dimension classification-editor" aria-label="Bereiche und Kalenderarten konfigurieren">
+          <div class="dimension-title"><strong>Bereiche &amp; Kalenderarten konfigurieren</strong><span class="setup-note">Eigene Bezeichnungen, Erkennungswörter und Reihenfolge</span></div>
+          <div class="classification-grid">
+            <div class="classification-sidebar">
+              <label class="section-title" for="classification-kind">Konfiguration</label>
+              <select id="classification-kind"><option value="areas">Bereiche</option><option value="types">Kalenderarten</option></select>
+              <label class="section-title" for="classification-list">Vorhandene Einträge</label>
+              <select id="classification-list" size="8" aria-label="Bereich oder Kalenderart zum Bearbeiten"></select>
+              <div class="setup-actions classification-actions">
+                <button id="classification-new" type="button">+ Neu</button>
+                <button id="classification-up" type="button" aria-label="Eintrag nach oben verschieben" title="Nach oben">↑</button>
+                <button id="classification-down" type="button" aria-label="Eintrag nach unten verschieben" title="Nach unten">↓</button>
+                <button id="classification-delete" type="button">Löschen</button>
+              </div>
+              <div id="classification-detected" class="classification-detected">
+                <label for="classification-detected-list" class="section-title">Vorschläge für neue Bereiche</label>
+                <select id="classification-detected-list" aria-label="Vorgeschlagenen Bereich auswählen"></select>
+                <div class="setup-actions classification-actions">
+                  <button id="classification-adopt" type="button">Übernehmen</button>
+                  <button id="classification-dismiss" type="button">Verwerfen</button>
+                </div>
+                <button id="classification-scan" type="button">Vorschläge ermitteln</button>
+                <p class="setup-note" id="classification-proposal-note">Beim ersten Start einmalig ermittelt. Neue oder gelöschte Bereiche werden nur nach einem manuellen Suchlauf vorgeschlagen.</p>
+              </div>
+            </div>
+            <div class="classification-form">
+              <label class="section-title" for="classification-label">Bezeichnung</label>
+              <input id="classification-label" type="text" maxlength="60" placeholder="z. B. Vertrieb">
+              <label class="section-title" for="classification-id">Eindeutige Kennung</label>
+              <input id="classification-id" type="text" maxlength="36" spellcheck="false" placeholder="z. B. sales" pattern="[a-z][a-z0-9_-]*">
+              <p class="setup-note">Kennungen können geändert werden; betroffene Schnellansichten und Profile werden beim Speichern mit angepasst.</p>
+              <label class="section-title" for="classification-keywords">Schlüsselwörter zur Erkennung</label>
+              <textarea id="classification-keywords" rows="4" placeholder="Sales&#10;Vertrieb*&#10;&lt;Test*&gt;"></textarea>
+              <p class="setup-note">Ein Suchwort pro Zeile. <code>su*wort</code> erlaubt beliebige Zeichen zwischen „su“ und „wort“; <code>&lt;intern&gt;</code> schließt Kalender mit „intern“ aus. Beides ist kombinierbar: <code>&lt;test*&gt;</code>. Mehrere positive Wörter gelten als ODER, Ausschlüsse haben Vorrang. Mindestens ein positives Wort ist nötig. Der erste passende Bereich bzw. die erste Art gewinnt. Unbekannte (KÜRZEL) werden nur als Vorschläge angeboten.</p>
+              <p class="setup-note" id="classification-note" role="status" aria-live="polite"></p>
+            </div>
+          </div>
+        </section>
+        <section class="dimension setup-common-calendars" aria-label="Allgemeine Kalender unabhängig von Bereichen verwalten">
+          <div class="dimension-title"><strong>Allgemeine Kalender</strong><span class="setup-note">Instanzweit verwendete Kalender erkennen</span></div>
+          <div class="setup-common-grid">
+            <div>
+              <label class="section-title" for="classification-common">Schlüsselwörter zur Erkennung</label>
+              <p class="setup-note">Beispielsweise Feiertage, Ferien oder gemeinsame Kalender. Diese Regeln gelten unabhängig von der oben gewählten Bereichs- oder Kalenderart.</p>
+            </div>
+            <div>
+              <textarea id="classification-common" rows="3" placeholder="Feiertag*&#10;Geburtstag*&#10;&lt;privat*&gt;"></textarea>
+              <p class="setup-note">Ein Muster pro Zeile. <code>*</code> ist ein Platzhalter, <code>&lt;Begriff&gt;</code> ein Ausschluss. Gespeichert wird gemeinsam mit den Bereichs- und Artenregeln über die Fußzeile.</p>
+            </div>
+          </div>
+        </section>
+        </div>
+        <div class="setup-subpanel" data-setup-panel="quick" hidden>
+          <p class="setup-intro">Schnellansichten bearbeiten und speichern. Die Organisation der Gruppen erfolgt im eigenen Reiter „Kategorien“.</p>
+        <section class="dimension quick-editor">
+          <div class="dimension-title"><strong>Schnellansichten konfigurieren</strong><span class="setup-note">Sichtbarkeit, Regeln und eigene Ansichten</span></div>
+          <div class="quick-editor-grid">
+            <div class="quick-sidebar">
+              <label class="section-title" for="quick-view-list">Vorhandene Schnellansichten</label>
+              <input id="quick-view-search" type="search" placeholder="Schnellansichten filtern …" aria-label="Schnellansichten filtern">
+              <select id="quick-view-list" size="10" aria-label="Schnellansicht zum Bearbeiten"></select>
+              <div class="setup-actions quick-list-actions"><button id="quick-new" type="button">+ Neu</button><button id="quick-up" type="button" aria-label="Schnellansicht nach oben" title="Schnellansicht nach oben">↑</button><button id="quick-down" type="button" aria-label="Schnellansicht nach unten" title="Schnellansicht nach unten">↓</button></div>
+
+            </div>
+            <div class="quick-form">
+              <label class="section-title" for="quick-name">Name der Schnellansicht</label>
+              <input id="quick-name" type="text" maxlength="70" placeholder="z. B. Termine für das Pfarramt">
+              <div class="quick-fields">
+                <div><label for="quick-group">Kategorie</label><select id="quick-group"></select></div>
+                <div><label for="quick-mode">Auswahlmethode</label><select id="quick-mode"><option value="rules">Bereiche und Kalenderarten</option><option value="keys">Einzelne Kalender</option></select></div>
+              </div>
+              <label class="quick-toggle"><input id="quick-visible" type="checkbox"> In den Schnellansichten anzeigen</label>
+              <div class="quick-config" id="quick-rules">
+                <strong>Bereiche</strong><div class="quick-checks" id="quick-areas"></div>
+                <strong>Kalenderarten</strong><div class="quick-checks" id="quick-types"></div>
+                <strong>Zusätzliche Kalender</strong><div class="quick-checks" id="quick-extra"></div>
+
+                <input type="checkbox" id="quick-planning" hidden><input type="checkbox" id="quick-unassigned" hidden>
+                <p class="setup-note">Bereich × Art als Schnittmenge. Für nicht zuordenbare Kalender gibt es „Ohne Bereich“.</p>
+              </div>
+              <div class="quick-config" id="quick-keys" hidden>
+                <label for="quick-key-search">Einzelne Kalender auswählen</label><input id="quick-key-search" type="search" placeholder="Kalender suchen …">
+                <div class="quick-key-list" id="quick-key-list"></div>
+                <p class="setup-note">Feste Kalenderauswahl: Neue Kalender werden nicht automatisch ergänzt.</p>
+              </div>
+              <p class="setup-note" id="quick-editor-note"></p>
+            </div>
+          </div>
+        </section>
+        </div>
+        <div class="setup-subpanel" data-setup-panel="categories" hidden>
+          <p class="setup-intro">Kategorien organisieren die Schnellansichten im Auswahlmenü. Hier kannst du Kategorien anlegen, umbenennen, sortieren oder leere Kategorien löschen.</p>
+          <section class="dimension category-management" aria-label="Kategorien verwalten">
+            <div class="dimension-title"><strong>Kategorien der Schnellansichten</strong><span class="setup-note">Organisation und Reihenfolge</span></div>
+            <div class="classification-grid quick-category-editor">
+              <div class="classification-sidebar">
+                <label class="section-title" for="quick-category-list">Vorhandene Kategorien</label>
+                <select id="quick-category-list" size="10" aria-label="Kategorie zur Bearbeitung wählen"></select>
+                <div class="setup-actions classification-actions category-actions">
+                  <button id="quick-category-new" type="button" title="Neue Kategorie anlegen">+ Neu</button>
+                  <button id="quick-category-up" type="button" title="Nach oben" aria-label="Kategorie nach oben">↑</button>
+                  <button id="quick-category-down" type="button" title="Nach unten" aria-label="Kategorie nach unten">↓</button>
+                  <button id="quick-category-delete" type="button" title="Nur leere Kategorien löschen">Löschen</button>
+                </div>
+              </div>
+              <div class="classification-form">
+                <label class="section-title" for="quick-category-name">Name der Kategorie</label>
+                <input id="quick-category-name" type="text" maxlength="45" placeholder="Neue oder vorhandene Kategorie">
+                <p class="setup-note" id="quick-category-mode-hint">„+ Neu“ startet eine neue Kategorie mit leerem Namensfeld. Die eigentliche Anlage erfolgt über „Kategorie anlegen“ in der Fußzeile.</p>
+                <label class="section-title" for="quick-category-members">Zugeordnete Schnellansichten</label>
+                <div id="quick-category-members" class="setup-members" aria-live="polite"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="setup-subpanel" data-setup-panel="saved" hidden>
+          <p class="setup-intro">Gespeicherte Kalenderprofile und Sortier-Sets zentral verwalten. Reihenfolgen bestimmen die Anzeige in den jeweiligen Auswahlmenüs.</p>
+          <section class="dimension" aria-label="Gespeicherte Profile und Sortier-Sets verwalten">
+            <div class="dimension-title"><strong>Eigene Profile &amp; Sortier-Sets</strong><span class="setup-note">Umbenennen, sortieren und löschen</span></div>
+            <div class="classification-grid">
+              <div class="classification-sidebar">
+                <label class="section-title" for="saved-manager-kind">Eintragstyp</label>
+                <select id="saved-manager-kind"><option value="profiles">Kalenderprofile</option><option value="sorting">Sortier-Sets</option></select>
+                <label class="section-title" for="saved-manager-list">Gespeicherte Einträge</label>
+                <select id="saved-manager-list" size="10" aria-label="Gespeicherten Eintrag auswählen"></select>
+                <div class="setup-actions classification-actions">
+                  <button id="saved-manager-up" type="button" title="Nach oben" aria-label="Eintrag nach oben">↑</button>
+                  <button id="saved-manager-down" type="button" title="Nach unten" aria-label="Eintrag nach unten">↓</button>
+                  <button id="saved-manager-delete" type="button">Löschen</button>
+                </div>
+              </div>
+              <div class="classification-form">
+                <label class="section-title" for="saved-manager-name">Name des Eintrags</label>
+                <input id="saved-manager-name" type="text" maxlength="60" placeholder="Eintrag auswählen">
+                <p class="setup-note" id="saved-manager-detail" aria-live="polite"></p>
+                <p class="setup-note">Neue Profile werden unter „Profile &amp; Filter“ oder „Einzelauswahl“ gespeichert. Neue Sortier-Sets werden unter „Sortierung“ gespeichert. Hier erfolgt ausschließlich ihre Organisation.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="setup-subpanel" data-setup-panel="backup" hidden>
+          <p class="setup-intro">Komplette Konfiguration für einen späteren Import sichern. Einzelne Kalenderprofile und Sortier-Sets werden in ihren Arbeitsreitern gespeichert und im Unterreiter „Profile &amp; Sortier-Sets“ verwaltet.</p>
+          <section class="profile-section setup-backup">
+            <div class="toolbar"><strong class="section-title">Datensicherung und Gerätewechsel</strong></div>
+            <p class="setup-note">Sichere deine Profile, Sortier-Sets, Schnellansichten und Auswahleinstellungen als JSON. Die Datei kann vertrauliche Kalendernamen enthalten.</p>
+            <input id="settings-file" type="file" accept=".json,application/json" hidden>
+            <div class="setup-note" id="settings-summary"></div>
+            <p class="setup-note">Import nur mit Bestätigung. Keine Änderung an der aktiven Kalenderanzeige oder Serversortierung.</p>
+          </section>
+          <section class="dimension"><div class="dimension-title"><strong>Information</strong></div><p class="setup-note">Einstellungen werden im lokalen Browserspeicher gespeichert. Die JSON-Sicherung enthält auch eigene Schnellansichten und ihre Reihenfolge.</p></section>        </div>
+      </div>
+    </div>
+    <div class="foot"><div class="status" id="status" role="status" aria-live="polite"></div><div class="foot-controls">
+      <div class="setup-footer-actions" data-setup-footer="classification" hidden><button id="classification-reset" type="button">Standard wiederherstellen</button><button id="classification-save" class="primary" type="button">Konfiguration speichern</button></div>
+      <div class="setup-footer-actions" data-setup-footer="quick" hidden><button id="quick-reset" type="button">Auf Standard zurücksetzen</button><button id="quick-delete" type="button">Eigene Ansicht löschen</button><button id="quick-save" class="primary" type="button">Ansicht speichern</button></div>
+      <div class="setup-footer-actions" data-setup-footer="categories" hidden><button id="quick-category-rename" class="primary" type="button" disabled>Kategorie umbenennen</button></div>
+      <div class="setup-footer-actions" data-setup-footer="saved" hidden><button id="saved-manager-rename" class="primary" type="button">Umbenennen</button></div>
+      <div class="setup-footer-actions" data-setup-footer="backup" hidden><button id="settings-export" type="button">JSON exportieren</button><button id="settings-import" class="primary" type="button">JSON importieren …</button></div>
+      <button id="sort-refresh-page" class="refresh-btn" type="button" title="Kalenderansicht neu laden" hidden>Neu laden</button><button class="primary" id="sort-apply" type="button">Sortierung serverseitig übernehmen</button><button class="primary" id="apply" type="button">Auswahl anwenden</button></div></div>
