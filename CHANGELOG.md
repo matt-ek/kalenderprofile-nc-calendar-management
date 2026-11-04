@@ -1,6 +1,15 @@
 # Änderungsprotokoll
 
+## 2.0.2 – 04.11.2026
+
+- **Hotfix:** Fehlender Button `saved-manager-discard` im Setup ergänzt. Dadurch wird der JavaScript-Abbruch beim Start behoben.
+- „Speichern“ und „Verwerfen“ stehen im Setup-Editor wieder korrekt zur Verfügung.
+- Release-Prüfung um die Validierung sämtlicher statischer HTML-IDs und einen Browser-Starttest erweitert.
+- Keine Änderungen am JSON-Schema, an bestehenden Profilen oder an serverseitiger CalDAV-Logik.
+
 ## 2.0.1 – 04.11.2026
+
+**Bekannter Fehler:** 2.0.1 kann beim Öffnen ein unvollständiges, nicht schließbares Fenster anzeigen. Bitte 2.0.2 verwenden.
 
 - **Setup → Profile & Sortier-Sets**: neue Profile und Sortier-Sets direkt erstellen, vorhandene Einträge duplizieren.
 - Zuordnung einzelner Kalender über Checkboxen, Suche und Mehrfachfilter.

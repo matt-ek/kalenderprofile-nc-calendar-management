@@ -4,8 +4,14 @@ import json
 from playwright.sync_api import sync_playwright
 
 ROOT=Path(__file__).resolve().parents[1]
+def app_locator_is_present(page):
+    return page.locator('#nc-calendar-management-generic-v2').count() == 1
 with sync_playwright() as pw:
-    browser=pw.chromium.launch(headless=True,executable_path='/usr/bin/chromium',args=['--no-sandbox'])
+    chromium_executable=Path('/usr/bin/chromium')
+    launch_args={'headless':True,'args':['--no-sandbox']}
+    if chromium_executable.exists():
+        launch_args['executable_path']=str(chromium_executable)
+    browser=pw.chromium.launch(**launch_args)
     page=browser.new_page(viewport={'width':1390,'height':1050},accept_downloads=True)
     errors=[]
     page.on('pageerror',lambda e:errors.append(str(e)))
@@ -21,11 +27,14 @@ with sync_playwright() as pw:
       document.body.appendChild(root);
     }''')
     page.evaluate((ROOT/'src/calendar-management-generic.js').read_text())
+    assert app_locator_is_present(page), "Startup did not create the iframe"
     app=page.frame_locator('#nc-calendar-management-generic-v2').locator('#kalenderprofile-app')
     initial_selected=app.locator('#list input[type="checkbox"]:checked').count()
     app.locator('[data-tab="setup"]').click()
     app.locator('[data-setup-tab="saved"]').click()
     assert app.locator('#saved-manager-new').is_enabled()
+    assert app.locator('#saved-manager-discard').count()==1
+    assert app.locator('#close').count()==1
     app.locator('#saved-manager-new').click()
     assert app.locator('#saved-manager-name').input_value()==''
     app.locator('#saved-manager-name').fill('Meine zwei Kalender')

@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  const VERSION = '2.0.1';
+  const VERSION = '2.0.2';
   const HOST_ID = 'nc-calendar-management-generic-v2';
   const existing = document.getElementById(HOST_ID);
   if (existing) { existing.__kpDispose?.(); existing.remove(); return; }
@@ -1074,7 +1074,7 @@
       <div class="setup-footer-actions" data-setup-footer="classification" hidden><button id="classification-reset" type="button">Standard wiederherstellen</button><button id="classification-save" class="primary" type="button">Konfiguration speichern</button></div>
       <div class="setup-footer-actions" data-setup-footer="quick" hidden><button id="quick-reset" type="button">Auf Standard zurücksetzen</button><button id="quick-delete" type="button">Eigene Ansicht löschen</button><button id="quick-save" class="primary" type="button">Ansicht speichern</button></div>
       <div class="setup-footer-actions" data-setup-footer="categories" hidden><button id="quick-category-rename" class="primary" type="button" disabled>Kategorie umbenennen</button></div>
-      <div class="setup-footer-actions" data-setup-footer="saved" hidden><button id="saved-manager-rename" class="primary" type="button">Umbenennen</button></div>
+      <div class="setup-footer-actions" data-setup-footer="saved" hidden><button id="saved-manager-discard" type="button">Verwerfen</button><button id="saved-manager-rename" class="primary" type="button">Speichern</button></div>
       <div class="setup-footer-actions" data-setup-footer="backup" hidden><button id="settings-export" type="button">JSON exportieren</button><button id="settings-import" class="primary" type="button">JSON importieren …</button></div>
       <button id="sort-refresh-page" class="refresh-btn" type="button" title="Kalenderansicht neu laden" hidden>Neu laden</button><button class="primary" id="sort-apply" type="button">Sortierung serverseitig übernehmen</button><button class="primary" id="apply" type="button">Auswahl anwenden</button></div></div>`;
   const el = id => shadow.getElementById(id);

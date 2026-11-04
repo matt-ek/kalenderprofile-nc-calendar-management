@@ -18,15 +18,24 @@ for marker, file in [("@STYLE_INLINE@", "calendar-management.css"), ("@HTML_INLI
 
 bundle = (ROOT / "src/calendar-management-generic.js").read_text(encoding="utf-8")
 assert source == bundle, "Built JS differs from modular sources"
-assert "const VERSION = '2.0.1'" in source
+assert "const VERSION = '2.0.2'" in source
 assert "<h2>Kalenderprofile</h2>" in source
 assert "Kalenderverwaltung für Nextcloud · V${VERSION}" in source
 assert "Nextcloud Calendar Management · V${VERSION}" not in source
 assert "id=\"saved-manager-new\"" in source
 assert "id=\"saved-manager-duplicate\"" in source
+assert "id=\"saved-manager-discard\"" in source
 assert "function managerSave()" in source
 assert "function managerMoveSort(" in source
 assert "(Generic) ·" not in source
+# Every literal el('id') binding must have a corresponding HTML element.
+# Missing bindings can abort initialization before the close button is wired.
+markup = (ROOT / "src/assets/calendar-management.html").read_text(encoding="utf-8")
+dom_ids = re.findall(r'\bid="([^"]+)"', markup)
+assert len(dom_ids) == len(set(dom_ids)), "Duplicate HTML element IDs"
+literal_refs = set(re.findall(r"""\bel\(['"]([^'"]+)['"]\)""", source))
+missing = sorted(literal_refs - set(dom_ids))
+assert not missing, f"JavaScript references missing HTML IDs: {missing}"
 subprocess.run(["node", "--check", str(ROOT / "src/calendar-management-generic.js")], check=True)
 
 url = (ROOT / "install/bookmarklet-url.txt").read_text(encoding="utf-8").strip()

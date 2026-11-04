@@ -1,6 +1,6 @@
 # Architektur – Kalenderprofile
 
-Stand: V2.0.1. Dies ist die Entwicklungsstruktur des lokalen Bookmarklets, keine serverseitige Nextcloud-App.
+Stand: V2.0.2. Dies ist die Entwicklungsstruktur des lokalen Bookmarklets, keine serverseitige Nextcloud-App.
 
 ## Prinzipien
 

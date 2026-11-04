@@ -22,5 +22,11 @@ jobs:
         run: python scripts/build.py
       - name: Verify sources, bookmarklet and installer
         run: python tests/check_release.py
+      - name: Install Chromium browser testing dependencies
+        run: |
+          python -m pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Exercise initial startup and saved editor in Chromium
+        run: python tests/test_saved_editor_201.py
       - name: Verify generated files are committed
         run: git diff --exit-code -- src/calendar-management-generic.js install/bookmarklet-url.txt install/installation.html

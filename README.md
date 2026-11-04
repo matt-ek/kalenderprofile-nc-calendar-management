@@ -4,7 +4,7 @@
 
 **Free & Open Source · Contributions welcome!**
 
-**Version:** 2.0.1 (04.11.2026)  
+**Version:** 2.0.2 (04.11.2026)  
 Kalenderverwaltung für Nextcloud
 
 Browser-Bookmarklet zur Verwaltung von Kalenderprofilen, Schnellansichten, Kategorien, Bereichs- und Kalenderartfiltern sowie Kalenderreihenfolgen in der Nextcloud-Kalender-App.
