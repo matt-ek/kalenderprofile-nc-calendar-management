@@ -2,6 +2,8 @@
 
 ## 2.0.0 – 04.11.2026
 
+- Veröffentlichung des Projekts unter der MIT-Lizenz; Beitragsrichtlinien für Forks und Pull Requests ergänzt.
+
 Stabile Veröffentlichung auf Basis der produktiv geprüften Beta 15.
 
 - Einheitlicher Produktname **Kalenderprofile**; „Nextcloud“ wird im Untertitel als Plattform genannt.
