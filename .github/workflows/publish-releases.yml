@@ -55,3 +55,9 @@ jobs:
           }
           create_release v2.0.0 7a45c48adffc09766a3a3dfcc3d5577e406712c2 docs/releases/v2.0.0.md
           create_release v2.0.1 c1517d75d1b0088005290f35441bb6b15dd3ff37 docs/releases/v2.0.1.md
+          if [ "$(gh release view v2.0.1 --json isDraft --jq '.isDraft')" = "true" ]; then
+            echo "Publishing the existing 2.0.1 draft after the interrupted asset upload"
+            gh release edit v2.0.1 --draft=false --notes-file docs/releases/v2.0.1.md
+          fi
+          gh release view v2.0.1 --json isDraft,tagName,url
+          test "$(gh release view v2.0.1 --json isDraft --jq '.isDraft')" = "false"
