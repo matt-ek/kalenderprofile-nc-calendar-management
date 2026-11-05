@@ -1,0 +1,14 @@
+# Freigabe Kalenderprofile v2.0.3
+
+release-approved: true
+
+Freigabe am 05.11.2026 auf ausdrücklichen Wunsch des Projekteigentümers: 2.0.3 als GitHub-Release veröffentlichen.
+
+Voraussetzungen:
+- Positiver manueller Funktionstest vom Anwender gemeldet (Umfang nicht genauer spezifiziert).
+- GitHub Actions auf main erfolgreich: Run 42120694605, Commit 1bf657df527a5218fe36937f2194f924a22e9fd4.
+- Workflow führt vor Tag-Erzeugung und Veröffentlichung erneut Build-, Browser-, CalDAV- und Release-Paketprüfungen aus.
+- Risiko nichtatomarer, serverseitiger CalDAV-Sortierungen und ausstehender spezifischer Live-Fehlertests ist akzeptierter dokumentierter Restumfang.
+- Bestehende Tags und Release-Assets dürfen nicht überschrieben werden.
+
+Go/No-Go: GO für das Stabilisierungsrelease v2.0.3, vorbehaltlich vollständig erfolgreicher technischer Release-Gates.
