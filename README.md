@@ -55,13 +55,8 @@ Copyright © 2026 Matthias Ebermann-Kestel.
 
 Die aktuelle Entwicklungsplanung mit Prioritäten, offenen Risiken und Abnahmekriterien steht im [Projektplan](docs/PROJECT_PLAN.md). Der [Entwicklungs- und Releaseprozess](docs/RELEASE_PROCESS.md) beschreibt Pull Requests, Qualitätssicherung, Freigaben und Hotfixes. Die Umsetzung wird über [GitHub Issues](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/issues) verfolgt.
 
-## Veröffentlichte Versionen und ältere Artefakte
+## Veröffentlichte Version
 
-Bis einschließlich 2.0.4 enthalten historische Quell- und Release-Stände einzelne organisationsbezogene Beispielkennungen und Texte. In der Prüfung wurden keine produktiven Kalenderexporte oder Zugangsdaten im aktuellen Projekt nachgewiesen. Die früheren, unveränderlichen Git-Tags und Release-Pakete bleiben zu Prüf- und Reproduzierbarkeitszwecken erhalten. Für neue Installationen wird die bereinigte Version 2.0.5 empfohlen. Weitere Informationen: [Umgang mit älteren Release-Artefakten](docs/RELEASE_HISTORY_POLICY.md).
+**Die einzige regulär angebotene Veröffentlichung ist [Version 2.0.5](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.5).** Die alten Releases und Git-Tags von 2.0.0 bis 2.0.4 wurden am 06.11.2026 auf ausdrücklichen Wunsch des Repository-Eigentümers gelöscht. Die Git-Commit-Historie sowie ältere Release-Notizen bleiben erhalten; externe Kopien und Downloads können nicht rückwirkend entfernt werden.
 
-- [2.0.5 – Organisationsneutrale Bereinigung](docs/releases/v2.0.5.md)
-- [2.0.4 – Neue Installationsoberfläche](docs/releases/v2.0.4.md)
-- [2.0.3 – Stabilisierung und Release-Sicherheit](docs/releases/v2.0.3.md)
-- [2.0.2 – Start-Hotfix](docs/releases/v2.0.2.md)
-- [2.0.1 – Erweiterter Profil- und Sortier-Set-Editor](docs/releases/v2.0.1.md)
-- [2.0.0 – Stabile Erstveröffentlichung](docs/releases/v2.0.0.md)
+Weitere Informationen: [Veröffentlichungshistorie](docs/RELEASE_HISTORY_POLICY.md) und [Release Notes 2.0.5](docs/releases/v2.0.5.md).
