@@ -2,7 +2,9 @@ name: Build and quality checks
 
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
 
 # A new commit supersedes obsolete branch/PR runs, avoiding parallel browser installs.
 concurrency:
