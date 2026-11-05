@@ -40,6 +40,7 @@ MOCK = r"""() => {
     const address = String(url);
     window.__davCalls.push({method, url: address});
     if (method === 'PROPFIND') {
+      if (window.__davMode === 'read-error') throw Error('Simulated network read failure');
       const entries = Object.entries(window.__davOrders)
         .filter(([name]) => window.__davMode !== 'missing' || name !== 'Mitte')
         .map(([name, order]) => xml(name,
@@ -57,7 +58,8 @@ MOCK = r"""() => {
       const name = {zeta: 'Zeta', alpha: 'Alpha', mitte: 'Mitte'}[match[1]];
       window.__davOrders[name] = Number(value[1]);
       window.__davWriteCount++;
-      if (window.__davMode === 'fail-after-write' && window.__davWriteCount === 1) {
+      if ((window.__davMode === 'fail-after-write' && window.__davWriteCount === 1) ||
+          (window.__davMode === 'rollback-fails' && window.__davWriteCount <= 2)) {
         return {ok: false, status: 500, text: async () => 'DAV failed after server mutation'};
       }
       return {ok: true, status: 207, text: async () =>
@@ -119,6 +121,22 @@ def denied_confirmation(browser):
         context.close()
 
 
+def failed_rollback(browser):
+    context, page, app, errors = setup_case(browser, True, "rollback-fails")
+    try:
+        app.locator("#sort-check").click()
+        expect(app.locator("#sort-apply")).to_be_enabled()
+        app.locator("#sort-apply").click()
+        expect(app.locator("#sort-apply")).to_be_disabled()
+        result = app.locator("#status").inner_text()
+        assert "Sortierung fehlgeschlagen" in result
+        assert "Rücknahme für 1 Kalender fehlgeschlagen" in result
+        assert page.evaluate("window.__davWriteCount") >= 2
+        assert errors == [], errors
+    finally:
+        context.close()
+
+
 def failed_server_write(browser):
     context, page, app, errors = setup_case(browser, True, "fail-after-write")
     try:
@@ -147,8 +165,10 @@ with sync_playwright() as pw:
         check_no_write(browser, "normal")
         check_no_write(browser, "missing")
         check_no_write(browser, "invalid-order")
+        check_no_write(browser, "read-error")
         denied_confirmation(browser)
         failed_server_write(browser)
+        failed_rollback(browser)
     finally:
         browser.close()
-print("PASS: CalDAV read-only, missing/invalid mapping, confirmation, partial-write rollback")
+print("PASS: CalDAV read-only, invalid/missing/network error, consent, partial writes, failed rollback")
