@@ -121,6 +121,26 @@ def denied_confirmation(browser):
         context.close()
 
 
+def confirmed_sort_and_restore(browser):
+    context, page, app, errors = setup_case(browser, True)
+    try:
+        app.locator("#sort-check").click()
+        expect(app.locator("#sort-apply")).to_be_enabled()
+        app.locator("#sort-apply").click()
+        expect(app.locator("#sort-restore")).to_be_enabled()
+        success = app.locator("#status").inner_text()
+        assert "erfolgreich gespeichert und kontrolliert" in success, success
+        assert page.evaluate("JSON.stringify(window.__davOrders)") == '{"Zeta":2,"Alpha":0,"Mitte":1}'
+        # The explicit restore flow verifies the saved original server order.
+        app.locator("#sort-restore").click()
+        restored = app.locator("#status").inner_text()
+        assert "Vorherige Reihenfolge wiederhergestellt" in restored, restored
+        assert page.evaluate("JSON.stringify(window.__davOrders)") == '{"Zeta":0,"Alpha":1,"Mitte":2}'
+        assert errors == [], errors
+    finally:
+        context.close()
+
+
 def failed_rollback(browser):
     context, page, app, errors = setup_case(browser, True, "rollback-fails")
     try:
@@ -167,8 +187,9 @@ with sync_playwright() as pw:
         check_no_write(browser, "invalid-order")
         check_no_write(browser, "read-error")
         denied_confirmation(browser)
+        confirmed_sort_and_restore(browser)
         failed_server_write(browser)
         failed_rollback(browser)
     finally:
         browser.close()
-print("PASS: CalDAV read-only, invalid/missing/network error, consent, partial writes, failed rollback")
+print("PASS: CalDAV read-only, invalid/missing/network error, consent, successful restore, partial writes, failed rollback")
