@@ -1,5 +1,15 @@
 # Änderungsprotokoll
 
+## 2.0.4 – Release-Kandidat
+
+- Vollständige Überarbeitung der Installer-HTML mit modernem, responsivem Layout und klaren Installationsanweisungen.
+- Sichtbare Versionsangaben aus der Entwicklungsquelle abgeleitet; veraltete Beta-Hinweise entfernt.
+- Drag-and-drop und manuelle Copy/Paste-Installation mit Codebox, Clipboard-API und Fallback.
+- Pflege der Installer-Vorlage getrennt von den generierten Installationsartefakten; reproduzierbarer Build.
+- Automatisierte Konsistenz- und Browser-Prüfung auf Desktop- und Mobilbreite.
+- Keine Änderungen an Funktionen, Datenmodell, Browser-Speicherkennungen oder CalDAV-Verhalten innerhalb der Anwendung.
+
+
 ## 2.0.3 – veröffentlicht am 05.11.2026
 
 - CalDAV-Regressionssuite für schreibfreie Prüfung, unvollständige und ungültige Zuordnungen, abgelehnte Übernahme und Rücknahmeversuche bei Teilfehlern.
