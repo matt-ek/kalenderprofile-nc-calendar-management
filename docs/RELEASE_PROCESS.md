@@ -8,7 +8,7 @@
 - Für jede Änderung wird ein eigener Branch verwendet: fix/..., feat/..., refactor/..., test/... oder docs/....
 - Jeder Pull Request referenziert ein Issue, dokumentiert Risiken und listet tatsächliche Tests auf.
 - Kein automatisches Zusammenfassen von Featureentwicklung und großflächigem Refactoring.
-- Direkte Änderungen an Release-Tags oder nachträglicher Austausch bereits veröffentlichter Artefakte sind untersagt. Eine Korrektur erfolgt als neues Patch-Release.
+- Veröffentlichte Release-Tags und Assets dürfen nicht überschrieben oder stillschweigend umgeschrieben werden. Korrekturen erfolgen als neue Patch-Releases. Ausdrücklich autorisierte Löschungen historischer Releases samt Tags sind als separate, protokollierte Wartungsmaßnahme mit enger Positivliste und anschließender Prüfung zulässig.
 - Produktiv-Nutzerkonfigurationen und CalDAV-Operationen sind geschützte Kompatibilitätsgrenzen.
 - Keine produktiven Zugangsdaten, Cookies, Tokens, personenbezogenen Kalendernamen oder persönlichen JSON-Backups in GitHub.
 
