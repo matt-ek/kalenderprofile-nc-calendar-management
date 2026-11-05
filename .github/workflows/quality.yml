@@ -25,6 +25,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Block organization-specific examples and personal data artifacts
+        run: python tests/test_repo_neutrality_205.py
       - name: Rebuild standalone bookmarklet
         run: python scripts/build.py
       - name: Verify sources, bookmarklet and installer

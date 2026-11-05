@@ -6,14 +6,14 @@
 
 ## Ergebnis
 
-**Qualitäts-Gate: 17 von 17 Prüfungen bestanden.** Die vollständige Liste mit Laufzeiten steht in `quality-gate-results.txt`. Ausführung über `python tests/run_quality_gate.py`; die Tests benutzen Chromium und simulierte Nextcloud-Kalender, soweit nicht anders vermerkt.
+**Historischer Abnahmevermerk: 17 von 17 Prüfungen als bestanden dokumentiert.** Die ursprünglich genannte Einzelprotokolldatei und das damalige Teststartskript sind im aktuellen Repository nicht vorhanden; dieser historische Vermerk ersetzt keinen neu ausgeführten Test. Bei damaligen Tests kamen nach der Dokumentation Chromium und simulierte Kalender zum Einsatz.
 
 | Prüfbereich | Ergebnis |
 |---|---|
 | Build & JavaScript-Syntax | Bestanden: Node.js-Syntaxprüfung, 8 Entwicklungsabschnitte, HTML/CSS-Einbettung |
 | Installer & Bookmarklet | Bestanden: URL-Dekodierung reproduziert den vollständigen JavaScript-Quelltext bytegenau |
 | Oberfläche | Bestanden: sichtbarer Untertitel ohne „(Generic)“, funktionierende Setup-Unterreiter, UI-Smoketest |
-| Gemeinde-JSON & ältere Einstellungen | Bestanden: Import, Alias-Kürzel, Schnellansichten, Beta-7-Migration |
+| Ältere Konfigurationsdateien und Einstellungen | Historisch dokumentiert: Import, Alias-Kürzel, Schnellansichten, Beta-7-Migration |
 | Bereiche & Arten | Bestanden: Vorschlagserkennung, Schlüsselwortmuster, Ausschlüsse, Neuanlage, Kennungsänderung |
 | Einzelauswahl | Bestanden: Suche, Mehrfachfilter, Sammelauswahl, temporär lösbare Fixierungen |
 | Profile & Sortier-Sets | Bestanden: Anlegen, Umbenennen, Sortieren, Löschen, Persistenz |
@@ -24,7 +24,7 @@
 ## Änderungen gegenüber Beta 15
 
 1. **Produktbezeichnung:** In der Oberfläche und auf der Installationsseite lautet der Produktname **Kalenderprofile**. Der Untertitel lautet `Kalenderverwaltung für Nextcloud · V2.0.0`.
-2. **Persistenzkorrektur:** Der bevorzugte Bereich wird bei mehrteiligen Speicheroperationen als Rohtext abgelegt, genau wie bei einer manuellen Änderung. Ältere, versehentlich JSON-kodierte Werte (z. B. `"bue"`) werden weiterhin gelesen. Die Änderung benötigt keine Migration und verändert keine anderen Einstellungen.
+2. **Persistenzkorrektur:** Der bevorzugte Bereich wird bei mehrteiligen Speicheroperationen als Rohtext abgelegt, genau wie bei einer manuellen Änderung. Ältere, versehentlich JSON-kodierte Kennungen werden weiterhin als String gelesen. Die Änderung benötigt keine Migration und verändert keine anderen Einstellungen.
 3. **Qualitätssicherung:** Ein neuer Regressionstest für ältere bevorzugte Bereiche; bestehende Tests warten bei JSON-Importen auf den tatsächlichen Abschluss, statt auf ein zufällig frühes UI-Ereignis.
 4. **Releasepflege:** Versionskennung 2.0.0, konsolidiertes Änderungsprotokoll, aktualisierte Installation und Dokumentation.
 

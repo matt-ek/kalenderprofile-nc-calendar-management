@@ -1,6 +1,6 @@
 # Architektur – Kalenderprofile
 
-Stand: V2.0.4 (Installer-Release-Kandidat). Dies ist die Entwicklungsstruktur des lokalen Bookmarklets, keine serverseitige Nextcloud-App.
+Stand: V2.0.5 (organisationsneutrale Bereinigung). Dies ist die Entwicklungsstruktur des lokalen Bookmarklets, keine serverseitige Nextcloud-App.
 
 ## Prinzipien
 
@@ -49,7 +49,7 @@ CalDAV ändert mehrere Kalender **nicht atomar**. Ein Fehler nach einem serverse
 - `python tests/test_saved_editor_201.py` (Chromium/Playwright)
 - `python tests/test_caldav_safety_203.py` (Chromium/Playwright mit simulierten CalDAV-Antworten)
 
-Die Installer-Vorlage enthält ausschließlich die Platzhalter `@@KP_BOOKMARKLET_HREF@@` und `@@KP_VERSION@@`. Der Build füllt diese aus derselben modularen JavaScript-Version; Copy/Paste und Drag-and-drop verwenden denselben URL-Wert ohne doppelte Speicherung des großen Skripts. Der Browser-Test `tests/test_installer_204.py` prüft beide Kopierwege, die Versionsanzeige und die mobile Breite.\n\nÄltere Release-QA-Berichte nennen teilweise Testdateien, die im aktuellen Repository nicht vorliegen. Diese historischen Angaben sind keine Nachweise über aktuell ausgeführte Tests.
+Die Installer-Vorlage enthält ausschließlich die Platzhalter `@@KP_BOOKMARKLET_HREF@@` und `@@KP_VERSION@@`. Der Build füllt diese aus derselben modularen JavaScript-Version; Copy/Paste und Drag-and-drop verwenden denselben URL-Wert ohne doppelte Speicherung des großen Skripts. Der Browser-Test `tests/test_installer_204.py` prüft beide Kopierwege, die Versionsanzeige und die mobile Breite. Die Datenschutzprüfung `tests/test_repo_neutrality_205.py` kontrolliert alle verfolgten Textdateien einschließlich des kodierten Bookmarks und der HTML-Ausgabe auf unerwünschte Organisationshinweise, Schlüssel und Exportdateien.\n\nÄltere Release-QA-Berichte nennen teilweise Testdateien, die im aktuellen Repository nicht vorliegen. Diese historischen Angaben sind keine Nachweise über aktuell ausgeführte Tests.
 
 Die vorhandenen Browser-Tests verwenden simulierte Nextcloud-Kalender. Ein Versionsmatrix-Test mit aktuellen produktiven Nextcloud- und CalDAV-Installationen bleibt eine separate Abnahmebedingung.
 

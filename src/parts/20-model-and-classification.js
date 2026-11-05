@@ -154,7 +154,7 @@
     return match?norm(match[1]):'';
   }
   // A configured area may use an ASCII ID different from its visible suffix:
-  // e.g. (BÜH) -> bue. Such suffixes must not create a second virtual area.
+  // e.g. (NORD) -> north. Such suffixes must not create a second virtual area.
   // Only exact suffix aliases count here, so keyword matching remains unchanged.
   function configuredAreaForSuffix(suffix,configuration=rules){
     if(!suffix)return null;
@@ -215,8 +215,8 @@
       const raw=match[1];
       const atEdge=match.index===0||match.index+match[0].length===value.length;
       // Keep the previously supported lowercase/title-case trailing `(sales)`.
-      // In a name with several parentheses, a final `(Beate)` after an actual
-      // `(BWH)` code is more likely an owner name and must not be suggested.
+      // With multiple parentheses, a trailing title-case label after an
+      // uppercase area code is likely descriptive, not an additional area.
       const likelyOwner=bracketMatches.length>1&&match.index>0&&/^[\p{Lu}][\p{Ll}]+$/u.test(raw);
       if(isCode(raw)||(atEdge&&!likelyOwner))result.add(norm(raw));
     }
