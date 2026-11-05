@@ -1,7 +1,7 @@
 # Qualitätssicherung und Freigabe – Kalenderprofile 2.0.3
 
 **Stand:** 05.11.2026  
-**Status:** Release-Kandidat; automatisierte QA bestanden, manueller Funktionstest vom Anwender positiv bestätigt. Präziser Umfang der Live-Kompatibilitäts- und CalDAV-Schreibtests ist nicht dokumentiert.
+**Status:** Veröffentlichung vom Projekteigentümer ausdrücklich freigegeben; erneute technische Release-Gates und Asset-Verifizierung stehen bis zur GitHub-Veröffentlichung noch aus. Automatisierte QA und manueller Funktionstest positiv bestätigt; genauer Umfang der CalDAV-Live-Schreibtests nicht dokumentiert.
 
 ## 1. Nachweisbarer Basisstand
 
@@ -51,11 +51,11 @@ Die Versionen realer Testinstanzen sollen beim ersten Live-Test protokolliert we
 - [x] Code-/Workflowstand `f4c9c75` durch alle verpflichtenden CI-Checks erfolgreich (Workflow 42119552222). Dokumentationsfolgecommits gesondert prüfen.
 - [x] Release-Packaging-Logik sowie deterministisches ZIP und Prüfsummen im CI-Kontext geprüft. Tatsächliche Tag-Veröffentlichung und Asset-Download stehen noch aus.
 - [x] Manueller Funktionstest vom Anwender als erfolgreich gemeldet („getestet, funktioniert“); Testumgebung und Prüfumfang nicht gesondert protokolliert.
-- [ ] Für serverseitige Schreibfunktionen: ausdrückliche Freigabe und Dummy-Kalender-Test auf autorisierter Instanz, andernfalls Restrisiko dokumentieren.
-- [ ] Go/No-Go und Release-Commit protokolliert.
+- [x] Risiko ausstehender spezieller CalDAV-Live-Schreib-/Fehlerfalltests explizit im QA-Bericht und in den Release Notes dokumentiert und für dieses Stabilisierungsrelease vom Projekteigentümer durch die Freigabe akzeptiert. Dies ist **kein** Nachweis eines erfolgreichen Live-Schreibtests.
+- [x] Go/No-Go: **GO unter technischen Vorbehalten** durch ausdrücklichen Veröffentlichungsauftrag am 05.11.2026. Nachweis: `docs/releases/v2.0.3.approved`, früherer grüner main-Commit `1bf657df527a5218fe36937f2194f924a22e9fd4`. Veröffentlichung ausschließlich nach erfolgreicher erneuter Release-Pipeline.
 - [ ] GitHub-Release-Tag und Assets erstellt und gegen SHA256SUMS.txt verifiziert.
 
-**Freigabeentscheidung:** Noch offen. Der Kandidat ist erst dann ein offiziell veröffentlichtes Release, wenn die erforderlichen Gates bestätigt sind.
+**Freigabeentscheidung:** Geschäftlich GO, technisch bis zum erfolgreichen Release-Workflow bedingt. Das Release gilt erst mit geprüftem Git-Tag und veröffentlichten, verifizierten Assets als ausgeliefert.
 
 ## 5. Risiken und Rollback
 
