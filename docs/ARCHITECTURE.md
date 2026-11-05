@@ -1,6 +1,6 @@
 # Architektur – Kalenderprofile
 
-Stand: V2.0.2. Dies ist die Entwicklungsstruktur des lokalen Bookmarklets, keine serverseitige Nextcloud-App.
+Stand: V2.0.3. Dies ist die Entwicklungsstruktur des lokalen Bookmarklets, keine serverseitige Nextcloud-App.
 
 ## Prinzipien
 
@@ -46,8 +46,10 @@ CalDAV ändert mehrere Kalender **nicht atomar**. Ein Fehler nach einem serverse
 
 - `node --check src/calendar-management-generic.js`
 - `python tests/check_release.py`
-- `python tests/test_caldav_refactor_beta15.py`
-- Weitere Dateien `tests/test_*.py` für bestehende Szenarien und `tests/smoke_ui.py` für die Oberfläche.
+- `python tests/test_saved_editor_201.py` (Chromium/Playwright)
+- `python tests/test_caldav_safety_203.py` (Chromium/Playwright mit simulierten CalDAV-Antworten)
+
+Ältere Release-QA-Berichte nennen teilweise Testdateien, die im aktuellen Repository nicht vorliegen. Diese historischen Angaben sind keine Nachweise über aktuell ausgeführte Tests.
 
 Die vorhandenen Browser-Tests verwenden simulierte Nextcloud-Kalender. Ein Versionsmatrix-Test mit aktuellen produktiven Nextcloud- und CalDAV-Installationen bleibt eine separate Abnahmebedingung.
 
