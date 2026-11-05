@@ -1,10 +1,13 @@
 """Browser regression: versioned, offline installer with drag-and-drop and copy/paste."""
 from pathlib import Path
+import re
 from playwright.sync_api import sync_playwright, expect
 
 ROOT = Path(__file__).resolve().parents[1]
 INSTALLER = (ROOT / "install/installation.html").resolve()
-EXPECTED_VERSION = "2.0.4"
+version_match = re.search(r"const VERSION = '(\d+\.\d+\.\d+)';", (ROOT / "src/parts/00-startup.js").read_text(encoding="utf-8"))
+assert version_match, "Missing source version"
+EXPECTED_VERSION = version_match.group(1)
 
 with sync_playwright() as playwright:
     launch_options = {"headless": True, "args": ["--no-sandbox"]}
