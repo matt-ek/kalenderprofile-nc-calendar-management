@@ -12,3 +12,5 @@ Voraussetzungen:
 - Bestehende Tags und Release-Assets dürfen nicht überschrieben werden.
 
 Go/No-Go: GO für das Stabilisierungsrelease v2.0.3, vorbehaltlich vollständig erfolgreicher technischer Release-Gates.
+
+Erneuter Freigabeversuch: Die Release-Gates im Run 42122196589 bestanden; eine fehlerhafte Tag-Existenz-Vorprüfung stoppte die Veröffentlichung. Der korrigierte Workflow versucht die unveränderliche Tag-Erstellung zuerst und stoppt sicher bei bestehenden abweichenden Referenzen. Keine bestehende Referenz wird verändert.

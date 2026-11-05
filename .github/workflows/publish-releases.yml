@@ -109,20 +109,24 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          tag_ref="repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG"
-          existing="$(gh api "$tag_ref" --jq '.object.sha' 2>/dev/null || true)"
-          if [[ -n "$existing" ]]; then
-            if [[ "$existing" != "$GITHUB_SHA" ]]; then
-              echo "::error::Tag $RELEASE_TAG already exists at a different commit. Refusing replacement."
+          # Attempt creation first: a missing ref can otherwise yield a "null"
+          # jq value that is nonempty and gets mistaken for an existing tag.
+          # GitHub rejects POST with HTTP 422 if the ref already exists.
+          create_result="$(gh api -X POST "repos/$GITHUB_REPOSITORY/git/refs" \
+            -f "ref=refs/tags/$RELEASE_TAG" \
+            -f "sha=$GITHUB_SHA" --jq '.object.sha' 2>"$RUNNER_TEMP/tag-create-error" || true)"
+          if [[ "$create_result" == "$GITHUB_SHA" ]]; then
+            echo "Created immutable tag $RELEASE_TAG at $GITHUB_SHA"
+          else
+            tag_ref="repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG"
+            existing="$(gh api "$tag_ref" --jq '.object.sha' 2>/dev/null || true)"
+            if [[ "$existing" == "$GITHUB_SHA" ]]; then
+              echo "Existing immutable tag points to approved commit."
+            else
+              echo "::error::Tag could not be safely created or verified; no existing ref will be replaced."
+              sed -E 's/(token|secret|password)[^[:space:]]*/[REDACTED]/Ig' "$RUNNER_TEMP/tag-create-error" | head -n 8
               exit 1
             fi
-            echo "Existing tag points to approved commit."
-          else
-            gh api -X POST "repos/$GITHUB_REPOSITORY/git/refs" \
-              -f "ref=refs/tags/$RELEASE_TAG" \
-              -f "sha=$GITHUB_SHA" >/dev/null
-            test "$(gh api "$tag_ref" --jq '.object.sha')" = "$GITHUB_SHA"
-            echo "Created $RELEASE_TAG at approved commit $GITHUB_SHA"
           fi
       - name: Publish only if the release is new
         env:
