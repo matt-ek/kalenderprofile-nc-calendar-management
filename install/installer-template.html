@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Kalenderprofile für Nextcloud – Browser-Lesezeichen installieren, per Drag-and-drop oder manuell mit kopierbarem Bookmarklet-Code.">
+  <title>Kalenderprofile – Installation</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page:#f4f7fb;--surface:#fff;--ink:#152c3c;--muted:#526679;
+      --border:#dce6ee;--accent:#176da5;--accent-dark:#105581;
+      --soft:#eaf3fa;--success:#146d4d;--shadow:0 20px 58px rgba(23,54,79,.07);
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--page);color:var(--ink);line-height:1.6;font-size:16px}
+    a{color:var(--accent-dark)}
+    a:focus-visible,button:focus-visible,textarea:focus-visible,summary:focus-visible{
+      outline:3px solid #8ac5ee;outline-offset:3px
+    }
+    .shell{max-width:1120px;margin:auto;padding:34px 28px 64px}
+    .topline{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:40px}
+    .identity{display:flex;align-items:center;gap:12px;font-size:16px;font-weight:750;letter-spacing:-.025em}
+    .mark{display:grid;place-items:center;width:43px;height:43px;border-radius:13px;
+      background:var(--accent-dark);color:#fff}
+    .mark svg{width:23px;height:23px}
+    .version{border:1px solid #c6ddec;background:#e7f1f9;border-radius:999px;padding:5px 13px;
+      font-size:13px;font-weight:700;color:var(--accent-dark);white-space:nowrap}
+    .eyebrow{color:var(--accent-dark);font-size:12px;letter-spacing:.13em;text-transform:uppercase;font-weight:800}
+    .hero{max-width:780px;margin-bottom:34px}
+    h1{font-size:clamp(34px,5vw,55px);line-height:1.12;letter-spacing:-.055em;margin:12px 0 18px}
+    .lead{font-size:18px;color:var(--muted);max-width:64ch;margin:0}
+    .features{display:flex;flex-wrap:wrap;gap:9px;margin-top:23px}
+    .features span{display:inline-flex;align-items:center;border:1px solid var(--border);
+      background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;color:#435d6d}
+    .steps-intro{margin:34px 0 17px;display:flex;align-items:baseline;flex-wrap:wrap;gap:12px}
+    h2{font-size:23px;line-height:1.25;letter-spacing:-.025em;margin:0}
+    h3{font-size:19px;line-height:1.3;letter-spacing:-.02em;margin:0}
+    p{margin:10px 0;color:var(--muted)}
+    .steps-intro p{margin:0;font-size:14px}
+    .install-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+    .panel{min-width:0;background:var(--surface);border:1px solid var(--border);
+      border-radius:20px;padding:29px;box-shadow:var(--shadow)}
+    .panel-primary{border-color:#a6cae0;box-shadow:0 20px 56px rgba(16,85,129,.09)}
+    .panel-header{display:flex;gap:13px;align-items:flex-start}
+    .step{display:grid;flex:none;place-items:center;width:32px;height:32px;border-radius:10px;
+      background:var(--soft);color:var(--accent-dark);font-size:14px;font-weight:800}
+    .panel-header p{font-size:14px;margin:5px 0 0}
+    .action-block{margin:28px 0 20px}
+    .bookmark,.copy-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      min-height:48px;border:0;border-radius:11px;padding:13px 20px;font:700 15px/1.3 inherit;
+      font-family:inherit;font-size:15px;text-align:center;cursor:pointer;text-decoration:none}
+    .bookmark{background:var(--accent);color:#fff;box-shadow:0 6px 15px rgba(23,109,165,.18)}
+    .bookmark:hover{background:var(--accent-dark);color:#fff}
+    .copy-button{background:#eef4f8;color:var(--ink);border:1px solid #cfdce5}
+    .copy-button:hover{background:#e2edf5}
+    .action-hint{display:block;margin-top:11px;color:var(--muted);font-size:13px}
+    .code-heading{display:block;margin-bottom:8px;font-size:13px;font-weight:750;color:#324d5e}
+    textarea{display:block;width:100%;height:112px;resize:vertical;background:#f7fafc;color:#30475a;
+      border:1px solid var(--border);border-radius:11px;padding:13px 14px;
+      font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+      white-space:pre;overflow:auto;overflow-wrap:normal}
+    .manual-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:12px}
+    #copy-status{font-size:13px;color:var(--muted);min-height:20px}
+    #copy-status.success{color:var(--success)}
+    .instructions{margin:18px 0 0;padding-left:20px;color:var(--muted);font-size:14px}
+    .instructions li+li{margin-top:9px}
+    .instructions strong{color:var(--ink)}
+    .next{display:flex;gap:15px;align-items:flex-start;margin-top:21px;padding:23px 26px;
+      border:1px solid #d3e4ef;border-radius:16px;background:#ebf4fa}
+    .next .step{background:#d5e9f5}
+    .next h2{font-size:18px;margin:0 0 4px}
+    .next p{margin:0;font-size:14px}
+    .details{margin-top:27px;background:var(--surface);border:1px solid var(--border);
+      border-radius:16px;padding:18px 23px}
+    summary{cursor:pointer;font-weight:750;color:var(--ink)}
+    .details p{font-size:14px;margin:12px 0 0}
+    .footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;
+      margin-top:30px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+    .footer a{font-weight:650}
+    @media(max-width:790px){.install-grid{grid-template-columns:1fr}.shell{padding:24px 18px 42px}
+      .panel{padding:24px}.topline{margin-bottom:30px}.hero{margin-bottom:24px}}
+    @media(max-width:440px){.panel{padding:20px}.next{padding:19px}.topline{gap:12px}
+      .identity{font-size:14px}.version{font-size:12px}.lead{font-size:16px}
+      .bookmark,.copy-button{width:100%}.manual-actions{align-items:stretch;flex-direction:column}
+      .manual-actions .copy-button{width:100%}}
+    @media(prefers-reduced-motion:no-preference){.bookmark,.copy-button{transition:background-color .12s ease}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topline">
+      <div class="identity">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M7 3v4M17 3v4M3 10h18M8 15h3M15 15h1"></path>
+          </svg>
+        </span>
+        <span>Kalenderprofile</span>
+      </div>
+      <span class="version">Version @@KP_VERSION@@</span>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="eyebrow">Installation · Nextcloud Kalender</div>
+        <h1 id="page-title">Deine Kalender.<br>Deine Ansicht.</h1>
+        <p class="lead">Kalenderprofile ergänzt die Nextcloud-Kalenderansicht um speicherbare Profile, praktische Filter und eine individuelle Sortierung. Installiere es als Browser-Lesezeichen – ohne zusätzliche Nextcloud-App.</p>
+        <div class="features" aria-label="Funktionsübersicht">
+          <span>Profile &amp; Schnellansichten</span>
+          <span>Bereiche &amp; Kalenderarten</span>
+          <span>Individuelle Sortierung</span>
+          <span>Lokale JSON-Sicherung</span>
+        </div>
+      </section>
+
+      <section aria-labelledby="install-heading">
+        <div class="steps-intro">
+          <h2 id="install-heading">In wenigen Schritten startklar</h2>
+          <p>Wähle eine der beiden Installationsmethoden.</p>
+        </div>
+        <div class="install-grid">
+          <article class="panel panel-primary" aria-labelledby="drag-title">
+            <div class="panel-header">
+              <span class="step" aria-hidden="true">01</span>
+              <div>
+                <h3 id="drag-title">Per Drag-and-drop</h3>
+                <p>Der schnellste Weg in Chrome oder Edge auf dem Desktop.</p>
+              </div>
+            </div>
+            <div class="action-block">
+              <a class="bookmark" href="@@KP_BOOKMARKLET_HREF@@">Kalenderprofile</a>
+              <span class="action-hint">Den blauen Button mit der Maus in die Lesezeichenleiste ziehen – nicht einfach anklicken.</span>
+            </div>
+            <ol class="instructions">
+              <li>Öffne Chrome oder Edge und blende bei Bedarf die <strong>Lesezeichenleiste</strong> mit <strong>Strg + Umschalt + B</strong> ein.</li>
+              <li>Ziehe den Button <strong>Kalenderprofile</strong> in die Lesezeichenleiste.</li>
+              <li>Das Lesezeichen ist installiert. Es muss nicht erneut heruntergeladen werden.</li>
+            </ol>
+          </article>
+
+          <article class="panel" aria-labelledby="manual-title">
+            <div class="panel-header">
+              <span class="step" aria-hidden="true">02</span>
+              <div>
+                <h3 id="manual-title">Manuell installieren</h3>
+                <p>Falls Drag-and-drop nicht funktioniert oder du den Link selbst anlegen möchtest.</p>
+              </div>
+            </div>
+            <div class="action-block">
+              <label class="code-heading" for="bookmarklet-code">Vollständige Lesezeichen-Adresse</label>
+              <textarea id="bookmarklet-code" readonly rows="4" wrap="off" spellcheck="false" aria-describedby="code-help">Bookmarklet-Adresse wird vorbereitet …</textarea>
+              <div class="manual-actions">
+                <button id="copy-bookmarklet" class="copy-button" type="button">Code kopieren</button>
+                <span id="copy-status" role="status" aria-live="polite"></span>
+              </div>
+              <span id="code-help" class="action-hint">Die Codebox enthält den vollständigen JavaScript-Link und kann auch manuell markiert und kopiert werden.</span>
+            </div>
+            <ol class="instructions">
+              <li>Klicke auf <strong>Code kopieren</strong>.</li>
+              <li>Erstelle ein Browser-Lesezeichen mit dem Namen <strong>Kalenderprofile</strong> oder bearbeite ein vorhandenes.</li>
+              <li>Füge den Code vollständig in das Feld <strong>URL / Adresse</strong> ein und speichere das Lesezeichen.</li>
+            </ol>
+          </article>
+        </div>
+
+        <div class="next" aria-labelledby="start-title">
+          <span class="step" aria-hidden="true">03</span>
+          <div>
+            <h2 id="start-title">In Nextcloud verwenden</h2>
+            <p>Öffne deine Nextcloud-Kalender-App und klicke in der Lesezeichenleiste auf <strong>Kalenderprofile</strong>. Über <strong>Setup</strong> richtest du Bereiche, Kalenderarten und Schnellansichten ein. Bereits vorhandene Einstellungen bleiben bei einem Update erhalten.</p>
+          </div>
+        </div>
+      </section>
+
+      <details class="details">
+        <summary>Hinweise zu Sicherheit und Kompatibilität</summary>
+        <p>Das Bookmarklet enthält seinen JavaScript-Code vollständig und benötigt keinen externen Loader. Es wird in der geöffneten Nextcloud-Kalenderseite ausgeführt und verwendet deren angemeldete Sitzung.</p>
+        <p>Kalender-Sichtbarkeit wird erst nach <strong>„Auswahl anwenden“</strong> geändert. Eine serverseitige CalDAV-Sortierung wird gesondert geprüft und muss ausdrücklich bestätigt werden. Mehrere CalDAV-Schreiboperationen sind nicht atomar; im Fehlerfall erfolgt ein Rücknahmeversuch.</p>
+        <p>Profile und Einstellungen werden im lokalen Browserspeicher gehalten. Ein JSON-Export kann Kalendernamen und benutzerspezifische Angaben enthalten. Die Anwendung orientiert sich an der Nextcloud-Kalenderoberfläche; nicht jede Browser- oder Nextcloud-Version ist geprüft.</p>
+      </details>
+    </main>
+
+    <footer class="footer">
+      <span>Kalenderprofile · Version @@KP_VERSION@@ · Browser-Bookmarklet</span>
+      <span>Offline installierbar · Kein zusätzliches Nextcloud-Plugin</span>
+    </footer>
+  </div>
+  <script>
+    (() => {
+      'use strict';
+      const link = document.querySelector('a.bookmark');
+      const field = document.getElementById('bookmarklet-code');
+      const button = document.getElementById('copy-bookmarklet');
+      const status = document.getElementById('copy-status');
+      // One source of truth: same literal URL for drag-and-drop and copy/paste.
+      const code = link.getAttribute('href');
+      field.value = code;
+      const selectCode = () => {
+        field.focus();
+        field.select();
+        field.setSelectionRange(0, field.value.length);
+      };
+      field.addEventListener('focus', () => field.select());
+      button.addEventListener('click', async () => {
+        let copied = false;
+        try {
+          if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+            await navigator.clipboard.writeText(code);
+            copied = true;
+          }
+        } catch (_) { /* local file and browser permissions can block Clipboard API */ }
+        if (!copied) {
+          selectCode();
+          try { copied = document.execCommand('copy'); }
+          catch (_) { /* user can always select and copy the code manually */ }
+        }
+        status.classList.toggle('success', copied);
+        status.textContent = copied
+          ? 'Kopiert. Jetzt in das URL-Feld des Lesezeichens einfügen.'
+          : 'Automatisches Kopieren blockiert. Code ist markiert: Strg + C drücken.';
+      });
+    })();
+  </script>
+</body>
+</html>
