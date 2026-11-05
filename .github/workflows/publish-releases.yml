@@ -70,6 +70,8 @@ jobs:
           fi
           echo "RELEASE_TAG=$RELEASE_TAG" >> "$GITHUB_ENV"
           echo "Validated $RELEASE_TAG at $(git rev-parse HEAD)"
+      - name: Block organization-specific examples and personal data artifacts
+        run: python tests/test_repo_neutrality_205.py
       - name: Rebuild and verify standalone artifacts
         run: |
           set -euo pipefail
