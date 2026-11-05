@@ -18,7 +18,9 @@ for marker, file in [("@STYLE_INLINE@", "calendar-management.css"), ("@HTML_INLI
 
 bundle = (ROOT / "src/calendar-management-generic.js").read_text(encoding="utf-8")
 assert source == bundle, "Built JS differs from modular sources"
-assert "const VERSION = '2.0.2'" in source
+version_match = re.search(r"const VERSION = '(\d+\.\d+\.\d+)'", source)
+assert version_match, "Missing semantic version in source"
+assert version_match.group(1) == re.search(r"const VERSION = '(\d+\.\d+\.\d+)'", parts[0].read_text(encoding="utf-8")).group(1)
 assert "<h2>Kalenderprofile</h2>" in source
 assert "Kalenderverwaltung für Nextcloud · V${VERSION}" in source
 assert "Nextcloud Calendar Management · V${VERSION}" not in source

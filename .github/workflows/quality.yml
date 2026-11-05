@@ -2,7 +2,14 @@ name: Build and quality checks
 
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
+
+# A new commit supersedes obsolete branch/PR runs, avoiding parallel browser installs.
+concurrency:
+  group: quality-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -22,11 +29,15 @@ jobs:
         run: python scripts/build.py
       - name: Verify sources, bookmarklet and installer
         run: python tests/check_release.py
+      - name: Verify release packaging and checksums
+        run: python tests/test_release_packaging_203.py
       - name: Install Chromium browser testing dependencies
         run: |
           python -m pip install playwright==1.56.0
           python -m playwright install --with-deps chromium
       - name: Exercise initial startup and saved editor in Chromium
         run: python tests/test_saved_editor_201.py
+      - name: Test CalDAV safety and recovery with a simulated server
+        run: python tests/test_caldav_safety_203.py
       - name: Verify generated files are committed
         run: git diff --exit-code -- src/calendar-management-generic.js install/bookmarklet-url.txt install/installation.html
