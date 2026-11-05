@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  const VERSION = '2.0.3';
+  const VERSION = '2.0.4';
   const HOST_ID = 'nc-calendar-management-generic-v2';
   const existing = document.getElementById(HOST_ID);
   if (existing) { existing.__kpDispose?.(); existing.remove(); return; }
