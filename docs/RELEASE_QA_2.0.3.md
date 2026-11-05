@@ -21,6 +21,7 @@
 | Fehlende DAV-Zuordnung | Server liefert weniger Kalender als Browser | Schreibfreigabe bleibt deaktiviert |
 | Ungültige DAV-Reihenfolge | Server liefert nichtnumerische Sortierung | Keine Schreiboperation |
 | Benutzer bricht Übernahme ab | Dialog wird verworfen | Keine Schreiboperation |
+| Bestätigte Sortierung und Wiederherstellung | Freigabe, verifizierte PROPPATCH-Schreibvorgänge und explizite Rücknahme | Neureihenfolge und Originalreihenfolge werden jeweils nachgelesen |
 | Fehler nach Teiländerung | Erster `PROPPATCH` wirkt, Antwort ist HTTP 500 | Rücknahmeversuch; Fehler statt Erfolg |
 | Rücknahme ebenfalls fehlerhaft | Simulierter Server lehnt auch die Rücknahme ab | Explizite Warnung über fehlgeschlagene Rücknahme |
 | Netzwerk-Lesefehler | PROPFIND bricht vor der Zuordnung ab | Keine Schreiboperation |
