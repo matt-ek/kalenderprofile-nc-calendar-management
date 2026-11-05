@@ -1,10 +1,10 @@
 # Änderungsprotokoll
 
-## 2.0.3 – Release-Kandidat, 05.11.2026
+## 2.0.3 – veröffentlicht am 05.11.2026
 
 - CalDAV-Regressionssuite für schreibfreie Prüfung, unvollständige und ungültige Zuordnungen, abgelehnte Übernahme und Rücknahmeversuche bei Teilfehlern.
 - Verpflichtende Playwright-Prüfungen in GitHub Actions erweitert.
-- Generische, tagbasierte Release-Pipeline statt fest kodierter Vorgängerversionen; versionierte Assets und SHA-256-Prüfsummen vorgesehen.
+- Freigabegesteuerte Release-Pipeline mit unveränderlichem Tag, versionierten Assets und verifizierten SHA-256-Prüfsummen.
 - Dynamische Versionsprüfung im Build-Konsistenztest.
 - QA- und Kompatibilitätsnachweise für 2.0.3 mit ausdrücklich offener Live-Abnahme.
 - Keine Änderung an Fachfunktionen, Oberfläche, Konfigurationsschema oder CalDAV-Verhalten.
