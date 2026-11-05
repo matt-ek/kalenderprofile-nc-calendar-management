@@ -86,6 +86,7 @@ jobs:
         run: |
           python tests/test_saved_editor_201.py
           python tests/test_caldav_safety_203.py
+          python tests/test_installer_204.py
       - name: Package versioned release artifacts and checksums
         shell: bash
         run: |
