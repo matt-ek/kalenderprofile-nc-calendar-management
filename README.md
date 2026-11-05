@@ -4,7 +4,7 @@
 
 **Free & Open Source · Contributions welcome!**
 
-**Release:** 2.0.4 – verbesserter Installer (freigegeben, Veröffentlichung über GitHub Actions)    
+**Aktuelle Version:** [2.0.4](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.4) – veröffentlicht am 06.11.2026    
 Kalenderverwaltung für Nextcloud
 
 Browser-Bookmarklet zur Verwaltung von Kalenderprofilen, Schnellansichten, Kategorien, Bereichs- und Kalenderartfiltern sowie Kalenderreihenfolgen in der Nextcloud-Kalender-App.
