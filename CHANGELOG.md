@@ -1,6 +1,6 @@
 # Änderungsprotokoll
 
-## 2.0.4 – zur Veröffentlichung freigegeben
+## 2.0.4 – veröffentlicht am 06.11.2026
 
 - Vollständige Überarbeitung der Installer-HTML mit modernem, responsivem Layout und klaren Installationsanweisungen.
 - Sichtbare Versionsangaben aus der Entwicklungsquelle abgeleitet; veraltete Beta-Hinweise entfernt.
