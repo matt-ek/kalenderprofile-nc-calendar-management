@@ -1,12 +1,19 @@
 # Änderungsprotokoll
 
+## Wartung 06.11.2026 – ältere Releases und Tags entfernt
+
+- Releases 2.0.0 bis 2.0.4 einschließlich ihrer Git-Tags auf ausdrücklichen Wunsch des Repository-Eigentümers aus GitHub gelöscht.
+- Version 2.0.5 bleibt als einziges Release mit unveränderten Installer-, ZIP- und Prüfsummendateien erhalten.
+- Git-Historie, historische Dokumente, bereits erfolgte Downloads und externe Kopien sind nicht Teil der Löschung.
+- Einmaligen Löschworkflow nach erfolgreicher Prüfung entfernt; Publishing-Trigger auf reguläre Versionsfreigaben eingeschränkt.
+
 ## 2.0.5 – veröffentlicht am 06.11.2026: organisationsneutrale Veröffentlichung
 
 - Sichtbare und kommentierte Beispiele aus einem früheren projektspezifischen Einsatz durch neutrale Bezeichnungen ersetzt.
 - Installer, Bookmarklet-URL und JavaScript-Bundle aus der aktuellen Quelle neu erzeugt; bestehendes UI-Verhalten, lokales Datenformat und CalDAV-Logik unverändert.
 - Historische QA-Texte von konkreten Beispielkennungen bereinigt und frühere Qualitätsnachweise präzisiert.
 - Verbindliche Datenschutz-/Neutralitätsprüfung in CI und Release-Pipeline; sie erfasst auch URL-kodierte Inhalte in generierten Dateien und verhindert versehentliche Aufnahme persönlicher Exportdateien.
-- Ältere Tags bleiben für Nachvollziehbarkeit unverändert; die Veröffentlichungshistorie und ihre Grenzen sind dokumentiert.
+- Bei Veröffentlichung von 2.0.5 blieben die älteren Tags zunächst bestehen; sie wurden am 06.11.2026 gesondert entfernt.
 
 
 ## 2.0.4 – veröffentlicht am 06.11.2026
