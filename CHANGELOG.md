@@ -1,6 +1,6 @@
 # Änderungsprotokoll
 
-## 2.0.5 – Release-Kandidat: organisationsneutrale Veröffentlichung
+## 2.0.5 – veröffentlicht am 06.11.2026: organisationsneutrale Veröffentlichung
 
 - Sichtbare und kommentierte Beispiele aus einem früheren projektspezifischen Einsatz durch neutrale Bezeichnungen ersetzt.
 - Installer, Bookmarklet-URL und JavaScript-Bundle aus der aktuellen Quelle neu erzeugt; bestehendes UI-Verhalten, lokales Datenformat und CalDAV-Logik unverändert.
