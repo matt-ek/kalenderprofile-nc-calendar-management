@@ -1,0 +1,91 @@
+name: Retire legacy releases 2.0.0-2.0.4 (one-time)
+
+# This workflow is intentionally limited to one approved file change.
+on:
+  push:
+    branches: [main]
+    paths:
+      - docs/releases/retire-legacy-releases.approved
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalenderprofile-one-time-legacy-release-retirement
+  cancel-in-progress: false
+
+jobs:
+  retire-legacy:
+    if: github.repository == 'matt-ek/kalenderprofile-nc-calendar-management' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Strict preflight and protect current v2.0.5
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          approval=docs/releases/retire-legacy-releases.approved
+          grep -Fxq 'retirement-approved: true' "$approval"
+          grep -Fxq 'preserve-tag: v2.0.5' "$approval"
+          grep -Fxq 'remove-exactly: v2.0.0 v2.0.1 v2.0.2 v2.0.3 v2.0.4' "$approval"
+          grep -Fxq "  const VERSION = '2.0.5';" src/parts/00-startup.js
+          test "$(gh api "repos/$GITHUB_REPOSITORY" --jq '.private')" = "false"
+          protected_ref="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/v2.0.5" --jq '.object.sha')"
+          test "$protected_ref" = "7781d1b3a6b7c15ae616aaf47c9ec1ef63122ba0"
+          gh release view v2.0.5 --json tagName,isDraft,assets | jq -e '
+            .tagName=="v2.0.5" and (.isDraft == false)
+            and ([.assets[].name] | sort) ==
+              (["kalenderprofile-v2.0.5-installation.html", "kalenderprofile-v2.0.5.zip", "SHA256SUMS.txt"] | sort)
+          '
+          declare -A expected=(
+            [v2.0.0]=7a45c48adffc09766a3a3dfcc3d5577e406712c2
+            [v2.0.1]=c1517d75d1b0088005290f35441bb6b15dd3ff37
+            [v2.0.2]=05d7e49edd83e9d2858717841752233c97787d18
+            [v2.0.3]=fe8a7e4bad47b9bcb57d577ea9d516b7fedc81c8
+            [v2.0.4]=0f1b98c2265a4dedabd4cf8ad06bad6ad4c00c8e
+          )
+          for tag in v2.0.0 v2.0.1 v2.0.2 v2.0.3 v2.0.4; do
+            ref="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$tag" --jq '.object.sha')"
+            test "$ref" = "${expected[$tag]}"
+            gh release view "$tag" --json tagName,isDraft | jq -e \
+              --arg tag "$tag" '.tagName==$tag and (.isDraft==false)'
+            echo "Verified historical $tag at pinned commit; approved for retirement"
+          done
+          echo "All five historical releases and tags match the exact approved allowlist."
+      - name: Delete exactly five legacy releases and their Git tags
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for tag in v2.0.0 v2.0.1 v2.0.2 v2.0.3 v2.0.4; do
+            gh release delete "$tag" --cleanup-tag --yes
+            echo "Retired release and tag $tag"
+          done
+      - name: Verify deleted releases and tags; protect v2.0.5
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for tag in v2.0.0 v2.0.1 v2.0.2 v2.0.3 v2.0.4; do
+            if gh release view "$tag" >/dev/null 2>&1; then
+              echo "::error::Release still exists: $tag"; exit 1
+            fi
+            if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$tag" >/dev/null 2>&1; then
+              echo "::error::Git tag still exists: $tag"; exit 1
+            fi
+            echo "Verified absent: $tag release and tag"
+          done
+          ref="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/v2.0.5" --jq '.object.sha')"
+          test "$ref" = "7781d1b3a6b7c15ae616aaf47c9ec1ef63122ba0"
+          gh release view v2.0.5 --json tagName,isDraft,assets | jq -e '
+            .tagName=="v2.0.5" and (.isDraft == false)
+            and ([.assets[].name] | sort) ==
+              (["kalenderprofile-v2.0.5-installation.html", "kalenderprofile-v2.0.5.zip", "SHA256SUMS.txt"] | sort)
+          '
+          echo "Exactly five legacy release/tag pairs retired; protected release v2.0.5 unchanged."
