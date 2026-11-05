@@ -4,8 +4,7 @@
 
 **Free & Open Source · Contributions welcome!**
 
-**Aktuelles veröffentlichtes Release:** [2.0.4](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.4)  
-**Nächster Patch:** 2.0.5 – organisationsneutrale Bereinigung (Release-Kandidat)    
+**Aktuelles veröffentlichtes Release:** [2.0.5](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.5) – 06.11.2026    
 Kalenderverwaltung für Nextcloud
 
 Browser-Bookmarklet zur Verwaltung von Kalenderprofilen, Schnellansichten, Kategorien, Bereichs- und Kalenderartfiltern sowie Kalenderreihenfolgen in der Nextcloud-Kalender-App.
@@ -58,9 +57,9 @@ Die aktuelle Entwicklungsplanung mit Prioritäten, offenen Risiken und Abnahmekr
 
 ## Veröffentlichte Versionen und ältere Artefakte
 
-Bis einschließlich 2.0.4 enthalten historische Quell- und Release-Stände einzelne organisationsbezogene Beispielkennungen und Texte. In der Prüfung wurden keine produktiven Kalenderexporte oder Zugangsdaten im aktuellen Projekt nachgewiesen. Die früheren, unveränderlichen Git-Tags und Release-Pakete bleiben zu Prüf- und Reproduzierbarkeitszwecken erhalten. Für neue Installationen sollte nach Veröffentlichung der bereinigte Stand 2.0.5 verwendet werden. Weitere Informationen: [Umgang mit älteren Release-Artefakten](docs/RELEASE_HISTORY_POLICY.md).
+Bis einschließlich 2.0.4 enthalten historische Quell- und Release-Stände einzelne organisationsbezogene Beispielkennungen und Texte. In der Prüfung wurden keine produktiven Kalenderexporte oder Zugangsdaten im aktuellen Projekt nachgewiesen. Die früheren, unveränderlichen Git-Tags und Release-Pakete bleiben zu Prüf- und Reproduzierbarkeitszwecken erhalten. Für neue Installationen wird die bereinigte Version 2.0.5 empfohlen. Weitere Informationen: [Umgang mit älteren Release-Artefakten](docs/RELEASE_HISTORY_POLICY.md).
 
-- [2.0.5 – Organisationsneutralität (Kandidat)](docs/releases/v2.0.5.md)
+- [2.0.5 – Organisationsneutrale Bereinigung](docs/releases/v2.0.5.md)
 - [2.0.4 – Neue Installationsoberfläche](docs/releases/v2.0.4.md)
 - [2.0.3 – Stabilisierung und Release-Sicherheit](docs/releases/v2.0.3.md)
 - [2.0.2 – Start-Hotfix](docs/releases/v2.0.2.md)
