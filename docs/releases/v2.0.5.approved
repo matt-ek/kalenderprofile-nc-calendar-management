@@ -1,0 +1,16 @@
+# Freigabe Kalenderprofile v2.0.5
+
+release-approved: true
+
+Der Projekteigentümer hat ausdrücklich die vollständige Bereinigung des öffentlichen Repositories, die präventive CI-Prüfung und die Umsetzung der Patch-Version 2.0.5 beauftragt. Die Sichtbarkeit des Repositories bleibt public.
+
+Freigabeumfang:
+- Neutralisierung der identifizierten Quellkommentare und Beispiel-Beschriftungen.
+- Neuaufbau von JavaScript-Bundle, Bookmarklet-Adresse und Installer aus derselben Codebasis.
+- Bereinigung aktueller Dokumentation und sachliche Präzisierung früherer QA-Aussagen.
+- Verbindlicher CI- und Release-Scan auf bekannte projektspezifische Muster, persönliche Exportdateien und erkannte Geheimnisse.
+- Historische veröffentlichte Tags und Assets bleiben zur Nachvollziehbarkeit unangetastet; ihre verbleibenden Herkunftshinweise sind dokumentiert.
+
+Go/No-Go: GO unter der Bedingung, dass der vollständige PR-, main- und Release-CI-Lauf alle verpflichtenden Gates erfolgreich durchläuft. Die veröffentlichten drei Assets sind nach dem Download mittels SHA-256 zu verifizieren.
+
+Nicht behauptet: Eine forensische Untersuchung sämtlicher historischen Commits, eine vollständige Datenschutz-Zertifizierung oder neue produktive Server-/CalDAV-Schreibtests.
