@@ -1,26 +1,28 @@
 # Öffentliche Veröffentlichungshistorie und Datenschutz
 
-## Entscheidung
+## Aktuelle Entscheidung und Umsetzung
 
-Das Repository **bleibt öffentlich**. Die bereits veröffentlichten Git-Tags und Release-Dateien von Version 2.0.0 bis einschließlich 2.0.4 bleiben unverändert und werden nicht nachträglich überschrieben, um Integrität, Prüfsummen und Reproduzierbarkeit nicht zu brechen. Der neutrale Nachfolger ist Version 2.0.5.
+Das Repository **bleibt öffentlich**. Auf ausdrücklichen Wunsch des Repository-Eigentümers wurden am **06.11.2026** alle fünf historischen GitHub-Releases der Versionen **2.0.0 bis 2.0.4 einschließlich ihrer Git-Tags entfernt**. Der einzige verbliebene veröffentlichte Git-Tag und Release ist **v2.0.5**.
+
+Die Entfernung erfolgte über einen einmaligen freigegebenen GitHub-Actions-Workflow mit strenger Positivliste und Prüfung der ursprünglichen Tag-Commit-Hashes. Das [erfolgreiche Ausführungsprotokoll](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/actions/runs/42132262033) dokumentiert die Entfernung und die nachfolgende Prüfung der Abwesenheit der fünf Releases und Tags. Die unveränderte Version 2.0.5 war gegen Löschung geschützt. Der temporäre Workflow wird nach der Ausführung aus dem aktuellen Repository-Baum entfernt.
 
 ## Historischer Befund
 
-In älteren Quelltextkommentaren, einer Eingabefeld-Vorbelegung und Dokumentationsstellen wurden Beispielbezeichnungen aus einem vorangegangenen organisationsspezifischen Projekt verwendet. Diese Inhalte sind auch in älteren generierten Bookmarklet-Bundles und Installationsdateien vorhanden.
+In älteren Quelltextkommentaren, einem Eingabefeld-Platzhalter und Dokumentationsstellen waren konkrete Bezeichnungen aus einer früheren organisationsspezifischen Anwendung enthalten. Diese Hinweise waren auch in alten generierten JavaScript-Bundles und Installer-Dateien zu finden. Die öffentlich angebotene Nachfolgeversion 2.0.5 verwendet neutrale Beispiele.
 
-In der durchgeführten Sichtprüfung der aktuell verfolgten Dateien, bestehenden Release-Tags, Beispielkonfigurationen sowie abrufbaren Issue- und PR-Texten wurden **keine vollständigen produktiven Kalenderexporte, Zugangsdaten oder kundenspezifischen Server-URLs nachgewiesen**. Das ist keine vollständige forensische Bestätigung sämtlicher historischer Zwischenstände, fremder Forks oder zwischengespeicherter Kopien.
+Bei der Prüfung der damals aktuellen Dateien und der über GitHub abrufbaren Versionen wurden keine vollständigen produktiven Kalenderexporte, Zugangsdaten oder kundenspezifischen Server-URLs nachgewiesen. Das ist keine vollständige forensische Untersuchung aller historischen Commits, externen Forks oder Kopien.
 
-## Maßnahmen
+## Wirkung der Entfernung
 
-1. Neue Softwarestände ersetzen sämtliche gefundenen spezifischen Demo- und Hilfstexte durch neutrale Beispiele.
-2. Ein verbindlicher CI-Check prüft verfolgte Quell-, Dokumentations- und Auslieferungsdateien, auch mehrfach URL- bzw. HTML-dekodiert, und meldet nur Dateinamen und Regelklassen. Der Check verhindert die versehentliche Aufnahme einschlägiger Kalender- oder Exportformate.
-3. Das geprüfte Patch-Release 2.0.5 wird als neue, unveränderliche Version veröffentlicht; neue Installationen sollen die aktuelle Version verwenden.
-4. Die alten Releases bleiben öffentlich abrufbar, gelten jedoch hinsichtlich der organisationsneutralen Beispiele als **abgelöst**. Diese Einstufung bedeutet nicht automatisch, dass die alten Versionen funktionsunfähig sind.
-5. Frühere Git-Tags, Assets oder Commits werden **nicht** umgeschrieben oder gelöscht. Ein nachträgliches Umschreiben könnte Integritätsnachweise, bestehende Installationen, Links, Clones und Prüfsummen brechen und die bereits erfolgte öffentliche Sichtbarkeit ohnehin nicht zuverlässig rückgängig machen.
+- Die regulären GitHub-Release-Downloads und die fünf zugehörigen Tag-Referenzen stehen nicht mehr zur Verfügung.
+- Alle drei Release-Assets von 2.0.5 und dessen Tag wurden bei der Löschung erneut überprüft und bleiben erhalten.
+- Das Repository bleibt öffentlich, die Programmfunktionen und die aktuelle Codebasis bleiben unverändert.
+- Der CI-Check für organisationsspezifische Inhalte bleibt für neue Änderungen und Releases aktiviert.
 
-## Grenzen und Reaktion auf neue Befunde
+## Verbleibende historische Informationen
 
-- Die CI-Prüfung schützt den jeweils aktuellen Repositorystand; sie kann alte Tags, externe Clones, Caches oder Downloads nicht aus der Welt entfernen.
-- Falls später tatsächliche Geheimnisse oder sensible Personendaten gefunden werden, ist das ein gesonderter Sicherheitsvorfall: betroffene Berechtigungen beziehungsweise Tokens unverzüglich widerrufen/rotieren, betroffene Personen und erforderliche Meldungen prüfen und erst danach eine gezielte Git-/Release-Bereinigung entscheiden.
-- Lizenz- und Copyright-Urheberangaben sind bewusst nicht mit organisationsbezogenen Kalenderdaten gleichgesetzt.
-- Die Prüfung wird regelmäßig erweitert, wenn weitere projektspezifische Muster bekannt werden.
+- **Git-Commit-Historie und frühere Branches:** nicht umgeschrieben. Alter Quellcode kann über alte Commits oder Klone weiterhin erreichbar sein.
+- **Bereits heruntergeladene Dateien, externe Forks und Caches:** werden durch das Löschen von GitHub-Releases nicht entfernt.
+- **Release-Notizen und Changelog im Repository:** bleiben als historische Dokumentation erhalten; die Erwähnung älterer Versionen bedeutet nicht, dass diese noch als GitHub-Release angeboten werden.
+
+Falls nachträglich echte Geheimnisse oder sensible personenbezogene Daten nachgewiesen werden, sind betroffene Berechtigungen beziehungsweise Tokens gesondert zu widerrufen und eine zielgerichtete Sicherheitsprüfung einzuleiten. Das Löschen von Releases allein wäre dann keine ausreichende Maßnahme.
