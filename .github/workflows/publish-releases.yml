@@ -71,12 +71,9 @@ jobs:
           set -euo pipefail
           mkdir -p dist
           cp install/installation.html "dist/kalenderprofile-${RELEASE_TAG}-installation.html"
-          mkdir -p "$RUNNER_TEMP/kalenderprofile-${RELEASE_TAG}"
-          git archive HEAD | tar -xf - -C "$RUNNER_TEMP/kalenderprofile-${RELEASE_TAG}"
-          (
-            cd "$RUNNER_TEMP"
-            zip -qr "$GITHUB_WORKSPACE/dist/kalenderprofile-${RELEASE_TAG}.zip" "kalenderprofile-${RELEASE_TAG}"
-          )
+          # Archive tracks committed bytes and deterministic commit timestamps.
+          git archive --format=zip --prefix="kalenderprofile-${RELEASE_TAG}/" HEAD \
+            > "dist/kalenderprofile-${RELEASE_TAG}.zip"
           (
             cd dist
             sha256sum "kalenderprofile-${RELEASE_TAG}-installation.html" "kalenderprofile-${RELEASE_TAG}.zip" > SHA256SUMS.txt
@@ -91,7 +88,23 @@ jobs:
         run: |
           set -euo pipefail
           if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
-            echo "::notice::Release exists; no published asset or tag is overwritten."
+            # A retry must not mask partial or differing existing releases.
+            temp="$(mktemp -d)"
+            if ! gh release download "$RELEASE_TAG" -p SHA256SUMS.txt -D "$temp"; then
+              echo "::error::Existing release has no SHA256SUMS.txt; manual recovery required."
+              exit 1
+            fi
+            if ! cmp -s "$temp/SHA256SUMS.txt" dist/SHA256SUMS.txt; then
+              echo "::error::Existing release differs from this commit; refusing overwrite."
+              exit 1
+            fi
+            existing="$(gh release view "$RELEASE_TAG" --json isDraft,assets)"
+            test "$(echo "$existing" | jq -r '.isDraft')" = "false"
+            for asset in "kalenderprofile-${RELEASE_TAG}-installation.html" \
+                         "kalenderprofile-${RELEASE_TAG}.zip" "SHA256SUMS.txt"; do
+              echo "$existing" | jq -er --arg name "$asset" '.assets[] | select(.name == $name) | .name' >/dev/null
+            done
+            echo "::notice::Existing release verified; no asset or tag overwritten."
             exit 0
           fi
           gh release create "$RELEASE_TAG" \
