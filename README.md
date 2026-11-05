@@ -4,7 +4,8 @@
 
 **Free & Open Source · Contributions welcome!**
 
-**Aktuelle Version:** [2.0.4](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.4) – veröffentlicht am 06.11.2026    
+**Aktuelles veröffentlichtes Release:** [2.0.4](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.4)  
+**Nächster Patch:** 2.0.5 – organisationsneutrale Bereinigung (Release-Kandidat)    
 Kalenderverwaltung für Nextcloud
 
 Browser-Bookmarklet zur Verwaltung von Kalenderprofilen, Schnellansichten, Kategorien, Bereichs- und Kalenderartfiltern sowie Kalenderreihenfolgen in der Nextcloud-Kalender-App.
@@ -32,6 +33,7 @@ Der Installer und das Bookmarklet enthalten den vollständigen JavaScript-Code. 
 ```bash
 python scripts/build.py
 python tests/check_release.py
+python tests/test_repo_neutrality_205.py
 ```
 
 Die Build-Skripte erzeugen `src/calendar-management-generic.js`, `install/bookmarklet-url.txt` und `install/installation.html` aus den Entwicklungsdateien und der gepflegten Vorlage `install/installer-template.html`. Die sichtbare Installer-Version und beide Installationswege verwenden immer die Versionskennung bzw. Bookmarklet-Adresse aus derselben Quelle. Das ausgelieferte Bookmarklet hat keine externen Laufzeitabhängigkeiten. Die automatisierten Tests verwenden Playwright/Chromium. Version 2.0.3 ergänzt simulierte CalDAV-Fehlerfalltests; reale Nextcloud-Abnahmen werden separat dokumentiert.
@@ -54,8 +56,11 @@ Copyright © 2026 Matthias Ebermann-Kestel.
 
 Die aktuelle Entwicklungsplanung mit Prioritäten, offenen Risiken und Abnahmekriterien steht im [Projektplan](docs/PROJECT_PLAN.md). Der [Entwicklungs- und Releaseprozess](docs/RELEASE_PROCESS.md) beschreibt Pull Requests, Qualitätssicherung, Freigaben und Hotfixes. Die Umsetzung wird über [GitHub Issues](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/issues) verfolgt.
 
-## Releases
+## Veröffentlichte Versionen und ältere Artefakte
 
+Bis einschließlich 2.0.4 enthalten historische Quell- und Release-Stände einzelne organisationsbezogene Beispielkennungen und Texte. In der Prüfung wurden keine produktiven Kalenderexporte oder Zugangsdaten im aktuellen Projekt nachgewiesen. Die früheren, unveränderlichen Git-Tags und Release-Pakete bleiben zu Prüf- und Reproduzierbarkeitszwecken erhalten. Für neue Installationen sollte nach Veröffentlichung der bereinigte Stand 2.0.5 verwendet werden. Weitere Informationen: [Umgang mit älteren Release-Artefakten](docs/RELEASE_HISTORY_POLICY.md).
+
+- [2.0.5 – Organisationsneutralität (Kandidat)](docs/releases/v2.0.5.md)
 - [2.0.4 – Neue Installationsoberfläche](docs/releases/v2.0.4.md)
 - [2.0.3 – Stabilisierung und Release-Sicherheit](docs/releases/v2.0.3.md)
 - [2.0.2 – Start-Hotfix](docs/releases/v2.0.2.md)
