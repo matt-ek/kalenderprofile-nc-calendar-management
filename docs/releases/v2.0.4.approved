@@ -1,0 +1,18 @@
+# Freigabe Kalenderprofile v2.0.4
+
+release-approved: true
+
+Der Projekteigentümer hat die Veröffentlichung der Installer-Verbesserungen für Version 2.0.4 ausdrücklich freigegeben.
+
+Freigabegegenstand:
+- Überarbeiteter HTML-Installer mit dynamischer Versionsanzeige, neuer Gestaltung und klarer Dokumentation.
+- Installation per Drag-and-drop oder über vollständig kopierbaren Lesezeichen-Code und Codebox.
+- Keine Änderung von Kalenderfunktionen, gespeicherten Einstellungen oder CalDAV-Fachlogik gegenüber 2.0.3.
+- Bisher erfolgreicher automatisierter CI-Lauf auf main: 42125828056 (Commit dacd3e32b2df7b77ba9b01725e52aa8f0d3b85de).
+- Die Release-Pipeline wiederholt vor Tag-Erstellung und Veröffentlichung sämtliche vorgeschriebenen Tests.
+
+Freigabeentscheidung: GO unter der Voraussetzung, dass die automatisierten Release-Tests bestanden werden und die veröffentlichten Assets anhand von SHA-256-Prüfsummen verifiziert werden.
+
+Nicht behauptet: Durchführung manueller Chrome-/Edge-Installationsprüfungen oder spezifischer Live-CalDAV-Tests, die nicht gesondert nachgewiesen sind. Diese Restrisiken sind in docs/RELEASE_QA_2.0.4.md dokumentiert.
+
+Bestehende Git-Tags, veröffentlichte Releases und Assets dürfen nicht überschrieben werden.

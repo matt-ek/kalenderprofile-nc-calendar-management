@@ -1,6 +1,6 @@
 # Änderungsprotokoll
 
-## 2.0.4 – Release-Kandidat
+## 2.0.4 – zur Veröffentlichung freigegeben
 
 - Vollständige Überarbeitung der Installer-HTML mit modernem, responsivem Layout und klaren Installationsanweisungen.
 - Sichtbare Versionsangaben aus der Entwicklungsquelle abgeleitet; veraltete Beta-Hinweise entfernt.
