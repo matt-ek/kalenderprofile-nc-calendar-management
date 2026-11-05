@@ -2,7 +2,7 @@
 """Source, installer and bookmarklet consistency checks (no external Python packages)."""
 from pathlib import Path
 from urllib.parse import unquote
-from html import unescape
+from html import unescape, escape
 import re
 import subprocess
 
@@ -45,10 +45,26 @@ assert url.startswith("javascript:")
 assert unquote(url[len("javascript:"):]) == source, "Bookmarklet URL differs from JS"
 
 html = (ROOT / "install/installation.html").read_text(encoding="utf-8")
+template = (ROOT / "install/installer-template.html").read_text(encoding="utf-8")
+assert template.count("@@KP_VERSION@@") == 2
+assert template.count("@@KP_BOOKMARKLET_HREF@@") == 1
+expected_installer = template.replace("@@KP_VERSION@@", version_match.group(1)).replace(
+    "@@KP_BOOKMARKLET_HREF@@", escape(url, quote=True)
+)
+assert html == expected_installer, "Installer is stale or differs from the maintained template"
 m = re.search(r'<a class="bookmark" href="([^"]+)"', html)
 assert m, "Bookmarklet drag link missing"
 assert "<title>Kalenderprofile – Installation</title>" in html
 assert ">Kalenderprofile</a>" in html
-assert unescape(m.group(1)) == url, "Installer link differs from bookmarklet URL"
+assert unescape(m.group(1)) == url, "Installer drag link differs from bookmarklet URL"
+assert f'Version {version_match.group(1)}' in html, "Version is missing from installer header"
+assert html.count(f'Version {version_match.group(1)}') == 2, "Installer version header/footer mismatch"
+assert 'id="bookmarklet-code"' in html and 'id="copy-bookmarklet"' in html
+assert 'link.getAttribute(' in html and 'field.value = code' in html
+# The installer UI must not expose outdated Beta release descriptions.
+visible_document = re.sub(r'(<a class="bookmark" href=")[^"]*(")', r'\1[BOOKMARKLET]\2', html, count=1)
+assert "Technik-Release Beta 15" not in visible_document
+assert "V2.0.1</strong>" not in visible_document
+assert "@@KP_" not in html, "Unresolved build marker"
 
 print("PASS: source modules, CSS/HTML assets, JS syntax, bookmarklet and installer")
