@@ -1,6 +1,6 @@
 # Qualitätssicherung – Kalenderprofile 2.0.4 (Installer)
 
-**Status:** Release-Kandidat, nicht veröffentlicht.  
+**Status:** Vom Projekteigentümer ausdrücklich zur Veröffentlichung freigegeben; offizielle Auslieferung nach erfolgreichem Publishing-Workflow.  
 **Gegenstand:** Ausschließlich HTML-Installer, generierter Bookmarklet-Versionsstand und Build-/Prüfprozess.
 
 ## Ziel und Abgrenzung
@@ -26,7 +26,7 @@
 | Offline-Verhalten | Playwright über lokale Datei | Keine externen HTTP(S)-Anfragen bei Installation |
 | Releasetauglichkeit | `python tests/test_release_packaging_203.py` | Reproduzierbares ZIP, aktuelle Release Notes vorhanden |
 
-### Manuelle Prüfpunkte vor Veröffentlichung
+### Manuelle Prüfpunkte (nicht durch CI belegt)
 
 - [ ] Installer lokal unter Windows in Chrome öffnen; Drag-and-drop in Lesezeichenleiste prüfen.
 - [ ] Installer lokal unter Windows in Edge öffnen; Drag-and-drop prüfen.
@@ -37,4 +37,7 @@
 
 ## Veröffentlichung
 
-Das bestehende GitHub-Release `v2.0.3` und dessen unveränderliche Assets werden nicht rückwirkend geändert. Version 2.0.4 darf erst nach erfolgreichen CI-Gates und Release-Freigabe als eigener Tag mit neuen Assets publiziert werden.
+Das bestehende GitHub-Release `v2.0.3` und dessen unveränderliche Assets werden nicht rückwirkend geändert. Für 2.0.4 wurde die Veröffentlichung ausdrücklich freigegeben. Der vorangegangene Qualitätslauf auf `main` [42125828056](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/actions/runs/42125828056) war erfolgreich. Die noch offenen manuellen Prüfpunkte gelten **nicht** als durchgeführt; die Freigabe akzeptiert deren dokumentierten Restumfang für diese auf den Installer begrenzte Patch-Version. Die Release-Pipeline führt die automatisierten Tests erneut aus und erzeugt nur bei Erfolg einen eigenen unveränderlichen Tag sowie neue Assets. Nach der Veröffentlichung müssen Tag, Assets und SHA256SUMS.txt überprüft werden.
+
+
+**Freigabe:** GO durch ausdrückliche Nachricht des Projekteigentümers; kein Nachweis zusätzlicher manueller Browser- oder Live-Nextcloud-Tests.
