@@ -26,7 +26,7 @@
 ## Manuelle Grenzen
 
 - Die Neutralitätsprüfung ist ein statischer, begriffsbasierten Check auf bekannte Muster; sie ersetzt keine allgemeine Datenschutz-Zertifizierung.
-- Historische Artefakte und Referenzen bleiben vorhanden; für den Umgang damit gilt die [Historienrichtlinie](RELEASE_HISTORY_POLICY.md).
+- Frühere GitHub-Releases und Tags wurden entfernt; historische Commits und externe Kopien bleiben möglicherweise erreichbar. Details enthält die [Historienrichtlinie](RELEASE_HISTORY_POLICY.md).
 - Es wurde keine Live-CalDAV-Schreibprüfung aus diesem reinen Bereinigungsauftrag abgeleitet.
 
 **Go/No-Go:** **GO, abgeschlossen.** Die Veröffentlichung erfolgte nach ausdrücklicher Freigabe und vollständig erfolgreicher Release-Pipeline. Die historischen und forensischen Grenzen bleiben bestehen.
@@ -41,4 +41,4 @@
 - [GitHub-Release v2.0.5](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.5): veröffentlicht am 2026-11-05 um 23:37:29 UTC (06.11.2026, 00:37:29 MEZ).
 - Git-Tag `v2.0.5` auf Commit `7781d1b3a6b7c15ae616aaf47c9ec1ef63122ba0`.
 - Assetdateien: `kalenderprofile-v2.0.5-installation.html` (330204 Bytes), `kalenderprofile-v2.0.5.zip` (321188 Bytes), `SHA256SUMS.txt` (200 Bytes).
-- Frühere Tags/Downloads bleiben unverändert und unterliegen der [Historienrichtlinie](RELEASE_HISTORY_POLICY.md).
+- Die früheren GitHub-Releases und Tags 2.0.0 bis 2.0.4 wurden gesondert gelöscht. [Bereinigungsworkflow #42132262033](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/actions/runs/42132262033): erfolgreich; Schutz von 2.0.5 bestätigt.
