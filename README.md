@@ -48,6 +48,10 @@ Kalenderprofile ist **kostenlos und Open Source** unter der [MIT-Lizenz](LICENSE
 
 Copyright © 2026 Matthias Ebermann-Kestel.
 
+## Projektsteuerung und Roadmap
+
+Die aktuelle Entwicklungsplanung mit Prioritäten, offenen Risiken und Abnahmekriterien steht im [Projektplan](docs/PROJECT_PLAN.md). Der [Entwicklungs- und Releaseprozess](docs/RELEASE_PROCESS.md) beschreibt Pull Requests, Qualitätssicherung, Freigaben und Hotfixes. Die Umsetzung wird über [GitHub Issues](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/issues) verfolgt.
+
 ## Releases
 
 - [2.0.1 – Erweiterter Profil- und Sortier-Set-Editor](docs/releases/v2.0.1.md)
