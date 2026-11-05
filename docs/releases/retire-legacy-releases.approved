@@ -1,0 +1,15 @@
+# Einmalige Freigabe zur Entfernung früherer Releases
+
+retirement-approved: true
+remove-exactly: v2.0.0 v2.0.1 v2.0.2 v2.0.3 v2.0.4
+preserve-tag: v2.0.5
+
+Der Repository-Eigentümer hat ausdrücklich die Entfernung der fünf früheren GitHub-Releases
+einschließlich der zugehörigen Git-Tags bestätigt. Die freigegebene Version v2.0.5,
+das öffentliche Repository, main und die Commit-Historie bleiben unangetastet.
+
+Prüfung und Ausführung ausschließlich über
+.github/workflows/retire-legacy-releases.yml mit exakten Tag-SHAs, Schutzprüfung
+der aktuellen Version und abschließender API-Verifikation.
+
+Diese Datei ist ein einmaliges Freigabeartefakt und kein regelmäßiger Bereinigungsauftrag.
