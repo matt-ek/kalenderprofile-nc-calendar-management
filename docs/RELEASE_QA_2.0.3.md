@@ -22,7 +22,10 @@
 | Ungültige DAV-Reihenfolge | Server liefert nichtnumerische Sortierung | Keine Schreiboperation |
 | Benutzer bricht Übernahme ab | Dialog wird verworfen | Keine Schreiboperation |
 | Fehler nach Teiländerung | Erster `PROPPATCH` wirkt, Antwort ist HTTP 500 | Rücknahmeversuch; Fehler statt Erfolg |
+| Rücknahme ebenfalls fehlerhaft | Simulierter Server lehnt auch die Rücknahme ab | Explizite Warnung über fehlgeschlagene Rücknahme |
+| Netzwerk-Lesefehler | PROPFIND bricht vor der Zuordnung ab | Keine Schreiboperation |
 | Build-Konsistenz | Quell- und Installationsartefaktvergleich | Identisch zur Modulquelle |
+| Release-Archiv | Zweifache Git-Archive-Erzeugung und SHA-256-Kontrolle | Byteidentische ZIPs, vollständiges Archiv |
 | Editor-Regressionsschutz | Vorhandener Browser-Test | Profile, Sortier-Sets und Dialogstart funktionieren |
 
 Die simulierten Ergebnisse beweisen **nicht**, dass das Serververhalten auf allen Nextcloud-Versionen identisch ist.
