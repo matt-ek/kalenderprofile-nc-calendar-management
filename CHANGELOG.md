@@ -1,5 +1,14 @@
 # Änderungsprotokoll
 
+## 2.0.5 – Release-Kandidat: organisationsneutrale Veröffentlichung
+
+- Sichtbare und kommentierte Beispiele aus einem früheren projektspezifischen Einsatz durch neutrale Bezeichnungen ersetzt.
+- Installer, Bookmarklet-URL und JavaScript-Bundle aus der aktuellen Quelle neu erzeugt; bestehendes UI-Verhalten, lokales Datenformat und CalDAV-Logik unverändert.
+- Historische QA-Texte von konkreten Beispielkennungen bereinigt und frühere Qualitätsnachweise präzisiert.
+- Verbindliche Datenschutz-/Neutralitätsprüfung in CI und Release-Pipeline; sie erfasst auch URL-kodierte Inhalte in generierten Dateien und verhindert versehentliche Aufnahme persönlicher Exportdateien.
+- Ältere Tags bleiben für Nachvollziehbarkeit unverändert; die Veröffentlichungshistorie und ihre Grenzen sind dokumentiert.
+
+
 ## 2.0.4 – veröffentlicht am 06.11.2026
 
 - Vollständige Überarbeitung der Installer-HTML mit modernem, responsivem Layout und klaren Installationsanweisungen.
@@ -66,4 +75,4 @@ Stabile Veröffentlichung auf Basis der produktiv geprüften Beta 15.
 - **Beta 5–6:** Bearbeitbare Bereichs-/Typkennungen und Referenzübernahme.
 - **Beta 2–4:** Editierbare Bereiche/Kalenderarten, Importkompatibilität, Systemkalender-Erkennung.
 
-Die Gemeinde-spezifische Vorgängerversion V1.2.6 bleibt ein separates Projekt.
+Ein früheres, getrennt entwickeltes Projekt ist nicht Bestandteil dieses generischen Repositories.
