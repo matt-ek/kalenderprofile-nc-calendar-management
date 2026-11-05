@@ -39,5 +39,7 @@ jobs:
         run: python tests/test_saved_editor_201.py
       - name: Test CalDAV safety and recovery with a simulated server
         run: python tests/test_caldav_safety_203.py
+      - name: Test installer in Chromium on desktop and mobile
+        run: python tests/test_installer_204.py
       - name: Verify generated files are committed
         run: git diff --exit-code -- src/calendar-management-generic.js install/bookmarklet-url.txt install/installation.html

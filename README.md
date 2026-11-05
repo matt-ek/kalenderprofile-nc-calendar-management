@@ -4,14 +4,15 @@
 
 **Free & Open Source · Contributions welcome!**
 
-**Version:** 2.0.3 (05.11.2026)  
+**Veröffentlicht:** 2.0.3 (05.11.2026)  
+**In Vorbereitung:** 2.0.4 – verbesserter Installer  
 Kalenderverwaltung für Nextcloud
 
 Browser-Bookmarklet zur Verwaltung von Kalenderprofilen, Schnellansichten, Kategorien, Bereichs- und Kalenderartfiltern sowie Kalenderreihenfolgen in der Nextcloud-Kalender-App.
 
 ## Installation
 
-**Empfohlen:** Unter [Releases](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases) die passende Datei `kalenderprofile-vX.Y.Z-installation.html` im Bereich **Assets** herunterladen. Diese HTML-Datei **lokal in Chrome oder Edge öffnen**, den Link **Kalenderprofile** in die Lesezeichenleiste ziehen, die Nextcloud-Kalender-App aufrufen und das Lesezeichen anklicken. Die GitHub-Dateivorschau und die automatisch generierten Quellcode-Archive sind keine unmittelbar ausführbare Installationsseite.
+**Empfohlen:** Unter [Releases](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases) die passende Datei `kalenderprofile-vX.Y.Z-installation.html` im Bereich **Assets** herunterladen. Diese HTML-Datei **lokal in Chrome oder Edge öffnen** und entweder den Link **Kalenderprofile** in die Lesezeichenleiste ziehen oder die vollständige Bookmarklet-Adresse über **Code kopieren** als URL eines Lesezeichens einfügen. Danach die Nextcloud-Kalender-App öffnen und das Lesezeichen anklicken. Die GitHub-Dateivorschau und die automatisch generierten Quellcode-Archive sind keine unmittelbar ausführbare Installationsseite.
 
 Alternativ lässt sich die Datei `install/installation.html` aus dem vollständig heruntergeladenen Repository lokal öffnen.
 
@@ -34,11 +35,11 @@ python scripts/build.py
 python tests/check_release.py
 ```
 
-Die Build-Skripte erzeugen `src/calendar-management-generic.js`, `install/bookmarklet-url.txt` und `install/installation.html` aus den Entwicklungsdateien. Das ausgelieferte Bookmarklet hat keine externen Laufzeitabhängigkeiten. Die automatisierten Tests verwenden Playwright/Chromium. Version 2.0.3 ergänzt simulierte CalDAV-Fehlerfalltests; reale Nextcloud-Abnahmen werden separat dokumentiert.
+Die Build-Skripte erzeugen `src/calendar-management-generic.js`, `install/bookmarklet-url.txt` und `install/installation.html` aus den Entwicklungsdateien und der gepflegten Vorlage `install/installer-template.html`. Die sichtbare Installer-Version und beide Installationswege verwenden immer die Versionskennung bzw. Bookmarklet-Adresse aus derselben Quelle. Das ausgelieferte Bookmarklet hat keine externen Laufzeitabhängigkeiten. Die automatisierten Tests verwenden Playwright/Chromium. Version 2.0.3 ergänzt simulierte CalDAV-Fehlerfalltests; reale Nextcloud-Abnahmen werden separat dokumentiert.
 
 ## Kompatibilität und Sicherheit
 
-Die Software wurde in einer produktiven Nextcloud-Instanz mit der Beta-15-Basis geprüft und für 2.0.0 freigegeben; die Release-QA umfasst 17 erfolgreiche Prüfungen. Eine versionsübergreifende Kompatibilitätsgarantie für alle Nextcloud-Kalender-Versionen gibt es nicht.
+Für 2.0.3 sind automatisierte Browser- und simulierte CalDAV-Tests sowie eine positive manuelle Funktionsprüfung dokumentiert. Eine versionsübergreifende Kompatibilitätsgarantie für sämtliche Nextcloud- und Browser-Versionen gibt es nicht.
 
 Die CalDAV-Sortierung schreibt nach ausdrücklicher Benutzerfreigabe in die Nextcloud. Änderungen über mehrere Kalender sind nicht atomar; im Fehlerfall erfolgt ein Wiederherstellungsversuch. JSON-Exporte können Kalendernamen und weitere benutzerspezifische Angaben im Klartext enthalten.
 
@@ -56,6 +57,7 @@ Die aktuelle Entwicklungsplanung mit Prioritäten, offenen Risiken und Abnahmekr
 
 ## Releases
 
+- [2.0.4 – Installationsoberfläche (in Vorbereitung)](docs/releases/v2.0.4.md)
 - [2.0.3 – Stabilisierung und Release-Sicherheit](docs/releases/v2.0.3.md)
 - [2.0.2 – Start-Hotfix](docs/releases/v2.0.2.md)
 - [2.0.1 – Erweiterter Profil- und Sortier-Set-Editor](docs/releases/v2.0.1.md)

@@ -1,11 +1,11 @@
 # Architektur – Kalenderprofile
 
-Stand: V2.0.3. Dies ist die Entwicklungsstruktur des lokalen Bookmarklets, keine serverseitige Nextcloud-App.
+Stand: V2.0.4 (Installer-Release-Kandidat). Dies ist die Entwicklungsstruktur des lokalen Bookmarklets, keine serverseitige Nextcloud-App.
 
 ## Prinzipien
 
 1. Kein externer JavaScript-Lader: `src/calendar-management-generic.js` enthält CSS, HTML und Programmlogik.
-2. Die ausgelieferte JavaScript-Datei entsteht ausschließlich durch `python scripts/build.py`; Änderungen werden in `src/parts/*.js` und `src/assets/*` vorgenommen.
+2. Die ausgelieferte JavaScript-Datei entsteht ausschließlich durch `python scripts/build.py`; Anwendungsänderungen werden in `src/parts/*.js` und `src/assets/*` vorgenommen. Die Installer-HTML wird separat aus der gepflegten `install/installer-template.html` erzeugt. Ein altes generiertes Installer-Artefakt dient niemals als Vorlage.
 3. Vor Änderungen der Serverreihenfolge erfolgt eine schreibfreie CalDAV-Leseprüfung. Schreibvorgänge erfordern separate Benutzerbestätigung und anschließende Prüfung.
 4. Kalenderidentitäten sind nur eindeutig bei nativer ID oder einzigartigem Namen innerhalb einer Herkunftsgruppe. Mehrdeutige Einträge werden nicht automatisch umgeschaltet.
 5. Persönliche Einstellungen bleiben an Instanz und Benutzer gebunden. JSON-Schema 1 wird unverändert unterstützt.
@@ -49,7 +49,7 @@ CalDAV ändert mehrere Kalender **nicht atomar**. Ein Fehler nach einem serverse
 - `python tests/test_saved_editor_201.py` (Chromium/Playwright)
 - `python tests/test_caldav_safety_203.py` (Chromium/Playwright mit simulierten CalDAV-Antworten)
 
-Ältere Release-QA-Berichte nennen teilweise Testdateien, die im aktuellen Repository nicht vorliegen. Diese historischen Angaben sind keine Nachweise über aktuell ausgeführte Tests.
+Die Installer-Vorlage enthält ausschließlich die Platzhalter `@@KP_BOOKMARKLET_HREF@@` und `@@KP_VERSION@@`. Der Build füllt diese aus derselben modularen JavaScript-Version; Copy/Paste und Drag-and-drop verwenden denselben URL-Wert ohne doppelte Speicherung des großen Skripts. Der Browser-Test `tests/test_installer_204.py` prüft beide Kopierwege, die Versionsanzeige und die mobile Breite.\n\nÄltere Release-QA-Berichte nennen teilweise Testdateien, die im aktuellen Repository nicht vorliegen. Diese historischen Angaben sind keine Nachweise über aktuell ausgeführte Tests.
 
 Die vorhandenen Browser-Tests verwenden simulierte Nextcloud-Kalender. Ein Versionsmatrix-Test mit aktuellen produktiven Nextcloud- und CalDAV-Installationen bleibt eine separate Abnahmebedingung.
 
