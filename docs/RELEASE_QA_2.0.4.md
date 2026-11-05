@@ -1,6 +1,6 @@
 # Qualitätssicherung – Kalenderprofile 2.0.4 (Installer)
 
-**Status:** Vom Projekteigentümer ausdrücklich zur Veröffentlichung freigegeben; offizielle Auslieferung nach erfolgreichem Publishing-Workflow.  
+**Status:** Am 06.11.2026 offiziell als GitHub-Release v2.0.4 veröffentlicht; Tag und Prüfsummen der Download-Assets nachweislich verifiziert. Offene manuelle Prüfpunkte bleiben als nicht gesondert durchgeführt dokumentiert.  
 **Gegenstand:** Ausschließlich HTML-Installer, generierter Bookmarklet-Versionsstand und Build-/Prüfprozess.
 
 ## Ziel und Abgrenzung
@@ -41,3 +41,12 @@ Das bestehende GitHub-Release `v2.0.3` und dessen unveränderliche Assets werden
 
 
 **Freigabe:** GO durch ausdrückliche Nachricht des Projekteigentümers; kein Nachweis zusätzlicher manueller Browser- oder Live-Nextcloud-Tests.
+
+## Nachgewiesene Veröffentlichung
+
+- [Release v2.0.4](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.4); GitHub-Veröffentlichungszeitpunkt: 2026-11-05 23:07:46 UTC (2026-11-06 00:07:46 MEZ)
+- Git-Tag `v2.0.4` zeigt auf `0f1b98c2265a4dedabd4cf8ad06bad6ad4c00c8e`.
+- [Main-CI 42127015065](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/actions/runs/42127015065): erfolgreich, inklusive Installer-Chromium-Test.
+- [Release-CI 42127015016](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/actions/runs/42127015016): erfolgreich; drei Assets erzeugt, heruntergeladen und anhand von `SHA256SUMS.txt` geprüft.
+- Assets: `kalenderprofile-v2.0.4-installation.html` (330241 Bytes), `kalenderprofile-v2.0.4.zip` (311654 Bytes), `SHA256SUMS.txt` (200 Bytes).
+- Geschäftliche Freigabe: ausdrücklich erteilt. Die vorher genannten manuellen offenen Prüfpunkte werden durch die Release-Freigabe nicht nachträglich zu bestandenen Tests.
