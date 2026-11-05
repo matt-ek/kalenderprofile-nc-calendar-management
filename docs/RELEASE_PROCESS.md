@@ -1,6 +1,6 @@
 # Entwicklungs- und Releaseprozess – Kalenderprofile
 
-**Status:** Zielprozess, eingeführt als Planungsdokument am 05.11.2026. Er ersetzt die derzeitige technische Publish-Automation erst nach Umsetzung von [Issue #3](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/issues/3).
+**Status:** Verbindlicher Prozess für 2.0.3 und folgende Releases; Stand 05.11.2026. Einzelne zukünftige Ergänzungen aus [Issue #3](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/issues/3) bleiben möglich.
 
 ## 1. Grundregeln
 
@@ -20,7 +20,7 @@ Angelehnt an Semantic Versioning, bezogen auf das beobachtbare Produktverhalten:
 - **Minor (2.x.0):** Abwärtskompatible neue Funktion oder ausdrücklich genehmigte UI-Erweiterung.
 - **Major (x.0.0):** Beabsichtigte inkompatible Änderung mit zwingender Migrationsstrategie und Freigabe.
 
-Die Versionsangaben in Dokumentation, Bundle, Installer, Release Notes und Tag müssen identisch sein. Technische Speicher-IDs dürfen nicht bloß wegen einer neuen semantischen Version umbenannt werden. Diese Regel ist eine Zielvorgabe; die aktuell hart kodierte Versionsprüfung wird in Issue #3 generalisiert.
+Die Versionsangaben in Dokumentation, Bundle, Installer, Release Notes und Tag müssen identisch sein. Technische Speicher-IDs dürfen nicht bloß wegen einer neuen semantischen Version umbenannt werden. Die Versionsprüfung liest die Versionskennung dynamisch aus der modularen Codebasis.
 
 ## 3. Pull-Request-Prüfung
 
@@ -56,18 +56,18 @@ Empfohlen ist mindestens ein Review durch eine zweite Person, wenn verfügbar. W
 
 ## 5. Veröffentlichung
 
-**Sollprozess nach Issue #3:**
+**Gültiger Veröffentlichungsprozess:**
 
 1. Release-Issue und vollständige Checkliste vorbereiten; Go/No-Go festhalten.
 2. Versionskonsistenz in Quelltext, Installer, Dokumentation und Release Notes verifizieren.
-3. Tag auf getesteten Commit setzen; Tag/Commit eindeutig dokumentieren.
+3. Ausdrückliche Freigabe als Datei `docs/releases/vX.Y.Z.approved` mit der Zeile `release-approved: true` auf dem überprüften `main`-Stand dokumentieren. Der Veröffentlichungsworkflow erstellt nach erneut erfolgreichen Gates den unveränderlichen Tag, sofern er noch nicht existiert. Alternativ kann ein bereits existierender Tag mit `workflow_dispatch` erneut geprüft werden.
 4. CI mit unveränderlichen Quellen ausführen; fehlgeschlagene Gates blockieren den Release.
 5. Versionierte Installations-HTML, Quellpaket und SHA-256-Prüfsummen erstellen.
 6. Artefakte auf Vollständigkeit prüfen und lokal aus dem veröffentlichten Installer starten.
 7. Release Notes veröffentlichen: Highlights, Fixes, Migration, Kompatibilität, bekannte Grenzen, Installation.
 8. Downloadlinks und Prüfsummen kontrollieren, erst danach Freigabe kommunizieren.
 
-**Wichtig:** Im aktuell vorhandenen Workflow sind Versionen und ein main-/Workflow-Datei-Trigger noch fest kodiert. Die vorstehenden Punkte sind daher erst nach Umsetzung und Verifikation von #3 als automatisierter Standard anzusehen.
+**Sicherungsmaßnahmen:** Der Workflow wird auf `main` nur durch neu hinzugefügte/geänderte Freigabedateien ausgelöst, nicht durch allgemeine Workflow-Codeänderungen. Tag-Pushes und manuell angeforderte Workflow-Läufe bleiben unterstützt. Existierende Tags werden nicht verschoben; veröffentlichte Assets werden nicht überschrieben. Bei Release-Wiederholungen werden Prüfsummen und vorhandene Assets überprüft.
 
 ## 6. Hotfix und Rollback
 
