@@ -1,7 +1,7 @@
 # Qualitätssicherung und Freigabe – Kalenderprofile 2.0.3
 
 **Stand:** 05.11.2026  
-**Status:** Veröffentlichung vom Projekteigentümer ausdrücklich freigegeben; erneute technische Release-Gates und Asset-Verifizierung stehen bis zur GitHub-Veröffentlichung noch aus. Automatisierte QA und manueller Funktionstest positiv bestätigt; genauer Umfang der CalDAV-Live-Schreibtests nicht dokumentiert.
+**Status:** GitHub-Release v2.0.3 am 05.11.2026 veröffentlicht, Tag/Assets geprüft, alle Release- und Main-CI-Gates erfolgreich. Manueller Funktionstest positiv bestätigt; genauer Umfang der CalDAV-Live-Schreibtests nicht dokumentiert.
 
 ## 1. Nachweisbarer Basisstand
 
@@ -49,13 +49,13 @@ Die Versionen realer Testinstanzen sollen beim ersten Live-Test protokolliert we
 - [x] Projektplan, Risiken und Entwicklungs-/PR-Prozess dokumentiert.
 - [x] Build-/Browser-/CalDAV-Regressionsprüfung für einen Zwischenstand erfolgreich (oben referenziert).
 - [x] Code-/Workflowstand `f4c9c75` durch alle verpflichtenden CI-Checks erfolgreich (Workflow 42119552222). Dokumentationsfolgecommits gesondert prüfen.
-- [x] Release-Packaging-Logik sowie deterministisches ZIP und Prüfsummen im CI-Kontext geprüft. Tatsächliche Tag-Veröffentlichung und Asset-Download stehen noch aus.
+- [x] Reproduzierbares ZIP und Prüfsummen im CI geprüft; veröffentlichte Dateien erneut heruntergeladen und SHA256SUMS.txt erfolgreich validiert (Workflow 42122923194).
 - [x] Manueller Funktionstest vom Anwender als erfolgreich gemeldet („getestet, funktioniert“); Testumgebung und Prüfumfang nicht gesondert protokolliert.
 - [x] Risiko ausstehender spezieller CalDAV-Live-Schreib-/Fehlerfalltests explizit im QA-Bericht und in den Release Notes dokumentiert und für dieses Stabilisierungsrelease vom Projekteigentümer durch die Freigabe akzeptiert. Dies ist **kein** Nachweis eines erfolgreichen Live-Schreibtests.
 - [x] Go/No-Go: **GO unter technischen Vorbehalten** durch ausdrücklichen Veröffentlichungsauftrag am 05.11.2026. Nachweis: `docs/releases/v2.0.3.approved`, früherer grüner main-Commit `1bf657df527a5218fe36937f2194f924a22e9fd4`. Veröffentlichung ausschließlich nach erfolgreicher erneuter Release-Pipeline.
-- [ ] GitHub-Release-Tag und Assets erstellt und gegen SHA256SUMS.txt verifiziert.
+- [x] GitHub-Release-Tag `v2.0.3` auf Commit `fe8a7e4bad47b9bcb57d577ea9d516b7fedc81c8` erstellt; drei Assets veröffentlicht und mit Prüfsummen verifiziert.
 
-**Freigabeentscheidung:** Geschäftlich GO, technisch bis zum erfolgreichen Release-Workflow bedingt. Das Release gilt erst mit geprüftem Git-Tag und veröffentlichten, verifizierten Assets als ausgeliefert.
+**Freigabeentscheidung:** **GO / veröffentlicht.** Technische Qualitätsprüfung (Run 42122923202) und Veröffentlichung (Run 42122923194) erfolgreich; die dokumentierten Einschränkungen der nichtatomaren CalDAV-Sortierung gelten weiterhin.
 
 ## 5. Risiken und Rollback
 
@@ -64,3 +64,12 @@ Die Versionen realer Testinstanzen sollen beim ersten Live-Test protokolliert we
 - Das Bookmarklet läuft im Kontext der aktiven Benutzersitzung; nur vertrauenswürdige Quellen installieren.
 - JSON-Exporte können Kalenderbezeichnungen enthalten; keine privaten Exporte in Issues, Logs oder Test-Repositories.
 - Fällt 2.0.3 beim Nutzer aus, ist 2.0.2 als bereits veröffentlichtes Installationsasset vorhanden. Die gespeicherte Konfiguration bleibt formatkompatibel; eine serverseitige Rücknahme von CalDAV-Schreibvorgängen wird dadurch **nicht** garantiert.
+
+## 6. Bestätigte Veröffentlichung
+
+- [Release v2.0.3](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.3) – veröffentlicht 05.11.2026 um 22:37:40 UTC
+- Unveränderlicher Git-Tag `v2.0.3`, Commit `fe8a7e4bad47b9bcb57d577ea9d516b7fedc81c8`
+- [GitHub Actions – Build und Qualität](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/actions/runs/42122923202): erfolgreich
+- [GitHub Actions – Release und Prüfsummen](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/actions/runs/42122923194): erfolgreich
+- Release-Dateien: `kalenderprofile-v2.0.3-installation.html` (320067 Bytes), `kalenderprofile-v2.0.3.zip` (296071 Bytes), `SHA256SUMS.txt` (200 Bytes)
+- Prüfung: veröffentlichte Dateien im Workflow heruntergeladen und anhand der veröffentlichten SHA-256-Prüfsummendatei validiert
