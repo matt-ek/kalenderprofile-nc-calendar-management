@@ -10,7 +10,7 @@ on:
     # Path filters do not apply to tag pushes; approval-file changes on main
     # trigger a single explicitly authorized version publication.
     paths:
-      - 'docs/releases/*.approved'
+      - 'docs/releases/v[0-9]*.[0-9]*.[0-9]*.approved'
   workflow_dispatch:
     inputs:
       tag:
