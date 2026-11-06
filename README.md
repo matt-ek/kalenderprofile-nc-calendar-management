@@ -1,33 +1,69 @@
 # Kalenderprofile
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+**Mehr Übersicht in der Nextcloud-Kalender-App.**
 
-**Free & Open Source · Contributions welcome!**
+Kalenderprofile ist ein kostenloses Open-Source-**Bookmarklet**, mit dem sich viele Nextcloud-Kalender schneller auswählen, in persönlichen Ansichten zusammenfassen und übersichtlich sortieren lassen. Besonders nützlich ist es, wenn mehrere Teams, Projekte oder Ressourcen eigene Kalender verwenden.
 
-**Aktuelles veröffentlichtes Release:** [2.0.5](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.5) – 06.11.2026    
-Kalenderverwaltung für Nextcloud
+[![Aktuelle Version](https://img.shields.io/badge/Release-2.0.5-176da5)](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.5)
+[![MIT-Lizenz](https://img.shields.io/badge/Lizenz-MIT-64748b)](LICENSE)
+[![Build and quality checks](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/actions/workflows/quality.yml/badge.svg)](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/actions/workflows/quality.yml)
 
-Browser-Bookmarklet zur Verwaltung von Kalenderprofilen, Schnellansichten, Kategorien, Bereichs- und Kalenderartfiltern sowie Kalenderreihenfolgen in der Nextcloud-Kalender-App.
+**[Installer für Version 2.0.5 herunterladen](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/download/v2.0.5/kalenderprofile-v2.0.5-installation.html)** · [Release & weitere Downloads](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.5) · [Fehler oder Idee melden](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/issues)
 
-## Installation
+## Was bringt Kalenderprofile?
 
-**Empfohlen:** Unter [Releases](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases) die passende Datei `kalenderprofile-vX.Y.Z-installation.html` im Bereich **Assets** herunterladen. Diese HTML-Datei **lokal in Chrome oder Edge öffnen** und entweder den Link **Kalenderprofile** in die Lesezeichenleiste ziehen oder die vollständige Bookmarklet-Adresse über **Code kopieren** als URL eines Lesezeichens einfügen. Danach die Nextcloud-Kalender-App öffnen und das Lesezeichen anklicken. Die GitHub-Dateivorschau und die automatisch generierten Quellcode-Archive sind keine unmittelbar ausführbare Installationsseite.
+Die normale Nextcloud-Kalenderansicht bleibt erhalten. Kalenderprofile ergänzt sie um eine eigene Bedienoberfläche, in der sich häufig benötigte Kalenderkombinationen speichern und wieder aufrufen lassen.
 
-Alternativ lässt sich die Datei `install/installation.html` aus dem vollständig heruntergeladenen Repository lokal öffnen.
+| Bereich | Möglichkeiten |
+| --- | --- |
+| **Profile & Filter** | Kalender nach frei definierbaren Bereichen, Kalenderarten und Herkunft auswählen; persönliche Profile und Schnellansichten wiederverwenden. |
+| **Einzelauswahl** | Einzelne Kalender über Suche und kombinierbare Mehrfachfilter finden, an- oder abwählen und die Auswahl übernehmen. |
+| **Sortierung** | Eigene Sortier-Sets verwalten und die Reihenfolge von Kalendern mit gesonderter Bestätigung über CalDAV übernehmen. |
+| **Setup** | Bereiche, Kalenderarten, Erkennungsregeln, Schnellansichten, gespeicherte Profile und Sortier-Sets konfigurieren. |
+| **Sichern & Wiederherstellen** | Einstellungen über JSON exportieren und bei Bedarf wieder importieren. |
 
-Der Installer und das Bookmarklet enthalten den vollständigen JavaScript-Code. Es sind weder ein externer Loader noch zusätzliche Nextcloud-Apps erforderlich.
+Erkennungsregeln unterstützen Schlüsselwörter, Platzhalter (`*`) und Ausschlüsse. Die Zuordnung lässt sich an unterschiedliche Namenskonventionen anpassen. Kalender aus persönlichen, geteilten sowie unterstützten Nextcloud-Quellen wie Deck und Aufgaben können in die Auswahl einbezogen werden.
 
-## Funktionen
+Typische Einsatzfälle sind beispielsweise eine kompakte Ansicht aller Projekttermine, ein Wechsel zwischen Team- und Ressourcenkalendern oder eine persönliche Auswahl aus einer umfangreichen Kalenderliste.
 
-- Profile, dynamische Filter und Schnellansichten
-- Konfigurierbare Bereiche, Kalenderarten und Schlüsselwortregeln mit Wildcards und Ausschlüssen
-- Einzelauswahl mit Textsuche und Mehrfachfiltern
-- Temporär lösbare Fixierungen und Sammelauswahl
-- Sortier-Sets und bestätigte CalDAV-Sortierung
-- Lokale JSON-Sicherung und Wiederherstellung
-- Eigenständige, isolierte Oberfläche im Kalender
+## In wenigen Schritten installieren
 
-## Entwicklung und Tests
+**Voraussetzung:** Du hast Zugriff auf eine Nextcloud-Instanz mit Kalender-App und verwendest einen Desktop-Browser wie Chrome oder Edge. Die automatisierten Browsertests nutzen Chromium; eine vollständige Kompatibilitätsprüfung aller Browser- und Nextcloud-Versionen liegt nicht vor.
+
+1. **[Installer-HTML herunterladen](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/download/v2.0.5/kalenderprofile-v2.0.5-installation.html)** und die heruntergeladene Datei **lokal im Browser öffnen**. Die GitHub-Dateivorschau ist nicht die ausführbare Installationsseite.
+2. **Bookmarklet anlegen:** Entweder die Schaltfläche **„Kalenderprofile“** aus der Installationsseite in die Lesezeichenleiste ziehen **oder** mit **„Code kopieren“** die vollständige `javascript:`-Adresse kopieren und als URL eines neuen Lesezeichens einfügen.
+3. In Nextcloud die **Kalender-App** öffnen und das neue Lesezeichen anklicken.
+4. In Kalenderprofile die gewünschten Kalender auswählen, eine Ansicht speichern oder zunächst unter **Setup** eigene Kategorien und Erkennungsregeln definieren.
+
+Das Bookmarklet enthält die Anwendung vollständig. Es benötigt **keine zusätzliche Nextcloud-App**, keine Browser-Erweiterung und keinen externen JavaScript-Loader. Die Installer-HTML muss nicht auf den Nextcloud-Server hochgeladen werden.
+
+**Aktualisieren:** Bei einer neuen Version das bestehende Bookmarklet durch die neue Adresse ersetzen. Version 2.0.5 verwendet weiterhin die bisherigen Speicherkennungen und das vorhandene Konfigurationsschema; ein erneuter Import bestehender Profile ist für den Wechsel von 2.0.4 auf 2.0.5 nicht erforderlich.
+
+## Die vier Arbeitsbereiche
+
+**Profile & Filter:** Über Schnellansichten, gespeicherte Profile sowie Bereichs- und Kalenderartfilter werden zusammengehörige Kalender in einer Ansicht gebündelt. Vor der Übernahme lässt sich die Auswahl überprüfen.
+
+**Einzelauswahl:** Suche und Filter helfen beim gezielten Ein- oder Ausblenden einzelner Kalender. Fixierte Kalender können für die laufende Sitzung vorübergehend von ihrer Fixierung ausgenommen werden.
+
+**Sortierung:** Häufig benötigte Reihenfolgen können als Sortier-Sets gespeichert werden. Änderungen an der serverseitigen Kalenderreihenfolge werden gesondert geprüft und bestätigt.
+
+**Setup:** Hier werden die Klassifikation, eigene Schnellansichten, Profile, Sortier-Sets und der JSON-Import/-Export verwaltet. Die Einrichtung ist nicht auf eine bestimmte Organisation oder vordefinierte Kalendernamen beschränkt.
+
+*Abbildungen der tatsächlichen Oberfläche werden ergänzt, sobald geeignete, anonymisierte Screenshots vorliegen.* 
+
+## Sicherheit und Datenschutz
+
+Kalenderprofile wird **innerhalb der bereits geöffneten Nextcloud-Sitzung** ausgeführt und verfügt damit über die Rechte dieser Sitzung. Installiere ein Bookmarklet deshalb nur aus einer vertrauenswürdigen Quelle und prüfe bei Bedarf den veröffentlichten Quellcode.
+
+- **Lokale Einstellungen:** Profile und Konfigurationen werden im Browserspeicher der jeweiligen Nextcloud-Instanz und des Benutzers gehalten. JSON-Exporte können Kalendernamen, IDs und weitere benutzerspezifische Informationen **im Klartext** enthalten. Solche Dateien nicht unbereinigt öffentlich teilen.
+- **CalDAV:** Eine Änderung der Kalenderreihenfolge erfordert eine ausdrückliche Bestätigung. Die Anwendung führt davor Prüfungen durch; Änderungen über mehrere Kalender sind jedoch **nicht atomar**. Bei einem Teilfehler muss die Reihenfolge gegebenenfalls direkt in Nextcloud kontrolliert werden.
+- **Tests und Grenzen:** Die [automatisierten Qualitätsprüfungen zu 2.0.5](docs/RELEASE_QA_2.0.5.md) umfassen unter anderem Browser-, Installer-, Build-, CalDAV-Simulations- und Neutralitätsprüfungen. Sie ersetzen **keine vollständigen Live-Tests** aller Nextcloud- und Browser-Versionen.
+
+## Entwicklung
+
+Die bearbeitbaren Quellen liegen in `src/parts/` (JavaScript) und `src/assets/` (HTML/CSS). `scripts/build.py` erzeugt daraus das eigenständige Bundle, die Bookmarklet-URL und den Installer. Generierte Dateien gehören zum Repository; sie sollten nicht unabhängig von ihren Quellen bearbeitet werden.
+
+Für den lokalen Build und die grundlegenden Prüfungen werden **Python 3** und **Node.js** benötigt:
 
 ```bash
 python scripts/build.py
@@ -35,28 +71,16 @@ python tests/check_release.py
 python tests/test_repo_neutrality_205.py
 ```
 
-Die Build-Skripte erzeugen `src/calendar-management-generic.js`, `install/bookmarklet-url.txt` und `install/installation.html` aus den Entwicklungsdateien und der gepflegten Vorlage `install/installer-template.html`. Die sichtbare Installer-Version und beide Installationswege verwenden immer die Versionskennung bzw. Bookmarklet-Adresse aus derselben Quelle. Das ausgelieferte Bookmarklet hat keine externen Laufzeitabhängigkeiten. Die automatisierten Tests verwenden Playwright/Chromium. Version 2.0.3 ergänzt simulierte CalDAV-Fehlerfalltests; reale Nextcloud-Abnahmen werden separat dokumentiert.
+Die vollständige GitHub-CI führt darüber hinaus Browser- und simulierte CalDAV-Regressionstests aus. Für diese Tests sind zusätzliche Playwright-/Chromium-Abhängigkeiten erforderlich.
 
-## Kompatibilität und Sicherheit
+**Dokumentation:** [Architektur](docs/ARCHITECTURE.md) · [Release-Prozess](docs/RELEASE_PROCESS.md) · [Projektplan & Roadmap](docs/PROJECT_PLAN.md) · [Changelog](CHANGELOG.md) · [Release Notes 2.0.5](docs/releases/v2.0.5.md)
 
-Für 2.0.3 sind automatisierte Browser- und simulierte CalDAV-Tests sowie eine positive manuelle Funktionsprüfung dokumentiert. Eine versionsübergreifende Kompatibilitätsgarantie für sämtliche Nextcloud- und Browser-Versionen gibt es nicht.
+## Mitmachen und Lizenz
 
-Die CalDAV-Sortierung schreibt nach ausdrücklicher Benutzerfreigabe in die Nextcloud. Änderungen über mehrere Kalender sind nicht atomar; im Fehlerfall erfolgt ein Wiederherstellungsversuch. JSON-Exporte können Kalendernamen und weitere benutzerspezifische Angaben im Klartext enthalten.
+Fehlerberichte, Vorschläge und Pull Requests sind willkommen. Bitte beachte die [Beitragsrichtlinien](CONTRIBUTING.md) und veröffentliche in Issues oder Screenshots **keine privaten Kalenderdaten, Zugangsdaten oder persönlichen JSON-Exporte**.
 
-## Lizenz und Mitmachen
+Kalenderprofile steht unter der [MIT-Lizenz](LICENSE). Nutzung, Anpassung, Weitergabe und kommerzielle Nutzung sind im Rahmen der Lizenz möglich.
 
-Kalenderprofile ist **kostenlos und Open Source** unter der [MIT-Lizenz](LICENSE). Nutzung, Anpassung, Forks, Weitergabe und kommerzielle Nutzung sind gestattet; der Lizenz- und Urheberrechtshinweis muss bei Weitergabe erhalten bleiben.
+Die aktuell angebotene Version ist **2.0.5**. Frühere GitHub-Releases und ihre Tags wurden aus dem öffentlichen Downloadbereich entfernt; ältere Commits und außerhalb von GitHub gespeicherte Kopien können weiterhin existieren. Näheres erläutert die [Veröffentlichungshistorie](docs/RELEASE_HISTORY_POLICY.md).
 
-**Beiträge sind willkommen:** Fehlerberichte, Vorschläge, Übersetzungen und Pull Requests. Hinweise findest du in [CONTRIBUTING.md](CONTRIBUTING.md).
-
-Copyright © 2026 Matthias Ebermann-Kestel.
-
-## Projektsteuerung und Roadmap
-
-Die aktuelle Entwicklungsplanung mit Prioritäten, offenen Risiken und Abnahmekriterien steht im [Projektplan](docs/PROJECT_PLAN.md). Der [Entwicklungs- und Releaseprozess](docs/RELEASE_PROCESS.md) beschreibt Pull Requests, Qualitätssicherung, Freigaben und Hotfixes. Die Umsetzung wird über [GitHub Issues](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/issues) verfolgt.
-
-## Veröffentlichte Version
-
-**Die einzige regulär angebotene Veröffentlichung ist [Version 2.0.5](https://github.com/matt-ek/kalenderprofile-nc-calendar-management/releases/tag/v2.0.5).** Die alten Releases und Git-Tags von 2.0.0 bis 2.0.4 wurden am 06.11.2026 auf ausdrücklichen Wunsch des Repository-Eigentümers gelöscht. Die Git-Commit-Historie sowie ältere Release-Notizen bleiben erhalten; externe Kopien und Downloads können nicht rückwirkend entfernt werden.
-
-Weitere Informationen: [Veröffentlichungshistorie](docs/RELEASE_HISTORY_POLICY.md) und [Release Notes 2.0.5](docs/releases/v2.0.5.md).
+© 2026 Matthias Ebermann-Kestel
