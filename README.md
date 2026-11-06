@@ -37,7 +37,7 @@ Typische Einsatzfälle sind beispielsweise eine kompakte Ansicht aller Projektte
 
 Das Bookmarklet enthält die Anwendung vollständig. Es benötigt **keine zusätzliche Nextcloud-App**, keine Browser-Erweiterung und keinen externen JavaScript-Loader. Die Installer-HTML muss nicht auf den Nextcloud-Server hochgeladen werden.
 
-**Aktualisieren:** Bei einer neuen Version das bestehende Bookmarklet durch die neue Adresse ersetzen. Version 2.0.5 verwendet weiterhin die bisherigen Speicherkennungen und das vorhandene Konfigurationsschema; ein erneuter Import bestehender Profile ist für den Wechsel von 2.0.4 auf 2.0.5 nicht erforderlich.
+**Aktualisieren:** Bei einer neuen Version das bestehende Bookmarklet durch die neue Adresse ersetzen.
 
 ## Die vier Arbeitsbereiche
 
